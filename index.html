@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="description" content="Taller de Juegos de Mesa — Image Campus. 666: componentes, interfaz y arte.">
+<title>666 — Componentes, Interfaz y Arte</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Bungee&family=Zilla+Slab:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   SHELL — neutral chrome so each moodboard can be itself
+   ============================================================ */
+:root{
+  --plane:#0d0d0d;      --surface:#1a1a19;
+  --ink:#ffffff;        --ink-2:#c3c2b7;    --muted:#898781;
+  --line:#2c2c2a;       --rule:#383835;
+  --accent:#e66767;
+  --sans: system-ui, -apple-system, "Segoe UI", sans-serif;
+  --serif: Georgia, "Century Schoolbook", "Zilla Slab", serif;
+  color-scheme: dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;height:100%}
+body{background:var(--plane);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+.deck{height:100vh;overflow-y:scroll;scroll-snap-type:y mandatory;scroll-behavior:smooth}
+.slide{
+  min-height:100vh;scroll-snap-align:start;scroll-snap-stop:always;
+  padding:3.6vh 4vw 4.4vh;display:flex;flex-direction:column;
+  position:relative;overflow:hidden;
+}
+.slide-head{margin-bottom:1.6vh;flex:0 0 auto}
+.kicker{font-size:clamp(9px,1.1vh,12px);letter-spacing:.22em;text-transform:uppercase;color:var(--muted);font-weight:600}
+h1.title{font-size:clamp(20px,3.8vh,46px);margin:0;font-weight:700;letter-spacing:-.02em;line-height:1.08;flex:0 0 auto}
+h1.title em{font-style:normal;color:var(--accent)}
+.sub{font-size:clamp(11px,1.6vh,17px);color:var(--ink-2);margin:.55em 0 0;max-width:78ch;line-height:1.45;flex:0 0 auto}
+.body{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;justify-content:center;margin-top:2.4vh}
+.body.top{justify-content:flex-start}
+
+/* progress rail */
+.rail{position:fixed;right:1vw;top:50%;transform:translateY(-50%);z-index:60;display:flex;flex-direction:column;gap:9px}
+.rail button{width:8px;height:8px;border-radius:50%;border:0;padding:0;cursor:pointer;background:var(--rule);transition:background .18s,transform .18s}
+.rail button[aria-current="true"]{background:var(--accent);transform:scale(1.45)}
+.counter{position:fixed;left:1.4vw;bottom:1.4vh;z-index:60;font-size:11px;color:var(--muted);letter-spacing:.12em;font-variant-numeric:tabular-nums}
+.hint{position:fixed;right:1.4vw;bottom:1.4vh;z-index:60;font-size:10px;color:var(--rule);letter-spacing:.1em}
+
+/* generic */
+.grid{display:grid;gap:1.6vw}
+.two{grid-template-columns:1fr 1fr}
+.three{grid-template-columns:repeat(3,1fr)}
+.card-panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:1.6vh 1.3vw}
+table{width:100%;border-collapse:collapse;font-size:clamp(9px,1.42vh,15px)}
+th{text-align:left;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;
+   font-size:clamp(8px,1.02vh,11px);padding:.5em .7em;border-bottom:1px solid var(--rule)}
+td{padding:.42em .7em;border-bottom:1px solid var(--line);color:var(--ink-2)}
+td:first-child{color:var(--ink)}
+td.n{text-align:right;font-variant-numeric:tabular-nums;color:var(--ink);font-weight:600}
+tr:last-child td{border-bottom:0}
+tfoot td{border-top:1px solid var(--rule);border-bottom:0;color:var(--ink);font-weight:700;padding-top:.6em}
+.tag{display:inline-block;font-size:clamp(7.5px,1vh,10px);letter-spacing:.08em;text-transform:uppercase;
+     padding:.2em .55em;border-radius:99px;border:1px solid var(--rule);color:var(--muted);vertical-align:middle}
+.lbl{font-size:clamp(8.5px,1.15vh,12px);letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:1vh}
+
+/* stat tiles */
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:1vw}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:1.7vh 1.1vw}
+.tile .lab{font-size:clamp(9px,1.18vh,12px);color:var(--muted);letter-spacing:.06em}
+.tile .val{font-size:clamp(26px,5.6vh,60px);font-weight:600;line-height:1;margin-top:.22em}
+.tile .note{font-size:clamp(9px,1.18vh,12px);color:var(--ink-2);margin-top:.45em}
+
+/* ============================================================
+   SLIDE 1 — portada
+   ============================================================ */
+#s1{align-items:center;justify-content:center;text-align:center;
+    background:radial-gradient(ellipse at 50% 44%, #241012 0%, var(--plane) 62%)}
+.six{font-family:'Bungee',var(--sans);font-size:clamp(90px,30vh,280px);line-height:.86;letter-spacing:.02em;
+     color:#ff2d2d;text-shadow:0 0 .06em #ff2d2d55, 0 0 .28em #ff2d2d33}
+#s1 .lede{font-size:clamp(12px,2vh,22px);color:var(--ink-2);letter-spacing:.24em;text-transform:uppercase;margin-top:2.2vh}
+#s1 .meta{font-size:clamp(10px,1.35vh,14px);color:var(--muted);margin-top:4.5vh;letter-spacing:.1em;line-height:1.7}
+.seal{width:clamp(64px,10vh,110px);height:auto;margin-bottom:2.4vh;opacity:.8}
+
+/* ============================================================
+   CHART — validated palette on the reference dark surface
+   ============================================================ */
+.viz-root{
+  --surface-1:#1a1a19;
+  --text-primary:#ffffff; --text-secondary:#c3c2b7; --text-muted:#898781;
+  --axis:#383835; --gridline:#2c2c2a;
+  --series-1:#3987e5;   /* sólo construye o defiende */
+  --series-2:#d95926;   /* puede dañar a un rival    */
+  background:var(--surface-1);border:1px solid var(--gridline);border-radius:10px;padding:2vh 1.4vw 1.6vh;
+  display:flex;flex-direction:column;
+}
+.viz-title{font-size:clamp(11px,1.6vh,16px);font-weight:600;color:var(--text-primary)}
+.viz-sub{font-size:clamp(9px,1.22vh,12px);color:var(--text-secondary);margin-top:.25em}
+.legend{display:flex;gap:1.3em;margin:1.5vh 0 2vh;flex-wrap:wrap}
+.legend span{display:flex;align-items:center;gap:.45em;font-size:clamp(9px,1.22vh,12px);color:var(--text-secondary)}
+.swatch{width:10px;height:10px;border-radius:3px;flex:0 0 auto}
+.bars{display:flex;flex-direction:column;gap:.85vh;flex:1;justify-content:space-evenly}
+.row{display:grid;grid-template-columns:12ch 1fr 3.6ch;gap:.7em;align-items:center;cursor:default}
+.row .name{font-size:clamp(8px,1.18vh,12px);color:var(--text-secondary);text-align:right;white-space:nowrap}
+.plot{position:relative;height:clamp(9px,1.5vh,16px)}
+.bar{position:absolute;left:0;top:0;bottom:0;border-radius:0 4px 4px 0;transition:filter .15s}
+.row:hover .bar{filter:brightness(1.2)}
+.bar.a{background:var(--series-1)} .bar.b{background:var(--series-2)}
+.val{position:absolute;top:50%;transform:translateY(-50%);font-size:clamp(8px,1.18vh,12px);
+     color:var(--text-primary);font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
+.axis{display:grid;grid-template-columns:12ch 1fr 3.6ch;gap:.7em;margin-top:1.3vh}
+.axis .ticks{grid-column:2;display:flex;justify-content:space-between;border-top:1px solid var(--axis);
+             padding-top:.5vh;font-size:clamp(8px,1.02vh,11px);color:var(--text-muted);font-variant-numeric:tabular-nums}
+#tip{position:fixed;z-index:99;pointer-events:none;opacity:0;transition:opacity .12s;
+     background:#0d0d0d;border:1px solid var(--rule);border-radius:6px;padding:.5em .7em;
+     font-size:12px;color:var(--ink);box-shadow:0 6px 22px #000a;max-width:270px;line-height:1.45}
+#tip b{display:block;margin-bottom:.2em}
+#tip small{color:var(--muted)}
+
+/* ============================================================
+   CARD MOCKUPS
+   ============================================================ */
+.mockups{display:flex;gap:2.6vw;align-items:center;justify-content:center;flex-wrap:nowrap}
+.pcard{width:clamp(130px,29vh,250px);aspect-ratio:63/88;border-radius:10px;position:relative;
+       background:#151519;border:2px solid #2a2a30;display:flex;flex-direction:column;overflow:hidden;flex:0 0 auto}
+.pcard .band{background:#ffd400;color:#101018;font-family:'Bungee',var(--sans);
+             font-size:clamp(7.5px,1.15vh,12px);text-align:center;padding:.45em;letter-spacing:.05em}
+.pcard .icon{flex:1;display:flex;align-items:center;justify-content:center;font-size:clamp(34px,7.6vh,80px);color:#ffd400;line-height:1}
+.pcard .stat{display:flex;align-items:center;justify-content:center;gap:.4em;font-family:'Bungee',var(--sans);
+             font-size:clamp(12px,2.1vh,24px);color:#fff;padding-bottom:.35em}
+.pcard .target{background:#6b2bd9;color:#fff;font-size:clamp(6.5px,1vh,11px);text-align:center;
+               padding:.38em;letter-spacing:.14em;text-transform:uppercase}
+.pcard .remind{font-size:clamp(6px,.95vh,10px);color:#8a8a95;text-align:center;padding:.5em .55em;font-family:var(--serif);line-height:1.35}
+.pcard.instant{border:2px solid #ff2d2d;box-shadow:inset 0 0 0 3px #101018, inset 0 0 0 5px #ff2d2d}
+.pcard.instant .band{background:#ff2d2d;color:#fff}
+.pcard.instant .icon{color:#ff2d2d}
+.pcard.dual{background:linear-gradient(158deg,#1a1a24 0 49.5%,#3a3a48 49.5% 50.5%,#2a1219 50.5% 100%)}
+.pcard.dual .half{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.2em}
+.pcard.dual .half b{font-family:'Bungee',var(--sans);font-size:clamp(11px,2vh,22px)}
+.pcard.dual .half .who{font-size:clamp(6px,.95vh,10px);letter-spacing:.18em;color:#9a9aa8}
+.callouts{display:flex;flex-direction:column;gap:1.8vh;font-size:clamp(9.5px,1.5vh,16px);color:var(--ink-2);max-width:40ch}
+.callouts li{list-style:none;display:flex;gap:.7em;align-items:flex-start;line-height:1.45}
+.callouts .num{flex:0 0 auto;width:1.6em;height:1.6em;border-radius:50%;border:1px solid var(--accent);
+               color:var(--accent);display:grid;place-items:center;font-size:.75em;font-weight:700;margin-top:.15em}
+.cap{font-size:clamp(8px,1.12vh,11px);color:var(--muted);text-align:center;margin-top:1vh;letter-spacing:.06em}
+
+/* CSS dice — pips are absolutely positioned so they scale with the die itself
+   (percentage padding would resolve against the containing block, not the die) */
+.die{position:relative;aspect-ratio:1;border-radius:16%;background:#e8342f;
+     box-shadow:inset 0 -3px 7px #0005, 0 2px 6px #0009}
+.pips{position:absolute;inset:17%;display:grid;gap:9%}
+.pips i{background:#fff;border-radius:50%}
+.pips.d6{grid-template-columns:1fr 1fr;grid-template-rows:repeat(3,1fr)}
+.pips.d5{grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr)}
+.pips.d5 i:nth-child(1){grid-area:1/1}.pips.d5 i:nth-child(2){grid-area:1/3}
+.pips.d5 i:nth-child(3){grid-area:2/2}.pips.d5 i:nth-child(4){grid-area:3/1}.pips.d5 i:nth-child(5){grid-area:3/3}
+.pips.d4{grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr}
+
+/* player board */
+.pboard{background:#151519;border:1px solid #2a2a30;border-radius:12px;padding:2.4vh 1.8vw;
+        display:flex;flex-direction:column;gap:2.4vh;max-width:520px;margin:0 auto}
+.wells{display:flex;gap:1.4vw;justify-content:center}
+.well{width:clamp(50px,9vh,92px);aspect-ratio:1;border-radius:14px;background:#0a0a0e;
+      box-shadow:inset 0 4px 10px #000, inset 0 0 0 1px #2a2a30;display:grid;place-items:center;
+      position:relative}
+.well .die{width:78%}
+.well .lock{position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);width:24px;height:24px;
+            border-radius:50%;background:#ff2d2d;color:#fff;display:grid;place-items:center;
+            font-size:12px;border:2px solid #151519;font-weight:700}
+.momentum{display:flex;gap:.6vw;justify-content:center}
+.mom{flex:1;text-align:center;border:1px solid #2a2a30;border-radius:8px;padding:.9vh .3vw;
+     font-size:clamp(8px,1.15vh,12px);color:var(--muted)}
+.mom b{display:block;color:#ffd400;font-family:'Bungee',var(--sans);font-size:clamp(13px,2.3vh,26px);margin:.15em 0}
+.mom.on{border-color:#ffd40055;background:#ffd4000d}
+
+/* icon families */
+.fam{display:grid;grid-template-columns:repeat(6,1fr);gap:1.1vw}
+.fam .f{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:2vh .7vw;text-align:center}
+.fam .glyph{height:clamp(30px,5.6vh,58px);display:grid;place-items:center;margin-bottom:1vh;font-size:clamp(26px,5vh,52px);line-height:1}
+.fam .glyph svg{height:100%;width:auto}
+.fam .fname{font-size:clamp(9px,1.32vh,14px);font-weight:600}
+.fam .fhex{font-size:clamp(8px,1.02vh,11px);color:var(--muted);margin-top:.35em;font-variant-numeric:tabular-nums}
+
+/* ============================================================
+   MOODBOARD A — GRIMORIO
+   ============================================================ */
+#mbA{background:
+    repeating-linear-gradient(45deg,#0000 0 3px,#8b1a1a0a 3px 4px),
+    repeating-linear-gradient(-45deg,#0000 0 3px,#00000012 3px 4px),
+    radial-gradient(ellipse at 30% 20%,#f2e8cf 0%,#ddd0ad 55%,#c6b892 100%);
+  color:#1a140e}
+#mbA .kicker{color:#7a6a4a}
+#mbA h1.title{font-family:'UnifrakturMaguntia',var(--serif);font-weight:400;
+              font-size:clamp(24px,5vh,58px);letter-spacing:.01em;color:#0b0a0a;line-height:1.15}
+#mbA h1.title em{color:#8b1a1a}
+#mbA .sub{color:#3d3428;font-family:var(--serif)}
+#mbA .card-panel{background:#f4ecd8aa;border-color:#00000022;color:#1a140e}
+#mbA .lbl{color:#7a6a4a}
+#mbA .spec{font-family:var(--serif);font-size:clamp(10px,1.5vh,16px);line-height:1.55;color:#2b2419}
+#mbA .black{font-family:'UnifrakturMaguntia',serif;font-size:clamp(19px,3.8vh,40px);color:#0b0a0a;line-height:1.2}
+#mbA .slot{border-color:#00000033;color:#7a6a4a;background:#00000008}
+#mbA .slot:hover{background:#00000012;border-color:#8b1a1a}
+
+/* ============================================================
+   MOODBOARD B — NEÓN INFERNAL
+   ============================================================ */
+#mbB{background:
+    radial-gradient(circle at 1px 1px,#ff2e8814 1px,#0000 1.6px) 0 0/7px 7px,
+    radial-gradient(ellipse at 78% 12%,#6b2bd93d 0%,#0000 55%),
+    radial-gradient(ellipse at 12% 88%,#ff2d2d30 0%,#0000 52%),
+    #101018}
+#mbB h1.title{font-family:'Bungee',var(--sans);font-size:clamp(20px,4.2vh,48px);color:#ffd400;
+              text-shadow:3px 3px 0 #ff2d2d,6px 6px 0 #6b2bd9;letter-spacing:.01em;line-height:1.3}
+#mbB h1.title em{color:#00e5c0;text-shadow:3px 3px 0 #ff2e88}
+#mbB .kicker{color:#ff2e88}
+#mbB .sub{color:#c9c9d8}
+#mbB .card-panel{background:#16161f;border-color:#2a2a3a}
+#mbB .lbl{color:#ff2e88}
+#mbB .disp{font-family:'Bungee',var(--sans);font-size:clamp(16px,3.4vh,38px);color:#fff;
+           text-shadow:2px 2px 0 #ff2d2d,4px 4px 0 #101018;line-height:1.25}
+#mbB .slot{border-color:#3a3a4e;color:#7a7a92}
+#mbB .slot:hover{border-color:#ff2e88;background:#ff2e880d}
+
+/* palette strip */
+.pal{display:flex;border-radius:8px;overflow:hidden;border:1px solid #00000033}
+.pal div{flex:1;height:clamp(40px,6.4vh,72px);display:flex;align-items:flex-end;justify-content:center;
+         padding-bottom:.45em;font-size:clamp(7px,.98vh,10px);font-family:var(--sans);letter-spacing:.03em;
+         font-variant-numeric:tabular-nums}
+
+/* drop slots */
+.slots{display:grid;grid-template-columns:repeat(8,1fr);gap:.7vw}
+.slot{aspect-ratio:1;border:1.5px dashed;border-radius:8px;display:grid;place-items:center;text-align:center;
+      padding:.45em;font-size:clamp(7px,1vh,11px);line-height:1.35;cursor:pointer;background-size:cover;
+      background-position:center;transition:.15s;position:relative;overflow:hidden}
+.slot.filled{border-style:solid}
+.slot.filled span{opacity:0;transition:.15s}
+.slot.filled:hover span{opacity:1;background:#000000cc;color:#fff;padding:.4em;border-radius:5px}
+.slot span{pointer-events:none}
+
+/* games */
+.games .yr{color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* arguments */
+.args{display:grid;grid-template-columns:1fr 1fr;gap:2vh 2.4vw}
+.arg{display:flex;gap:.9em;align-items:flex-start}
+.arg .n{flex:0 0 auto;font-family:'Bungee',var(--sans);font-size:clamp(15px,2.7vh,30px);color:var(--accent);line-height:1;width:1.4em}
+.arg h3{margin:0 0 .3em;font-size:clamp(11px,1.68vh,17px);font-weight:600}
+.arg p{margin:0;font-size:clamp(9px,1.35vh,14px);color:var(--ink-2);line-height:1.5}
+
+/* checklist */
+.checks{display:flex;flex-direction:column;gap:1.3vh;font-size:clamp(10px,1.55vh,16px);padding:0;margin:0}
+.checks li{list-style:none;display:flex;gap:.7em;align-items:flex-start;color:var(--ink-2)}
+.checks .box{flex:0 0 auto;width:1.05em;height:1.05em;border:1px solid var(--rule);border-radius:3px;margin-top:.22em}
+
+.warn{border-left:2px solid var(--accent);padding-left:1.1em;margin:0}
+.warn li{list-style:none;margin-bottom:1.5vh;font-size:clamp(9px,1.4vh,15px);color:var(--ink-2);line-height:1.5}
+.warn li:last-child{margin-bottom:0}
+.warn b{color:var(--ink)}
+
+@media print{
+  .deck{height:auto;overflow:visible}
+  .slide{min-height:0;height:100vh;page-break-after:always;break-after:page}
+  .rail,.counter,.hint{display:none}
+}
+</style>
+</head>
+<body data-palette="#3987e5,#d95926">
+
+<div class="deck" id="deck">
+
+<!-- ================= 1 ================= -->
+<section class="slide" id="s1">
+  <svg class="seal" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+    <circle cx="50" cy="50" r="47" stroke="#ff2d2d" stroke-width="1.5"/>
+    <circle cx="50" cy="50" r="39" stroke="#ff2d2d" stroke-width=".7" opacity=".55"/>
+    <path d="M50 88 L11 27 H89 Z" stroke="#ff2d2d" stroke-width="1.5" opacity=".85"/>
+    <path d="M50 12 L11 73 H89 Z" stroke="#ff2d2d" stroke-width=".7" opacity=".35"/>
+  </svg>
+  <div class="six">666</div>
+  <div class="lede">A strategy game of cards and dices</div>
+  <div class="meta">Taller de Juegos de Mesa · Image Campus<br>Componentes · Interfaz · Arte</div>
+</section>
+
+<!-- ================= 2 ================= -->
+<section class="slide">
+  <div class="slide-head"><span class="kicker">01 · Componentes</span></div>
+  <h1 class="title">¿Qué componentes tengo? <em>¿Cuántos hay?</em></h1>
+  <p class="sub">Configuración base asumida: 2–4 jugadores, 15–25 min. Todo lo que sigue se desprende de esa decisión.</p>
+  <div class="body">
+    <div class="tiles" style="margin-bottom:2.6vh">
+      <div class="tile"><div class="lab">Piezas totales</div><div class="val">104</div><div class="note">sin caja ni inserto</div></div>
+      <div class="tile"><div class="lab">Cartas</div><div class="val">66</div><div class="note">60 normales + 6 instantáneas</div></div>
+      <div class="tile"><div class="lab">Dados d6</div><div class="val">13</div><div class="note">12 de jugador + 1 del destino</div></div>
+      <div class="tile"><div class="lab">Fichas</div><div class="val">18</div><div class="note">12 sellos + 6 escudos</div></div>
+    </div>
+    <div class="card-panel">
+      <table>
+        <thead><tr><th>Componente</th><th style="text-align:right">Cant.</th><th>Formato</th><th>Material y acabado</th><th>Función</th></tr></thead>
+        <tbody>
+          <tr><td>Cartas de juego</td><td class="n">60</td><td>63 × 88 mm (poker)</td><td>300 gsm, lino</td><td>Mazo principal y mercado</td></tr>
+          <tr><td>Cartas instantáneas</td><td class="n">6</td><td>63 × 88 mm</td><td>Borde doble y canto rojo</td><td>Se disparan al aparecer</td></tr>
+          <tr><td>Dados de jugador</td><td class="n">12</td><td>d6 16 mm</td><td>Resina, 4 colores, grabado</td><td>Estado: 3-3-3 → 6-6-6</td></tr>
+          <tr><td>Dado del destino</td><td class="n">1</td><td>d6 19 mm</td><td>Negro y rojo, único</td><td>Orden de turno, GAMBLE, REROLL</td></tr>
+          <tr><td>Sellos de bloqueo</td><td class="n">12</td><td>Ø 22 mm</td><td>Cartón 2 mm troquelado</td><td>Marcan un 6 bloqueado</td></tr>
+          <tr><td>Fichas de escudo</td><td class="n">6</td><td>Ø 22 mm, forma de escudo</td><td>Cartón 2 mm</td><td>SHIELD activo</td></tr>
+          <tr><td>Tableros de jugador</td><td class="n">4</td><td>180 × 90 mm</td><td>Cartón 1,5 mm con huecos</td><td>Dados y track de momentum</td></tr>
+          <tr><td>Tapete del mercado</td><td class="n">1</td><td>300 × 120 mm</td><td>Cartón o tela</td><td>Mazo, 3 slots, descarte</td></tr>
+          <tr><td>Marcador de primer jugador</td><td class="n">1</td><td>Ø 35 mm</td><td>Cartón 2 mm</td><td>Orden de turno</td></tr>
+          <tr><td>Reglamento</td><td class="n">1</td><td>A5, 8 págs.</td><td>Papel 130 gsm</td><td>—</td></tr>
+        </tbody>
+        <tfoot><tr><td>Total</td><td class="n">104</td><td colspan="3">Caja 140 × 100 × 65 mm + inserto termoformado</td></tr></tfoot>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 3 ================= -->
+<section class="slide">
+  <div class="slide-head"><span class="kicker">02 · Estructura</span></div>
+  <h1 class="title">El mazo: <em>66 cartas</em></h1>
+  <p class="sub">La distribución no es decorativa: define el tono del juego. Cuatro de cada diez cartas pueden dañar a un rival — eso <em>es</em> 666.</p>
+  <div class="body">
+    <div class="grid two" style="align-items:stretch;flex:1">
+
+      <div class="viz-root">
+        <div class="viz-title">Composición del mazo por tipo de carta</div>
+        <div class="viz-sub">66 cartas · ordenado por cantidad</div>
+        <div class="legend">
+          <span><i class="swatch" style="background:#3987e5"></i>Sólo construye o defiende</span>
+          <span><i class="swatch" style="background:#d95926"></i>Puede dañar a un rival</span>
+        </div>
+        <div class="bars" id="bars"></div>
+        <div class="axis"><div class="ticks"><span>0</span><span>7</span><span>14</span></div></div>
+      </div>
+
+      <div class="card-panel">
+        <table>
+          <thead><tr><th>Carta</th><th style="text-align:right">Cant.</th><th>Efecto</th></tr></thead>
+          <tbody>
+            <tr><td>Movimiento +1</td><td class="n">14</td><td>Sube 1 un dado</td></tr>
+            <tr><td>Movimiento +2</td><td class="n">10</td><td>Sube 2 un dado</td></tr>
+            <tr><td>Movimiento −2</td><td class="n">6</td><td>Baja 2 un dado</td></tr>
+            <tr><td>Dual</td><td class="n">6</td><td>Dos efectos a la vez</td></tr>
+            <tr><td>SHIELD</td><td class="n">6</td><td>Protege un 6 propio</td></tr>
+            <tr><td>SMASH</td><td class="n">5</td><td>Baja 2 un 6 rival</td></tr>
+            <tr><td>TRADE</td><td class="n">5</td><td>Baja 2 un 6 rival, baja 1 uno propio</td></tr>
+            <tr><td>GAMBLE</td><td class="n">4</td><td>d6: 1-3 baja 1 · 4-6 sube 2</td></tr>
+            <tr><td>REROLL</td><td class="n">4</td><td>Un dado pasa a valor aleatorio</td></tr>
+            <tr><td>SURGE <span class="tag">instant</span></td><td class="n">2</td><td>Todos los dados +1</td></tr>
+            <tr><td>COLLAPSE <span class="tag">instant</span></td><td class="n">2</td><td>Todos los no bloqueados −1</td></tr>
+            <tr><td>FLOOD <span class="tag">instant</span></td><td class="n">2</td><td>Descartar el mercado, repartir 3</td></tr>
+          </tbody>
+          <tfoot><tr><td>Total</td><td class="n">66</td><td>28 cartas hostiles = 42 %</td></tr></tfoot>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= 4 ================= -->
+<section class="slide">
+  <div class="slide-head"><span class="kicker">03 · Interfaz</span></div>
+  <h1 class="title">Anatomía de la carta</h1>
+  <p class="sub">Hay 3 cartas boca arriba en el mercado que todos leen desde su asiento. La silueta del icono manda sobre la ilustración.</p>
+  <div class="body">
+    <div class="mockups">
+      <div>
+        <div class="pcard">
+          <div class="band">DEMONIC PUSH</div>
+          <div class="icon">▲</div>
+          <div class="stat"><span>+2</span></div>
+          <div class="target">Tú o rival</div>
+          <div class="remind">Sube 2 un dado. El excedente sobre 6 se pierde.</div>
+        </div>
+        <div class="cap">Carta estándar</div>
+      </div>
+
+      <ul class="callouts">
+        <li><span class="num">1</span><div><b>Banda de nombre</b> — color de familia. Identifica el tipo antes de leer nada.</div></li>
+        <li><span class="num">2</span><div><b>Icono grande</b> — 60 % del alto. Debe leerse a <b>1 metro</b>, la distancia real de lectura del mercado.</div></li>
+        <li><span class="num">3</span><div><b>Valor y dirección</b> — número más flecha, con un tope visual en el 6 para que el overflow sea obvio.</div></li>
+        <li><span class="num">4</span><div><b>Banda de objetivo</b> — a quién afecta. Es la pregunta que más se repite en mesa.</div></li>
+        <li><span class="num">5</span><div><b>Recordatorio</b> — sólo si el icono no alcanza. Century Schoolbook, cuerpo chico.</div></li>
+      </ul>
+
+      <div>
+        <div class="pcard instant">
+          <div class="band">⚡ COLLAPSE ⚡</div>
+          <div class="icon">▼</div>
+          <div class="target" style="background:#ff2d2d">Todos · instantánea</div>
+          <div class="remind">Se dispara al aparecer en el mercado. No se puede tener en mano.</div>
+        </div>
+        <div class="cap">Instantánea · borde doble</div>
+      </div>
+
+      <div>
+        <div class="pcard dual">
+          <div class="band" style="background:#00e5c0">DUAL</div>
+          <div class="half"><span class="who">TÚ</span><b>▲ +2</b></div>
+          <div class="half"><b>▼ −1</b><span class="who">RIVAL</span></div>
+        </div>
+        <div class="cap">Dual · corte en diagonal</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 5 ================= -->
+<section class="slide">
+  <div class="slide-head"><span class="kicker">03 · Interfaz</span></div>
+  <h1 class="title">Seis familias, <em>seis colores</em></h1>
+  <p class="sub">Codificación redundante siempre: color <b>+</b> forma de icono <b>+</b> posición. Nunca sólo color — cerca del 8 % de los jugadores tiene daltonismo, y un juego rojo/verde infernal es la trampa clásica.</p>
+  <div class="body">
+    <div class="fam" style="margin-bottom:3.4vh">
+      <div class="f"><div class="glyph" style="color:#ffd400">▲</div><div class="fname">Subir</div><div class="fhex">#FFD400</div></div>
+      <div class="f"><div class="glyph" style="color:#6b2bd9">▼</div><div class="fname">Bajar</div><div class="fhex">#6B2BD9</div></div>
+      <div class="f"><div class="glyph" style="color:#ff2d2d">✖</div><div class="fname">Ataque</div><div class="fhex">#FF2D2D</div></div>
+      <div class="f"><div class="glyph">
+        <svg viewBox="0 0 24 28" fill="none"><path d="M12 1 22 5v10c0 6-4.6 10-10 12C6.6 25 2 21 2 15V5z" stroke="#00E5C0" stroke-width="2.2" stroke-linejoin="round"/><path d="M12 8v9M7.7 11h8.6" stroke="#00E5C0" stroke-width="2.2"/></svg>
+      </div><div class="fname">Defensa</div><div class="fhex">#00E5C0</div></div>
+      <div class="f"><div class="glyph">
+        <svg viewBox="0 0 26 26" fill="none"><rect x="1.6" y="1.6" width="22.8" height="22.8" rx="5" stroke="#FF2E88" stroke-width="2.2"/><circle cx="8" cy="8" r="2.2" fill="#FF2E88"/><circle cx="18" cy="8" r="2.2" fill="#FF2E88"/><circle cx="13" cy="13" r="2.2" fill="#FF2E88"/><circle cx="8" cy="18" r="2.2" fill="#FF2E88"/><circle cx="18" cy="18" r="2.2" fill="#FF2E88"/></svg>
+      </div><div class="fname">Azar</div><div class="fhex">#FF2E88</div></div>
+      <div class="f"><div class="glyph" style="color:#ff2d2d">⚡</div><div class="fname">Instantánea</div><div class="fhex">doble borde</div></div>
+    </div>
+
+    <div class="grid two" style="align-items:center">
+      <div>
+        <div class="pboard">
+          <div class="wells">
+            <div class="well"><div class="die"><div class="pips d6"><i></i><i></i><i></i><i></i><i></i><i></i></div></div><span class="lock">✦</span></div>
+            <div class="well"><div class="die"><div class="pips d5"><i></i><i></i><i></i><i></i><i></i></div></div></div>
+            <div class="well"><div class="die"><div class="pips d4"><i></i><i></i><i></i><i></i></div></div></div>
+          </div>
+          <div class="momentum">
+            <div class="mom on">0 bloqueados<b>2</b>acciones</div>
+            <div class="mom">1 bloqueado<b>3</b>acciones</div>
+            <div class="mom">2 bloqueados<b>4</b>acciones</div>
+          </div>
+        </div>
+        <div class="cap">Tablero de jugador · 180 × 90 mm</div>
+      </div>
+      <ul class="callouts" style="max-width:46ch">
+        <li><span class="num">A</span><div><b>Huecos físicos</b> para los 3 dados: el valor no se mueve sin querer al empujar la mesa.</div></li>
+        <li><span class="num">B</span><div><b>El sello va encima del dado</b>, no cambia el dado. Comunica lo importante: bloqueado <b>≠</b> seguro — SMASH y TRADE siguen llegando.</div></li>
+        <li><span class="num">C</span><div><b>Momentum impreso</b>, no es un componente aparte: se lee contando sellos. El track cierra en 2 para que nadie busque la fila "3".</div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 6 ================= -->
+<section class="slide">
+  <div class="slide-head"><span class="kicker">03 · Interfaz</span></div>
+  <h1 class="title">Huecos de reglas que <em>resuelve el arte</em></h1>
+  <p class="sub">Detectados al listar componentes. Cada uno cambia una decisión de producción, así que hay que cerrarlos antes de dibujar.</p>
+  <div class="body">
+    <div class="grid two">
+      <ul class="warn">
+        <li><b>Número de jugadores no declarado.</b> Define cantidad de dados, tableros y sellos — y por lo tanto el presupuesto. Hay que fijarlo primero.</li>
+        <li><b>"Lock" no está definido formalmente.</b> Por SMASH y TRADE se deduce que un 6 bloqueado sigue siendo atacable. El sello encima del dado lo comunica.</li>
+        <li><b>El track de momentum sólo llega a 2.</b> Con 3 ganás. Correcto, pero el tablero debe cerrarlo visualmente.</li>
+      </ul>
+      <ul class="warn">
+        <li><b>Overflow ambiguo.</b> ¿+2 sobre un 5 queda en 6 o no se puede jugar? El icono necesita un tope visual en el 6.</li>
+        <li><b>SURGE frente a dados bloqueados.</b> COLLAPSE dice "no bloqueados"; SURGE no dice nada. Conviene escribirlo aunque el tope en 6 lo vuelva inocuo.</li>
+        <li><b>Las cartas Dual son el layout más difícil</b> del mazo: dos efectos, dos objetivos, una carta. Solución: corte en diagonal, mitad TÚ, mitad RIVAL.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 7 · MOODBOARD A ================= -->
+<section class="slide" id="mbA">
+  <div class="slide-head"><span class="kicker">04 · Moodboard A</span></div>
+  <h1 class="title">Grimorio</h1>
+  <p class="sub">Grabado ocultista, siglo XVII. <b>El juego es una página arrancada de un manual de demonología.</b></p>
+  <div class="body">
+    <div class="grid two" style="align-items:start;margin-bottom:2.6vh">
+      <div>
+        <div class="lbl">Paleta</div>
+        <div class="pal" style="margin-bottom:2.4vh">
+          <div style="background:#0B0A0A;color:#E8DCC0">#0B0A0A</div>
+          <div style="background:#E8DCC0;color:#0B0A0A">#E8DCC0</div>
+          <div style="background:#8B1A1A;color:#E8DCC0">#8B1A1A</div>
+          <div style="background:#C9A227;color:#0B0A0A">#C9A227</div>
+          <div style="background:#4A5240;color:#E8DCC0">#4A5240</div>
+        </div>
+        <div class="lbl">Tipografía</div>
+        <div class="black">Seiscientos sesenta y seis</div>
+        <div class="spec" style="margin-top:.8vh">Blackletter para títulos · <b>Century Schoolbook</b> para cuerpo — ya es la tipografía del deck del juego.</div>
+      </div>
+      <div>
+        <div class="lbl">Técnica y referentes</div>
+        <div class="card-panel spec">
+          <b>Técnica:</b> xilografía y grabado a buril, tramado cruzado, sin degradados, mancha de papel.<br>
+          <b>Iconografía:</b> sigilos de la Ars Goetia, diagramas alquímicos, sellos de lacre, círculos de invocación, memento mori.<br>
+          <b>Referentes:</b> Dictionnaire Infernal · grabados de Durero · Gustave Doré · El Bosco · Tarot de Marsella.<br>
+          <b>Referente de juego:</b> Escape the Dark Castle.<br>
+          <b>Tono:</b> solemne, austero, premium, adulto.
+        </div>
+      </div>
+    </div>
+    <div class="lbl">Buscar en Pinterest — clic o arrastrá una imagen a cada celda</div>
+    <div class="slots">
+      <div class="slot"><span>medieval woodcut engraving</span></div>
+      <div class="slot"><span>ars goetia sigil</span></div>
+      <div class="slot"><span>alchemical diagram</span></div>
+      <div class="slot"><span>grimoire manuscript page</span></div>
+      <div class="slot"><span>Dürer engraving</span></div>
+      <div class="slot"><span>tarot de marseille</span></div>
+      <div class="slot"><span>red wax seal</span></div>
+      <div class="slot"><span>memento mori woodcut</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 8 · MOODBOARD B ================= -->
+<section class="slide" id="mbB">
+  <div class="slide-head"><span class="kicker">04 · Moodboard B</span></div>
+  <h1 class="title">Neón <em>Infernal</em></h1>
+  <p class="sub">Cartoon pop, sticker de skate, 90s. <b>El infierno como fiesta de barrio — y vos le estás robando la silla a tu amigo.</b></p>
+  <div class="body">
+    <div class="grid two" style="align-items:start;margin-bottom:2.6vh">
+      <div>
+        <div class="lbl">Paleta</div>
+        <div class="pal" style="margin-bottom:2.4vh;border-color:#ffffff22">
+          <div style="background:#101018;color:#fff">#101018</div>
+          <div style="background:#FF2D2D;color:#fff">#FF2D2D</div>
+          <div style="background:#FF2E88;color:#fff">#FF2E88</div>
+          <div style="background:#FFD400;color:#101018">#FFD400</div>
+          <div style="background:#6B2BD9;color:#fff">#6B2BD9</div>
+          <div style="background:#00E5C0;color:#101018">#00E5C0</div>
+        </div>
+        <div class="lbl">Tipografía</div>
+        <div class="disp">SEIS SEIS SEIS</div>
+        <div style="color:#c9c9d8;font-size:clamp(9px,1.35vh,14px);margin-top:1.2vh;line-height:1.5">
+          Display pesada e inclinada tipo lettering de hot-rod, con sombra dura y contorno.
+        </div>
+      </div>
+      <div>
+        <div class="lbl">Técnica y referentes</div>
+        <div class="card-panel" style="font-size:clamp(9px,1.4vh,15px);color:#c9c9d8;line-height:1.55">
+          <b style="color:#fff">Técnica:</b> contorno grueso y variable, colores planos, halftone, cero realismo.<br>
+          <b style="color:#fff">Iconografía:</b> diablitos rubber-hose, tridentes, llamas, dados con cara, calaveras sonrientes, manitos de guante.<br>
+          <b style="color:#fff">Referentes:</b> Cuphead · Rat Fink / Ed Roth · Vince Ray y el lowbrow · tapas de heavy metal ochentoso · carteles de lucha libre · cajas de fósforos con diablo.<br>
+          <b style="color:#fff">Referentes de juego:</b> The Binding of Isaac: Four Souls · King of Tokyo · Boss Monster.<br>
+          <b style="color:#fff">Tono:</b> cómico, agresivo, ruidoso.
+        </div>
+      </div>
+    </div>
+    <div class="lbl">Buscar en Pinterest — clic o arrastrá una imagen a cada celda</div>
+    <div class="slots">
+      <div class="slot"><span>rubber hose cartoon devil</span></div>
+      <div class="slot"><span>90s skate sticker art</span></div>
+      <div class="slot"><span>halftone comic devil</span></div>
+      <div class="slot"><span>hot rod flames lettering</span></div>
+      <div class="slot"><span>cuphead style character</span></div>
+      <div class="slot"><span>Rat Fink Ed Roth</span></div>
+      <div class="slot"><span>vintage matchbox devil label</span></div>
+      <div class="slot"><span>lucha libre poster</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 9 ================= -->
+<section class="slide">
+  <div class="slide-head"><span class="kicker">05 · Investigación</span></div>
+  <h1 class="title">Cinco juegos en <em>BoardGameGeek</em></h1>
+  <p class="sub">Buscar cada uno en boardgamegeek.com y capturar la galería de componentes, no sólo la tapa. Lo que importa está en las fotos de mesa.</p>
+  <div class="body">
+    <div class="card-panel">
+      <table class="games">
+        <thead><tr><th style="width:3ch">#</th><th>Juego</th><th>Año</th><th>Por qué sirve como referencia</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>The Binding of Isaac: Four Souls</td><td class="yr">2018</td><td>El referente más directo: iconografía satánica y cartoon grotesco, cartas con d6, <i>take-that</i> puro. Prueba que "666" puede ser gracioso y vendible. Mirar el dorso y el borde de carta.</td></tr>
+          <tr><td>2</td><td>King of Tokyo</td><td class="yr">2011</td><td>Dados, cartas y agresión entre jugadores. El estándar de oro en <b>legibilidad</b>: iconos enormes, color por función, estado de cada jugador visible desde cualquier asiento.</td></tr>
+          <tr><td>3</td><td>Dice Throne</td><td class="yr">2018</td><td>Referencia de <b>interfaz física</b>: tablero de jugador con huecos para dados y track de estado impreso. Es exactamente nuestro problema de layout.</td></tr>
+          <tr><td>4</td><td>Escape the Dark Castle</td><td class="yr">2017</td><td>Referencia del Moodboard A: blanco y negro, grabado gótico, cero color salvo un acento. Demuestra que la vía austera funciona comercialmente.</td></tr>
+          <tr><td>5</td><td>Boss Monster</td><td class="yr">2013</td><td>"El jugador es el malo", humor, cartas verticales con banda de iconos. Referencia de cómo vender maldad sin volverse ofensivo.</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:clamp(9px,1.3vh,14px);color:var(--muted);margin:1.6vh 0 0;line-height:1.55">
+        <b>Si hace falta ampliar:</b> Gloom (dark cartoon a lo Edward Gorey) · Unstable Unicorns (take-that cartoon moderno) · Munchkin (humor y traición) · Machi Koro (mercado de 3 cartas boca arriba con dados).
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 10 ================= -->
+<section class="slide">
+  <div class="slide-head"><span class="kicker">06 · Decisión</span></div>
+  <h1 class="title">Elegimos <em>Neón Infernal</em></h1>
+  <p class="sub">Seis razones, todas atadas a una mecánica concreta. Ninguna es "nos gusta más".</p>
+  <div class="body">
+    <div class="args">
+      <div class="arg"><span class="n">1</span><div><h3>El arte tiene que desarmar la agresión</h3><p>El 42 % del mazo sirve para arruinarle el turno al de al lado. Con estética solemne, bajarle el 6 a un amigo se siente hostil; con estética cartoon, se siente un chiste. El arte decide si la mesa se ríe o se pelea.</p></div></div>
+      <div class="arg"><span class="n">2</span><div><h3>Legibilidad del mercado</h3><p>Hay 3 cartas boca arriba que todos leen desde su asiento. Contorno grueso, color plano y alto contraste se leen a 1 m; el tramado de grabado se empasta.</p></div></div>
+      <div class="arg"><span class="n">3</span><div><h3>Las instantáneas tienen que gritar</h3><p>Una carta que se dispara sola al aparecer necesita reventar visualmente. Un borde doble de neón sobre negro hace eso; un marco grabado, no.</p></div></div>
+      <div class="arg"><span class="n">4</span><div><h3>Los dados son la estrella</h3><p>Viven entre 3 y 6 y el número tiene que leerse siempre. La vía cartoon permite pips gigantes y codificación por color; el grabado empuja a dados bonitos e ilegibles.</p></div></div>
+      <div class="arg"><span class="n">5</span><div><h3>Posicionamiento</h3><p>Es un filler de 20 minutos. Negro y oro grabado promete un euro pesado de 50 € y genera la expectativa equivocada en góndola. El neón promete lo que el juego realmente es.</p></div></div>
+      <div class="arg"><span class="n">6</span><div><h3>Producción</h3><p>Colores planos: menos costo de prueba de color, mejor tolerancia a la variación de imprenta, y escala directo a merch y expansiones.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 11 ================= -->
+<section class="slide">
+  <div class="slide-head"><span class="kicker">06 · Decisión</span></div>
+  <h1 class="title">Lo que le <em>robamos</em> al Grimorio</h1>
+  <p class="sub">El moodboard A no se descarta entero. Se le sacan tres cosas que el neón solo no puede dar.</p>
+  <div class="body">
+    <div class="grid three" style="margin-bottom:4vh">
+      <div class="card-panel">
+        <div style="font-size:clamp(24px,4.2vh,42px);color:#ff2d2d;margin-bottom:1vh;line-height:1">✦</div>
+        <h3 style="margin:0 0 .4em;font-size:clamp(11px,1.68vh,17px)">El dorso de las cartas</h3>
+        <p style="margin:0;font-size:clamp(9px,1.35vh,14px);color:var(--ink-2);line-height:1.5">Un sigilo de la Ars Goetia, rojo sobre negro, geométrico. Da profundidad y hace que el mazo boca abajo se vea serio.</p>
+      </div>
+      <div class="card-panel">
+        <div style="font-size:clamp(24px,4.2vh,42px);color:#ff2d2d;margin-bottom:1vh;line-height:1">◎</div>
+        <h3 style="margin:0 0 .4em;font-size:clamp(11px,1.68vh,17px)">El logo "666"</h3>
+        <p style="margin:0;font-size:clamp(9px,1.35vh,14px);color:var(--ink-2);line-height:1.5">Construido como un sello de invocación circular, no como lettering cartoon. Contraste entre marca solemne y contenido gamberro.</p>
+      </div>
+      <div class="card-panel">
+        <div style="font-family:var(--serif);font-size:clamp(24px,4.2vh,42px);color:#ff2d2d;margin-bottom:1vh;line-height:1">Aa</div>
+        <h3 style="margin:0 0 .4em;font-size:clamp(11px,1.68vh,17px)">Century Schoolbook</h3>
+        <p style="margin:0;font-size:clamp(9px,1.35vh,14px);color:var(--ink-2);line-height:1.5">Para reglas y recordatorios en carta. Ya la usa el deck del juego, tiene autoridad y es más legible en cuerpo chico que cualquier display.</p>
+      </div>
+    </div>
+
+    <div class="lbl">Próximos pasos</div>
+    <ul class="checks">
+      <li><span class="box"></span>Cerrar el número de jugadores (2–4 o 2–6) → congela dados, tableros y sellos.</li>
+      <li><span class="box"></span>Bocetar las 6 familias de iconos en blanco y negro. <b style="color:var(--ink)">Test: identificar la familia a 1 m sin color.</b></li>
+      <li><span class="box"></span>Resolver el layout de la carta Dual (corte en diagonal).</li>
+      <li><span class="box"></span>Prototipo en papel del tablero de jugador con los 3 huecos de dado.</li>
+      <li><span class="box"></span>Pasar la paleta por un simulador de deuteranopía.</li>
+    </ul>
+  </div>
+</section>
+
+</div>
+
+<div class="rail" id="rail"></div>
+<div class="counter" id="counter">01 / 11</div>
+<div class="hint">← → para navegar</div>
+<div id="tip"></div>
+
+<script>
+/* ---------- deck composition chart ---------- */
+const DECK = [
+  {name:"Movimiento +1", n:14, hostile:false, fx:"Sube 1 un dado, propio o rival."},
+  {name:"Movimiento +2", n:10, hostile:false, fx:"Sube 2 un dado, propio o rival."},
+  {name:"Movimiento −2", n:6,  hostile:true,  fx:"Baja 2 un dado, propio o rival."},
+  {name:"Dual",          n:6,  hostile:true,  fx:"Dos efectos a la vez, ej. +2 propio y −1 rival."},
+  {name:"SHIELD",        n:6,  hostile:false, fx:"Protege un 6 propio del próximo SMASH o TRADE."},
+  {name:"SMASH",         n:5,  hostile:true,  fx:"Baja 2 un 6 rival."},
+  {name:"TRADE",         n:5,  hostile:true,  fx:"Baja 2 un 6 rival, luego baja 1 uno propio."},
+  {name:"GAMBLE",        n:4,  hostile:false, fx:"Tirá el d6: 1-3 baja 1, 4-6 sube 2."},
+  {name:"REROLL",        n:4,  hostile:true,  fx:"Un dado pasa a un valor aleatorio."},
+  {name:"SURGE",         n:2,  hostile:false, fx:"Instantánea. Todos los dados +1."},
+  {name:"COLLAPSE",      n:2,  hostile:true,  fx:"Instantánea. Todos los dados no bloqueados −1."},
+  {name:"FLOOD",         n:2,  hostile:false, fx:"Instantánea. Descartar el mercado, repartir 3 nuevas."}
+];
+const MAX = 14, TOTAL = 66;
+const tip = document.getElementById('tip');
+document.getElementById('bars').innerHTML = DECK.map(d => {
+  const w = (d.n / MAX * 100).toFixed(2);
+  return `<div class="row" data-name="${d.name}" data-n="${d.n}"
+       data-fx="${d.fx}" data-cat="${d.hostile ? 'Puede dañar a un rival' : 'Sólo construye o defiende'}">
+    <div class="name">${d.name}</div>
+    <div class="plot">
+      <div class="bar ${d.hostile ? 'b' : 'a'}" style="width:${w}%"></div>
+      <div class="val" style="left:calc(${w}% + 7px)">${d.n}</div>
+    </div>
+    <div></div>
+  </div>`;
+}).join('');
+
+document.querySelectorAll('.row').forEach(r => {
+  r.addEventListener('mousemove', e => {
+    const pct = Math.round(r.dataset.n / TOTAL * 100);
+    tip.innerHTML = `<b>${r.dataset.name}</b>${r.dataset.n} cartas · ${pct} % del mazo<br>
+                     <small>${r.dataset.cat}</small><br>${r.dataset.fx}`;
+    tip.style.opacity = 1;
+    tip.style.left = Math.min(e.clientX + 14, innerWidth - 285) + 'px';
+    tip.style.top  = Math.min(e.clientY + 14, innerHeight - 115) + 'px';
+  });
+  r.addEventListener('mouseleave', () => tip.style.opacity = 0);
+});
+
+/* ---------- moodboard drop slots ---------- */
+const fileInput = Object.assign(document.createElement('input'), {type:'file', accept:'image/*'});
+let target = null;
+const paint = (slot, file) => {
+  const fr = new FileReader();
+  fr.onload = () => { slot.style.backgroundImage = `url(${fr.result})`; slot.classList.add('filled'); };
+  fr.readAsDataURL(file);
+};
+fileInput.addEventListener('change', () => { if (target && fileInput.files[0]) paint(target, fileInput.files[0]); });
+document.querySelectorAll('.slot').forEach(slot => {
+  slot.addEventListener('click', () => { target = slot; fileInput.value = ''; fileInput.click(); });
+  slot.addEventListener('dragover', e => e.preventDefault());
+  slot.addEventListener('drop', e => {
+    e.preventDefault();
+    const f = [...e.dataTransfer.files].find(f => f.type.startsWith('image/'));
+    if (f) paint(slot, f);
+  });
+});
+
+/* ---------- navigation ---------- */
+const deck = document.getElementById('deck');
+const slides = [...document.querySelectorAll('.slide')];
+const rail = document.getElementById('rail');
+const counter = document.getElementById('counter');
+let idx = 0;
+
+slides.forEach((_, i) => {
+  const b = document.createElement('button');
+  b.setAttribute('aria-label', `Diapositiva ${i + 1}`);
+  b.addEventListener('click', () => go(i));
+  rail.appendChild(b);
+});
+const dots = [...rail.children];
+
+function mark(i){
+  idx = i;
+  dots.forEach((d, j) => d.setAttribute('aria-current', j === i));
+  counter.textContent = String(i + 1).padStart(2,'0') + ' / ' + String(slides.length).padStart(2,'0');
+}
+function go(i){
+  i = Math.max(0, Math.min(slides.length - 1, i));
+  slides[i].scrollIntoView({behavior:'smooth'});
+  mark(i);
+}
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) mark(slides.indexOf(e.target)); });
+}, {root: deck, threshold: 0.55});
+slides.forEach(s => io.observe(s));
+
+addEventListener('keydown', e => {
+  if (['ArrowRight','ArrowDown','PageDown',' '].includes(e.key)) { e.preventDefault(); go(idx + 1); }
+  if (['ArrowLeft','ArrowUp','PageUp'].includes(e.key))          { e.preventDefault(); go(idx - 1); }
+  if (e.key === 'Home') { e.preventDefault(); go(0); }
+  if (e.key === 'End')  { e.preventDefault(); go(slides.length - 1); }
+});
+mark(0);
+</script>
+</body>
+</html>
