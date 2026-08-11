@@ -183,42 +183,49 @@ tfoot td{border-top:1px solid var(--rule);border-bottom:0;color:var(--ink);font-
 /* ============================================================
    MOODBOARD A — GRIMORIO
    ============================================================ */
-#mbA{background:
+.skin-a{background:
     repeating-linear-gradient(45deg,#0000 0 3px,#8b1a1a0a 3px 4px),
     repeating-linear-gradient(-45deg,#0000 0 3px,#00000012 3px 4px),
     radial-gradient(ellipse at 30% 20%,#f2e8cf 0%,#ddd0ad 55%,#c6b892 100%);
   color:#1a140e}
-#mbA .kicker{color:#7a6a4a}
-#mbA h1.title{font-family:'UnifrakturMaguntia',var(--serif);font-weight:400;
+.skin-a .kicker{color:#7a6a4a}
+.skin-a h1.title{font-family:'UnifrakturMaguntia',var(--serif);font-weight:400;
               font-size:clamp(24px,5vh,58px);letter-spacing:.01em;color:#0b0a0a;line-height:1.15}
-#mbA h1.title em{color:#8b1a1a}
-#mbA .sub{color:#3d3428;font-family:var(--serif)}
-#mbA .card-panel{background:#f4ecd8aa;border-color:#00000022;color:#1a140e}
-#mbA .lbl{color:#7a6a4a}
-#mbA .spec{font-family:var(--serif);font-size:clamp(10px,1.5vh,16px);line-height:1.55;color:#2b2419}
-#mbA .black{font-family:'UnifrakturMaguntia',serif;font-size:clamp(19px,3.8vh,40px);color:#0b0a0a;line-height:1.2}
-#mbA .slot{border-color:#00000033;color:#7a6a4a;background:#00000008}
-#mbA .slot:hover{background:#00000012;border-color:#8b1a1a}
+.skin-a h1.title em{color:#8b1a1a}
+.skin-a .sub{color:#3d3428;font-family:var(--serif)}
+.skin-a .card-panel{background:#f4ecd8aa;border-color:#00000022;color:#1a140e}
+.skin-a .lbl{color:#7a6a4a}
+.skin-a .spec{font-family:var(--serif);font-size:clamp(10px,1.5vh,16px);line-height:1.55;color:#2b2419}
+.skin-a .black{font-family:'UnifrakturMaguntia',serif;font-size:clamp(19px,3.8vh,40px);color:#0b0a0a;line-height:1.2}
+.skin-a .slot{border-color:#00000033;color:#7a6a4a;background:#00000008}
+.skin-a .slot:hover{background:#00000012;border-color:#8b1a1a}
 
 /* ============================================================
    MOODBOARD B — NEÓN INFERNAL
    ============================================================ */
-#mbB{background:
+.skin-b{background:
     radial-gradient(circle at 1px 1px,#ff2e8814 1px,#0000 1.6px) 0 0/7px 7px,
     radial-gradient(ellipse at 78% 12%,#6b2bd93d 0%,#0000 55%),
     radial-gradient(ellipse at 12% 88%,#ff2d2d30 0%,#0000 52%),
     #101018}
-#mbB h1.title{font-family:'Bungee',var(--sans);font-size:clamp(20px,4.2vh,48px);color:#ffd400;
+.skin-b h1.title{font-family:'Bungee',var(--sans);font-size:clamp(20px,4.2vh,48px);color:#ffd400;
               text-shadow:3px 3px 0 #ff2d2d,6px 6px 0 #6b2bd9;letter-spacing:.01em;line-height:1.3}
-#mbB h1.title em{color:#00e5c0;text-shadow:3px 3px 0 #ff2e88}
-#mbB .kicker{color:#ff2e88}
-#mbB .sub{color:#c9c9d8}
-#mbB .card-panel{background:#16161f;border-color:#2a2a3a}
-#mbB .lbl{color:#ff2e88}
-#mbB .disp{font-family:'Bungee',var(--sans);font-size:clamp(16px,3.4vh,38px);color:#fff;
+.skin-b h1.title em{color:#00e5c0;text-shadow:3px 3px 0 #ff2e88}
+.skin-b .kicker{color:#ff2e88}
+.skin-b .sub{color:#c9c9d8}
+.skin-b .card-panel{background:#16161f;border-color:#2a2a3a}
+.skin-b .lbl{color:#ff2e88}
+.skin-b .disp{font-family:'Bungee',var(--sans);font-size:clamp(16px,3.4vh,38px);color:#fff;
            text-shadow:2px 2px 0 #ff2d2d,4px 4px 0 #101018;line-height:1.25}
-#mbB .slot{border-color:#3a3a4e;color:#7a7a92}
-#mbB .slot:hover{border-color:#ff2e88;background:#ff2e880d}
+.skin-b .slot{border-color:#3a3a4e;color:#7a7a92}
+.skin-b .slot:hover{border-color:#ff2e88;background:#ff2e880d}
+
+/* chips de búsqueda */
+.chips{display:flex;flex-wrap:wrap;gap:.45em}
+.chips b{font-size:clamp(8px,1.1vh,12px);letter-spacing:.06em;padding:.34em .7em;border-radius:99px;
+         font-weight:500;border:1px solid currentColor;opacity:.75}
+.skin-a .chips b{color:#5b4f3a}
+.skin-b .chips b{color:#00e5c0;border-color:#00e5c055;background:#00e5c00d}
 
 /* palette strip */
 .pal{display:flex;border-radius:8px;overflow:hidden;border:1px solid #00000033}
@@ -226,15 +233,28 @@ tfoot td{border-top:1px solid var(--rule);border-bottom:0;color:var(--ink);font-
          padding-bottom:.45em;font-size:clamp(7px,.98vh,10px);font-family:var(--sans);letter-spacing:.03em;
          font-variant-numeric:tabular-nums}
 
-/* drop slots */
-.slots{display:grid;grid-template-columns:repeat(8,1fr);gap:.7vw}
-.slot{aspect-ratio:1;border:1.5px dashed;border-radius:8px;display:grid;place-items:center;text-align:center;
-      padding:.45em;font-size:clamp(7px,1vh,11px);line-height:1.35;cursor:pointer;background-size:cover;
-      background-position:center;transition:.15s;position:relative;overflow:hidden}
-.slot.filled{border-style:solid}
-.slot.filled span{opacity:0;transition:.15s}
-.slot.filled:hover span{opacity:1;background:#000000cc;color:#fff;padding:.4em;border-radius:5px}
-.slot span{pointer-events:none}
+/* ============================================================
+   BOARD — galería justificada: todas las imágenes de una fila
+   comparten alto y el ancho sale del aspect ratio real, así que
+   NINGUNA se deforma ni se recorta (height:100% + width:auto)
+   ============================================================ */
+.board{flex:1;min-height:0;display:flex;flex-direction:column;gap:1.4vh}
+.brow{flex:1;min-height:0;display:flex;gap:.8vw;justify-content:center}
+.bfig{position:relative;height:100%;margin:0;flex:0 0 auto;border-radius:6px;overflow:hidden;
+      background:#00000022;cursor:pointer;transition:transform .18s, box-shadow .18s}
+.bfig img{display:block;height:100%;width:auto;object-fit:contain}
+.bfig:hover{transform:translateY(-3px);box-shadow:0 10px 26px #000a;z-index:2}
+.bcap{position:absolute;left:0;right:0;bottom:0;padding:1.6em .55em .4em;
+      font-size:clamp(7px,1.05vh,11px);line-height:1.3;color:#fff;text-align:center;
+      background:linear-gradient(transparent,#000000d9 55%);pointer-events:none}
+.bcap i{font-style:italic;opacity:.92}
+
+/* créditos */
+.cred{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.9vh}
+.cred li{font-size:clamp(8px,1.22vh,13px);line-height:1.35}
+.cred a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule)}
+.cred a:hover{border-bottom-color:var(--accent);color:var(--accent)}
+.cred span{display:block;color:var(--muted);font-size:.86em}
 
 /* games */
 .games .yr{color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
@@ -471,7 +491,7 @@ tfoot td{border-top:1px solid var(--rule);border-bottom:0;color:var(--ink);font-
 </section>
 
 <!-- ================= 7 · MOODBOARD A ================= -->
-<section class="slide" id="mbA">
+<section class="slide skin-a" id="mbA">
   <div class="slide-head"><span class="kicker">04 · Moodboard A</span></div>
   <h1 class="title">Grimorio</h1>
   <p class="sub">Grabado ocultista, siglo XVII. <b>El juego es una página arrancada de un manual de demonología.</b></p>
@@ -501,22 +521,39 @@ tfoot td{border-top:1px solid var(--rule);border-bottom:0;color:var(--ink);font-
         </div>
       </div>
     </div>
-    <div class="lbl">Buscar en Pinterest — clic o arrastrá una imagen a cada celda</div>
-    <div class="slots">
-      <div class="slot"><span>medieval woodcut engraving</span></div>
-      <div class="slot"><span>ars goetia sigil</span></div>
-      <div class="slot"><span>alchemical diagram</span></div>
-      <div class="slot"><span>grimoire manuscript page</span></div>
-      <div class="slot"><span>Dürer engraving</span></div>
-      <div class="slot"><span>tarot de marseille</span></div>
-      <div class="slot"><span>red wax seal</span></div>
-      <div class="slot"><span>memento mori woodcut</span></div>
+      <div style="margin-top:2.6vh">
+        <div class="lbl">Búsquedas de referencia — Pinterest, Canva o el archivo del museo</div>
+        <div class="chips"><b>medieval woodcut engraving</b><b>ars goetia sigil</b><b>alchemical diagram</b><b>grimoire manuscript page</b><b>Dürer engraving</b><b>tarot de marseille</b><b>red wax seal</b><b>memento mori woodcut</b><b>cross hatching illustration</b></div>
+      </div>
+  </div>
+</section>
+
+
+<!-- ================= 04 · Moodboard A · el board ================= -->
+<section class="slide skin-a" id="mbA-board">
+  <div class="slide-head"><span class="kicker">04 · Moodboard A · el board</span></div>
+  <h1 class="title">Grimorio — <em>las influencias</em></h1>
+  <p class="sub">Xilografía, buril y tramado cruzado. Todo grabado, sin degradados, un solo acento de color. Pasá el mouse por cualquier pieza para verla en grande.</p>
+  <div class="body">
+    <div class="board">
+        <div class="brow">
+          <figure class="bfig" data-slug="dictionnaire-adrammelech"><img src="img/dictionnaire-adrammelech.jpg" width="837" height="844" alt="Adramelech · Dictionnaire Infernal, 1863" loading="lazy"><figcaption class="bcap">Adramelech · <i>Dictionnaire Infernal</i>, 1863</figcaption></figure>
+          <figure class="bfig" data-slug="tarot-le-diable"><img src="img/tarot-le-diable.jpg" width="500" height="890" alt="Le Diable · Tarot Conver, 1760" loading="lazy"><figcaption class="bcap">Le Diable · Tarot Conver, 1760</figcaption></figure>
+          <figure class="bfig" data-slug="durer-melencolia"><img src="img/durer-melencolia.jpg" width="960" height="1221" alt="Melencolia I · Durero, 1514" loading="lazy"><figcaption class="bcap"><i>Melencolia I</i> · Durero, 1514</figcaption></figure>
+          <figure class="bfig" data-slug="clavicula-circulo"><img src="img/clavicula-circulo.jpg" width="668" height="658" alt="Círculo mágico · Clavicula Salomonis" loading="lazy"><figcaption class="bcap">Círculo mágico · <i>Clavicula Salomonis</i></figcaption></figure>
+        </div>
+        <div class="brow">
+          <figure class="bfig" data-slug="goetia-seals"><img src="img/goetia-seals.jpg" width="960" height="978" alt="Sigilos de la Ars Goetia" loading="lazy"><figcaption class="bcap">Sigilos de la <i>Ars Goetia</i></figcaption></figure>
+          <figure class="bfig" data-slug="atalanta-fugiens"><img src="img/atalanta-fugiens.jpg" width="690" height="640" alt="Atalanta Fugiens, Emblema I · Maier, 1617" loading="lazy"><figcaption class="bcap"><i>Atalanta Fugiens</i>, Emblema I · Maier, 1617</figcaption></figure>
+          <figure class="bfig" data-slug="holbein-danse-macabre"><img src="img/holbein-danse-macabre.jpg" width="500" height="715" alt="Danza de la Muerte · Holbein, s. XVI" loading="lazy"><figcaption class="bcap">Danza de la Muerte · Holbein, s. XVI</figcaption></figure>
+          <figure class="bfig" data-slug="sello-lacre"><img src="img/sello-lacre.png" width="522" height="532" alt="Sello de lacre rojo, c. 1301" loading="lazy"><figcaption class="bcap">Sello de lacre rojo, c. 1301</figcaption></figure>
+        </div>
     </div>
   </div>
 </section>
 
 <!-- ================= 8 · MOODBOARD B ================= -->
-<section class="slide" id="mbB">
+<section class="slide skin-b" id="mbB">
   <div class="slide-head"><span class="kicker">04 · Moodboard B</span></div>
   <h1 class="title">Neón <em>Infernal</em></h1>
   <p class="sub">Cartoon pop, sticker de skate, 90s. <b>El infierno como fiesta de barrio — y vos le estás robando la silla a tu amigo.</b></p>
@@ -549,16 +586,33 @@ tfoot td{border-top:1px solid var(--rule);border-bottom:0;color:var(--ink);font-
         </div>
       </div>
     </div>
-    <div class="lbl">Buscar en Pinterest — clic o arrastrá una imagen a cada celda</div>
-    <div class="slots">
-      <div class="slot"><span>rubber hose cartoon devil</span></div>
-      <div class="slot"><span>90s skate sticker art</span></div>
-      <div class="slot"><span>halftone comic devil</span></div>
-      <div class="slot"><span>hot rod flames lettering</span></div>
-      <div class="slot"><span>cuphead style character</span></div>
-      <div class="slot"><span>Rat Fink Ed Roth</span></div>
-      <div class="slot"><span>vintage matchbox devil label</span></div>
-      <div class="slot"><span>lucha libre poster</span></div>
+      <div style="margin-top:2.6vh">
+        <div class="lbl">Búsquedas de referencia — Pinterest, Canva o archivos de diseño popular</div>
+        <div class="chips"><b>rubber hose cartoon devil</b><b>90s skate sticker art</b><b>halftone comic devil</b><b>hot rod flames lettering</b><b>cuphead style character</b><b>Rat Fink Ed Roth</b><b>vintage matchbox devil label</b><b>lucha libre poster</b><b>krampus postcard</b></div>
+      </div>
+  </div>
+</section>
+
+
+<!-- ================= 04 · Moodboard B · el board ================= -->
+<section class="slide skin-b" id="mbB-board">
+  <div class="slide-head"><span class="kicker">04 · Moodboard B · el board</span></div>
+  <h1 class="title">Neón Infernal — <em>las influencias</em></h1>
+  <p class="sub">Diablo popular impreso: contorno grueso, color plano, cero realismo. La misma lengua gráfica que después heredan el lowbrow y el cartoon de los 90.</p>
+  <div class="body">
+    <div class="board">
+        <div class="brow">
+          <figure class="bfig" data-slug="krampus-1900"><img src="img/krampus-1900.jpg" width="324" height="504" alt="Postal de Krampus, c. 1900" loading="lazy"><figcaption class="bcap">Postal de Krampus, c. 1900</figcaption></figure>
+          <figure class="bfig" data-slug="fosforos-diablo"><img src="img/fosforos-diablo.jpg" width="500" height="386" alt="Etiqueta de fósforos · Checoslovaquia, 1940s" loading="lazy"><figcaption class="bcap">Etiqueta de fósforos · Checoslovaquia, 1940s</figcaption></figure>
+          <figure class="bfig" data-slug="krampus-gruss"><img src="img/krampus-gruss.jpg" width="500" height="794" alt="Gruss vom Krampus, c. 1900" loading="lazy"><figcaption class="bcap"><i>Gruss vom Krampus</i>, c. 1900</figcaption></figure>
+          <figure class="bfig" data-slug="lucha-libre"><img src="img/lucha-libre.jpg" width="500" height="667" alt="Máscaras de lucha libre mexicana" loading="lazy"><figcaption class="bcap">Máscaras de lucha libre mexicana</figcaption></figure>
+        </div>
+        <div class="brow">
+          <figure class="bfig" data-slug="posada-huertista"><img src="img/posada-huertista.jpg" width="960" height="969" alt="Calavera huertista · Posada, c. 1914" loading="lazy"><figcaption class="bcap"><i>Calavera huertista</i> · Posada, c. 1914</figcaption></figure>
+          <figure class="bfig" data-slug="krampus-wiener"><img src="img/krampus-wiener.jpg" width="500" height="780" alt="Wiener Werkstätte, postal nº 542, 1911" loading="lazy"><figcaption class="bcap">Wiener Werkstätte, postal nº 542, 1911</figcaption></figure>
+          <figure class="bfig" data-slug="posada-bravisimas"><img src="img/posada-bravisimas.jpg" width="960" height="1142" alt="Las bravísimas calaveras · Posada" loading="lazy"><figcaption class="bcap"><i>Las bravísimas calaveras</i> · Posada</figcaption></figure>
+          <figure class="bfig" data-slug="folies-les-dante"><img src="img/folies-les-dante.jpg" width="500" height="661" alt="Folies-Bergère · Les Dante, cartel" loading="lazy"><figcaption class="bcap"><i>Folies-Bergère · Les Dante</i>, cartel</figcaption></figure>
+        </div>
     </div>
   </div>
 </section>
@@ -639,10 +693,41 @@ tfoot td{border-top:1px solid var(--rule);border-bottom:0;color:var(--ink);font-
   </div>
 </section>
 
+<!-- ================= CRÉDITOS ================= -->
+<section class="slide" id="creditos">
+  <div class="slide-head"><span class="kicker">07 · Créditos</span></div>
+  <h1 class="title">Fuentes de las <em>imágenes</em></h1>
+  <p class="sub">Todo el material de los dos moodboards es de dominio público, CC0 o CC BY-SA, y viene de Wikimedia Commons. Clic en cualquier título para ir a la ficha original con su licencia completa.</p>
+  <div class="body">
+    <div class="grid two" style="align-items:start">
+      <div><div class="lbl">Moodboard A · Grimorio</div><ul class="cred">
+        <li><a href="https://commons.wikimedia.org/wiki/File:Dictionnaire_infernal_-_Adrammelech.jpg" target="_blank" rel="noopener">Adramelech · <i>Dictionnaire Infernal</i>, 1863</a><span>Louis Lebreton · Public domain · Wikimedia Commons</span></li>
+        <li><a href="https://commons.wikimedia.org/wiki/File:XV_LE_DIABLE_Nicolas_Conver_Tarot_1760.jpg" target="_blank" rel="noopener">Le Diable · Tarot Conver, 1760</a><span>Tarot World Project · CC BY-SA 4.0 · Wikimedia Commons</span></li>
+        <li><a href="https://commons.wikimedia.org/wiki/File:Albrecht_D%C3%BCrer_-_Melencolia_I_-_Google_Art_Project_(427760).jpg" target="_blank" rel="noopener"><i>Melencolia I</i> · Durero, 1514</a><span>Albrecht Dürer · Public domain · Wikimedia Commons</span></li>
+        <li><a href="https://commons.wikimedia.org/wiki/File:Key_of_Solomon_magic_circle.jpg" target="_blank" rel="noopener">Círculo mágico · <i>Clavicula Salomonis</i></a><span>Manuscrito anónimo · Clavicula Salomonis · Public domain · Wikimedia Commons</span></li>
+        <li><a href="https://commons.wikimedia.org/wiki/File:Goetia_seals.jpg" target="_blank" rel="noopener">Sigilos de la <i>Ars Goetia</i></a><span>Rune370 · CC BY-SA 4.0 · Wikimedia Commons</span></li>
+        <li><a href="https://commons.wikimedia.org/wiki/File:Atalanta_Fugiens_Emblema_I.jpg" target="_blank" rel="noopener"><i>Atalanta Fugiens</i>, Emblema I · Maier, 1617</a><span>Michael Maier · Public domain · Wikimedia Commons</span></li>
+        <li><a href="https://commons.wikimedia.org/wiki/File:Hans_Holbein_-_Dance_of_Death-_The_Trumpeters_of_Death_-_1929.146_-_Cleveland_Museum_of_Art.jpg" target="_blank" rel="noopener">Danza de la Muerte · Holbein, s. XVI</a><span>Hans Holbein · CC0 · Wikimedia Commons</span></li>
+        <li><a href="https://commons.wikimedia.org/wiki/File:Seal_of_the_Lords_de_Cantilupe;_c.1301._Red_Wax;_the_National_Archives,_UK._PRO_23-926.png" target="_blank" rel="noopener">Sello de lacre rojo, c. 1301</a><span>Anónimo, c. 1301 · The National Archives, UK · Public domain · Wikimedia Commons</span></li>
+      </ul></div>
+      <div><div class="lbl">Moodboard B · Neón Infernal</div><ul class="cred">
+        <li><a href="https://commons.wikimedia.org/wiki/File:Krampus-Postkarte_um_1900.jpg" target="_blank" rel="noopener">Postal de Krampus, c. 1900</a><span>Unknown author · Public domain · Wikimedia Commons</span></li>
+        <li><a href="https://commons.wikimedia.org/wiki/File:Matchbox_label_-_Smoking_Devil_Ram_-_Czechoslovakia_(circa_1940s)_-_MBP1407116658.jpg" target="_blank" rel="noopener">Etiqueta de fósforos · Checoslovaquia, 1940s</a><span>Anónimo · fabricante de fósforos · Public domain · Wikimedia Commons</span></li>
+        <li><a href="https://commons.wikimedia.org/wiki/File:Gruss_vom_Krampus.jpg" target="_blank" rel="noopener"><i>Gruss vom Krampus</i>, c. 1900</a><span>Unknown author · Public domain · Wikimedia Commons</span></li>
+        <li><a href="https://commons.wikimedia.org/wiki/File:Lucha_libre_masks.jpg" target="_blank" rel="noopener">Máscaras de lucha libre mexicana</a><span>StellarD · CC BY-SA 4.0 · Wikimedia Commons</span></li>
+        <li><a href="https://commons.wikimedia.org/wiki/File:Calavera_huertista,_c.1914,_printed_1930_(photo-relief_etching_with_engraving).jpg" target="_blank" rel="noopener"><i>Calavera huertista</i> · Posada, c. 1914</a><span>José Guadalupe Posada · Public domain · Wikimedia Commons</span></li>
+        <li><a href="https://commons.wikimedia.org/wiki/File:1911_circa_anonymer_K%C3%BCnstler_Wiener_Werkst%C3%A4tte_Postkarte_No._542,_Krampus_mit_Kind.jpg" target="_blank" rel="noopener">Wiener Werkstätte, postal nº 542, 1911</a><span>Anónimo · Wiener Werkstätte · Public domain · Wikimedia Commons</span></li>
+        <li><a href="https://commons.wikimedia.org/wiki/File:A_skeleton_holding_a_knife_leaping_over_a_pile_of_skulls,_people_flee_in_the_background,_from_a_broadside_entitled_%27Las_bravisimas_calaveras_Guatemaltecas%27_MET_DP869422.jpg" target="_blank" rel="noopener"><i>Las bravísimas calaveras</i> · Posada</a><span>José Guadalupe Posada / José Sanchez · CC0 · Wikimedia Commons</span></li>
+        <li><a href="https://commons.wikimedia.org/wiki/File:Folies-Berg%C3%A8re._Les_Dante_-_affiche_-_non_identifi%C3%A9_-_btv1b9003125d.jpg" target="_blank" rel="noopener"><i>Folies-Bergère · Les Dante</i>, cartel</a><span>Autor no identificado · Public domain · Wikimedia Commons</span></li>
+      </ul></div>
+    </div>
+  </div>
+</section>
+
 </div>
 
 <div class="rail" id="rail"></div>
-<div class="counter" id="counter">01 / 11</div>
+<div class="counter" id="counter">01 / 14</div>
 <div class="hint">← → para navegar</div>
 <div id="tip"></div>
 
@@ -689,22 +774,32 @@ document.querySelectorAll('.row').forEach(r => {
   r.addEventListener('mouseleave', () => tip.style.opacity = 0);
 });
 
-/* ---------- moodboard drop slots ---------- */
+/* ---------- reemplazar una pieza del moodboard en vivo ----------
+   Clic o arrastrar una imagen sobre cualquier pieza la sustituye. La fila
+   se re-justifica sola porque el alto lo fija el contenedor y el ancho sale
+   del aspect ratio del archivo nuevo: nunca se deforma. */
 const fileInput = Object.assign(document.createElement('input'), {type:'file', accept:'image/*'});
 let target = null;
-const paint = (slot, file) => {
+const paint = (fig, file) => {
   const fr = new FileReader();
-  fr.onload = () => { slot.style.backgroundImage = `url(${fr.result})`; slot.classList.add('filled'); };
+  fr.onload = () => {
+    const img = fig.querySelector('img');
+    img.removeAttribute('width'); img.removeAttribute('height');
+    img.src = fr.result;
+    const cap = fig.querySelector('.bcap');
+    if (cap) cap.innerHTML = file.name.replace(/\.[^.]+$/, '');
+  };
   fr.readAsDataURL(file);
 };
 fileInput.addEventListener('change', () => { if (target && fileInput.files[0]) paint(target, fileInput.files[0]); });
-document.querySelectorAll('.slot').forEach(slot => {
-  slot.addEventListener('click', () => { target = slot; fileInput.value = ''; fileInput.click(); });
-  slot.addEventListener('dragover', e => e.preventDefault());
-  slot.addEventListener('drop', e => {
+document.querySelectorAll('.bfig').forEach(fig => {
+  fig.title = 'Clic o arrastrá una imagen para reemplazar esta pieza';
+  fig.addEventListener('click', () => { target = fig; fileInput.value = ''; fileInput.click(); });
+  fig.addEventListener('dragover', e => e.preventDefault());
+  fig.addEventListener('drop', e => {
     e.preventDefault();
     const f = [...e.dataTransfer.files].find(f => f.type.startsWith('image/'));
-    if (f) paint(slot, f);
+    if (f) paint(fig, f);
   });
 });
 

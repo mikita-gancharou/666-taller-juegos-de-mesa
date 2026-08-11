@@ -10,9 +10,9 @@ Juego: *666, a strategy game of cards and dices*.
 Navegación: `←` `→` (o barra espaciadora, `Home`, `End`), o los puntos de la derecha.
 `Ctrl+P` → "Guardar como PDF" para exportar.
 
-En los dos slides de moodboard, **cada celda punteada acepta una imagen**: hacé clic
-para elegir un archivo, o arrastrá la imagen directo a la celda. El texto de cada
-celda es la búsqueda sugerida para Pinterest.
+Los dos moodboards ya están armados con material real (slides 8 y 10). Cada pieza
+se puede **reemplazar en vivo**: clic para elegir un archivo, o arrastrar la imagen
+directo sobre la pieza. La fila se re-justifica sola y ninguna imagen se deforma.
 
 ## Contenido
 
@@ -20,6 +20,13 @@ celda es la búsqueda sugerida para Pinterest.
 |---|---|
 | `index.html` | La presentación completa, 11 slides, un solo archivo |
 | `actividad_componentes_arte.md` | El documento de trabajo: tablas de componentes, especificaciones y argumentación |
+| `img/` | Las 16 piezas de los moodboards |
+
+## Imágenes
+
+Todo el material visual es de **dominio público, CC0 o CC BY-SA** y viene de
+Wikimedia Commons. La atribución completa, con autor, licencia y enlace a cada
+ficha original, está en el último slide de la presentación.
 
 ## La actividad
 
