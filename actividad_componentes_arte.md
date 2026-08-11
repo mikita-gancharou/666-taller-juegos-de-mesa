@@ -155,7 +155,7 @@ memento mori woodcut         ·   cross hatching illustration
 | **Tipografía** | Display pesada e inclinada tipo lettering de hot-rod, con sombra dura y contorno |
 | **Iconografía** | Diablitos rubber-hose, tridentes, llamas, dados con cara, calaveras sonrientes, manitos de guante |
 | **Referentes visuales** | Cuphead · Rat Fink / Ed Roth · Vince Ray & lowbrow art · tapas de heavy metal ochentoso · carteles de lucha libre · cajas de fósforos vintage con diablo |
-| **Referentes de juego** | *The Binding of Isaac: Four Souls* · *King of Tokyo* · *Boss Monster* |
+| **Referentes de juego** | *The Binding of Isaac: Four Souls* · *King of Tokyo* |
 | **Tono** | Cómico, agresivo, ruidoso, "family-friendly satánico" |
 
 **Búsquedas para Pinterest (copiar y pegar):**
@@ -186,13 +186,13 @@ Regla: **cada imagen tiene que justificar una decisión de producción concreta*
 
 | # | Juego | Año | Por qué sirve como referencia |
 |---|---|---|---|
-| 1 | **The Binding of Isaac: Four Souls** | 2018 | El referente más directo: iconografía satánica + cartoon grotesco, juego de cartas con d6, *take-that* puro. Muestra que "666" puede ser gracioso y vendible. Ver cómo resuelven el borde y el dorso de carta. |
-| 2 | **King of Tokyo** | 2011 | Dados + cartas + agresión entre jugadores. Referencia de **legibilidad**: iconos enormes, color por función, tablero de jugador con estado visible. Es el estándar de oro para "todos ven el estado de todos". |
-| 3 | **Dice Throne** | 2018 | Referencia de **interfaz física**: tablero de jugador con huecos para dados y track de estado impreso. Es exactamente el problema de layout de nuestro tablero. |
-| 4 | **Escape the Dark Castle** | 2017 | Referencia del Moodboard A: blanco y negro, grabado gótico, cero color salvo un acento. Demuestra que la vía austera funciona comercialmente. |
-| 5 | **Boss Monster** | 2013 | Temática "el jugador es el malo", humor, cartas verticales con banda de iconos. Referencia de cómo vender maldad sin volverse ofensivo. |
+| 1 | **The Binding of Isaac: Four Souls** | 2018 | Iconografía satánica en clave cartoon, cartas con d6 y *take-that* directo. Lo concreto: cómo el dorso y el borde de carta distinguen el tipo antes de leer el texto. |
+| 2 | **King of Tokyo** | 2011 | Dados, cartas y agresión entre jugadores. Lo concreto: iconos grandes y color por función, para que el estado de cada jugador se lea desde cualquier asiento — el mismo problema que nuestras 3 cartas de mercado boca arriba. |
+| 3 | **Dice Throne** | 2018 | Lo concreto: el tablero de jugador con huecos para los dados y el track de estado impreso al lado. Es exactamente el layout que tenemos que resolver. |
+| 4 | **Blood on the Clocktower** | 2022 | Lo concreto: el Grimorio del narrador es un libro físico con fichas de personaje, y cada ficha comunica por ilustración y forma, no por texto. Referencia para nuestros sellos de bloqueo y fichas de escudo, y para el concepto del Moodboard A. |
+| 5 | **Escape the Dark Castle** | 2017 | Lo concreto: blanco y negro, grabado, un único color de acento en toda la caja. Prueba de que la vía austera del Moodboard A funciona comercialmente. |
 
-**Alternativas si hace falta ampliar:** *Gloom* (dark cartoon a lo Edward Gorey), *Unstable Unicorns* (take-that cartoon moderno), *Munchkin* (humor + traición), *Machi Koro* (mercado de 3 cartas boca arriba + dados).
+**Alternativas si hace falta ampliar:** *Gloom* (cartoon oscuro a lo Edward Gorey), *Boss Monster* (el jugador es el malo), *Munchkin* (humor y traición), *Machi Koro* (mercado de 3 cartas boca arriba con dados).
 
 ---
 
