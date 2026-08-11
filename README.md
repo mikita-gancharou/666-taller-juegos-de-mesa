@@ -18,7 +18,7 @@ directo sobre la pieza. La fila se re-justifica sola y ninguna imagen se deforma
 
 | Archivo | Qué es |
 |---|---|
-| `index.html` | La presentación completa, 11 slides, un solo archivo |
+| `index.html` | La presentación completa, 14 slides |
 | `actividad_componentes_arte.md` | El documento de trabajo: tablas de componentes, especificaciones y argumentación |
 | `img/` | Las 16 piezas de los moodboards |
 
