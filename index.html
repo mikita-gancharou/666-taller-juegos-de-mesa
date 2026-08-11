@@ -105,7 +105,7 @@ tfoot td{border-top:1px solid var(--rule);border-bottom:0;color:var(--ink);font-
 .bar{position:absolute;left:0;top:0;bottom:0;border-radius:0 4px 4px 0;transition:filter .15s}
 .row:hover .bar{filter:brightness(1.2)}
 .bar.a{background:var(--series-1)} .bar.b{background:var(--series-2)}
-.val{position:absolute;top:50%;transform:translateY(-50%);font-size:clamp(8px,1.18vh,12px);
+.barlabel{position:absolute;top:50%;transform:translateY(-50%);font-size:clamp(8px,1.18vh,12px);
      color:var(--text-primary);font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
 .axis{display:grid;grid-template-columns:12ch 1fr 3.6ch;gap:.7em;margin-top:1.3vh}
 .axis .ticks{grid-column:2;display:flex;justify-content:space-between;border-top:1px solid var(--axis);
@@ -143,17 +143,21 @@ tfoot td{border-top:1px solid var(--rule);border-bottom:0;color:var(--ink);font-
                color:var(--accent);display:grid;place-items:center;font-size:.75em;font-weight:700;margin-top:.15em}
 .cap{font-size:clamp(8px,1.12vh,11px);color:var(--muted);text-align:center;margin-top:1vh;letter-spacing:.06em}
 
-/* CSS dice — pips are absolutely positioned so they scale with the die itself
-   (percentage padding would resolve against the containing block, not the die) */
+/* CSS dice — grilla 3x3 siempre: las celdas son cuadradas, así los pips
+   salen circulares y no elipses. Los pips se posicionan por cara. */
 .die{position:relative;aspect-ratio:1;border-radius:16%;background:#e8342f;
      box-shadow:inset 0 -3px 7px #0005, 0 2px 6px #0009}
-.pips{position:absolute;inset:17%;display:grid;gap:9%}
-.pips i{background:#fff;border-radius:50%}
-.pips.d6{grid-template-columns:1fr 1fr;grid-template-rows:repeat(3,1fr)}
-.pips.d5{grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr)}
+.pips{position:absolute;inset:16%;display:grid;
+      grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:6%}
+.pips i{background:#fff;border-radius:50%;aspect-ratio:1;width:82%;place-self:center}
+.pips.d4 i:nth-child(1){grid-area:1/1}.pips.d4 i:nth-child(2){grid-area:1/3}
+.pips.d4 i:nth-child(3){grid-area:3/1}.pips.d4 i:nth-child(4){grid-area:3/3}
 .pips.d5 i:nth-child(1){grid-area:1/1}.pips.d5 i:nth-child(2){grid-area:1/3}
-.pips.d5 i:nth-child(3){grid-area:2/2}.pips.d5 i:nth-child(4){grid-area:3/1}.pips.d5 i:nth-child(5){grid-area:3/3}
-.pips.d4{grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr}
+.pips.d5 i:nth-child(3){grid-area:2/2}
+.pips.d5 i:nth-child(4){grid-area:3/1}.pips.d5 i:nth-child(5){grid-area:3/3}
+.pips.d6 i:nth-child(1){grid-area:1/1}.pips.d6 i:nth-child(2){grid-area:1/3}
+.pips.d6 i:nth-child(3){grid-area:2/1}.pips.d6 i:nth-child(4){grid-area:2/3}
+.pips.d6 i:nth-child(5){grid-area:3/1}.pips.d6 i:nth-child(6){grid-area:3/3}
 
 /* player board */
 .pboard{background:#151519;border:1px solid #2a2a30;border-radius:12px;padding:2.4vh 1.8vw;
@@ -307,17 +311,16 @@ tfoot td{border-top:1px solid var(--rule);border-bottom:0;color:var(--ink);font-
   </svg>
   <div class="six">666</div>
   <div class="lede">A strategy game of cards and dices</div>
-  <div class="meta">Taller de Juegos de Mesa · Image Campus<br>Componentes · Interfaz · Arte</div>
 </section>
 
 <!-- ================= 2 ================= -->
 <section class="slide">
   <div class="slide-head"><span class="kicker">01 · Componentes</span></div>
   <h1 class="title">¿Qué componentes tengo? <em>¿Cuántos hay?</em></h1>
-  <p class="sub">Configuración base asumida: 2–4 jugadores, 15–25 min. Todo lo que sigue se desprende de esa decisión.</p>
+  <p class="sub">Configuración base asumida: 2–4 jugadores, 15–25 min.</p>
   <div class="body">
     <div class="tiles" style="margin-bottom:2.6vh">
-      <div class="tile"><div class="lab">Piezas totales</div><div class="val">104</div><div class="note">sin caja ni inserto</div></div>
+      <div class="tile"><div class="lab">Piezas totales</div><div class="val">103</div><div class="note">sin contar la caja</div></div>
       <div class="tile"><div class="lab">Cartas</div><div class="val">66</div><div class="note">60 normales + 6 instantáneas</div></div>
       <div class="tile"><div class="lab">Dados d6</div><div class="val">13</div><div class="note">12 de jugador + 1 del destino</div></div>
       <div class="tile"><div class="lab">Fichas</div><div class="val">18</div><div class="note">12 sellos + 6 escudos</div></div>
@@ -334,10 +337,9 @@ tfoot td{border-top:1px solid var(--rule);border-bottom:0;color:var(--ink);font-
           <tr><td>Fichas de escudo</td><td class="n">6</td><td>Ø 22 mm, forma de escudo</td><td>Cartón 2 mm</td><td>SHIELD activo</td></tr>
           <tr><td>Tableros de jugador</td><td class="n">4</td><td>180 × 90 mm</td><td>Cartón 1,5 mm con huecos</td><td>Dados y track de momentum</td></tr>
           <tr><td>Tapete del mercado</td><td class="n">1</td><td>300 × 120 mm</td><td>Cartón o tela</td><td>Mazo, 3 slots, descarte</td></tr>
-          <tr><td>Marcador de primer jugador</td><td class="n">1</td><td>Ø 35 mm</td><td>Cartón 2 mm</td><td>Orden de turno</td></tr>
           <tr><td>Reglamento</td><td class="n">1</td><td>A5, 8 págs.</td><td>Papel 130 gsm</td><td>—</td></tr>
         </tbody>
-        <tfoot><tr><td>Total</td><td class="n">104</td><td colspan="3">Caja 140 × 100 × 65 mm + inserto termoformado</td></tr></tfoot>
+        <tfoot><tr><td>Total</td><td class="n">103</td><td colspan="3">Caja de 140 × 100 × 65 mm</td></tr></tfoot>
       </table>
     </div>
   </div>
@@ -347,7 +349,7 @@ tfoot td{border-top:1px solid var(--rule);border-bottom:0;color:var(--ink);font-
 <section class="slide">
   <div class="slide-head"><span class="kicker">02 · Estructura</span></div>
   <h1 class="title">El mazo: <em>66 cartas</em></h1>
-  <p class="sub">La distribución no es decorativa: define el tono del juego. Cuatro de cada diez cartas pueden dañar a un rival — eso <em>es</em> 666.</p>
+  <p class="sub">La distribución define el tono del juego: cuatro de cada diez cartas pueden dañar a un rival.</p>
   <div class="body">
     <div class="grid two" style="align-items:stretch;flex:1">
 
@@ -391,7 +393,7 @@ tfoot td{border-top:1px solid var(--rule);border-bottom:0;color:var(--ink);font-
 <section class="slide">
   <div class="slide-head"><span class="kicker">03 · Interfaz</span></div>
   <h1 class="title">Anatomía de la carta</h1>
-  <p class="sub">Hay 3 cartas boca arriba en el mercado que todos leen desde su asiento. La silueta del icono manda sobre la ilustración.</p>
+  <p class="sub">Hay 3 cartas boca arriba en el mercado que todos leen desde su asiento, así que el icono importa más que la ilustración.</p>
   <div class="body">
     <div class="mockups">
       <div>
@@ -543,7 +545,7 @@ tfoot td{border-top:1px solid var(--rule);border-bottom:0;color:var(--ink);font-
 <section class="slide skin-a" id="mbA-board">
   <div class="slide-head"><span class="kicker">04 · Moodboard A · el board</span></div>
   <h1 class="title">Grimorio — <em>las influencias</em></h1>
-  <p class="sub">Xilografía, buril y tramado cruzado. Todo grabado, sin degradados, un solo acento de color. Pasá el mouse por cualquier pieza para verla en grande.</p>
+  <p class="sub">Xilografía, buril y tramado cruzado. Todo grabado, sin degradados, un solo acento de color.</p>
   <div class="body">
     <div class="board">
         <div class="brow">
@@ -566,7 +568,7 @@ tfoot td{border-top:1px solid var(--rule);border-bottom:0;color:var(--ink);font-
 <section class="slide skin-b" id="mbB">
   <div class="slide-head"><span class="kicker">04 · Moodboard B</span></div>
   <h1 class="title">Neón <em>Infernal</em></h1>
-  <p class="sub">Cartoon pop, sticker de skate, 90s. <b>El infierno como fiesta de barrio — y vos le estás robando la silla a tu amigo.</b></p>
+  <p class="sub">Cartoon pop, sticker de skate, 90s. Diablo dibujado, no diablo temible.</p>
   <div class="body">
     <div class="grid two" style="align-items:start;margin-bottom:2.6vh">
       <div>
@@ -608,7 +610,7 @@ tfoot td{border-top:1px solid var(--rule);border-bottom:0;color:var(--ink);font-
 <section class="slide skin-b" id="mbB-board">
   <div class="slide-head"><span class="kicker">04 · Moodboard B · el board</span></div>
   <h1 class="title">Neón Infernal — <em>las influencias</em></h1>
-  <p class="sub">Diablo popular impreso: contorno grueso, color plano, cero realismo. La misma lengua gráfica que después heredan el lowbrow y el cartoon de los 90.</p>
+  <p class="sub">Diablo popular impreso: contorno grueso, color plano, sin realismo. Es la base gráfica que después toman el lowbrow y el cartoon de los 90.</p>
   <div class="body">
     <div class="board">
         <div class="brow">
@@ -631,7 +633,7 @@ tfoot td{border-top:1px solid var(--rule);border-bottom:0;color:var(--ink);font-
 <section class="slide">
   <div class="slide-head"><span class="kicker">05 · Investigación</span></div>
   <h1 class="title">Cinco juegos en <em>BoardGameGeek</em></h1>
-  <p class="sub">Buscar cada uno en boardgamegeek.com y capturar la galería de componentes, no sólo la tapa. Lo que importa está en las fotos de mesa.</p>
+  <p class="sub">Cinco referencias de BoardGameGeek y qué se toma de cada una.</p>
   <div class="body">
     <div class="card-panel">
       <table class="games">
@@ -658,11 +660,11 @@ tfoot td{border-top:1px solid var(--rule);border-bottom:0;color:var(--ink);font-
   <p class="sub">Seis razones, todas atadas a una mecánica concreta. Ninguna es "nos gusta más".</p>
   <div class="body">
     <div class="args">
-      <div class="arg"><span class="n">1</span><div><h3>El arte tiene que desarmar la agresión</h3><p>El 42 % del mazo sirve para arruinarle el turno al de al lado. Con estética solemne, bajarle el 6 a un amigo se siente hostil; con estética cartoon, se siente un chiste. El arte decide si la mesa se ríe o se pelea.</p></div></div>
+      <div class="arg"><span class="n">1</span><div><h3>El arte suaviza la agresión</h3><p>El 42 % del mazo sirve para arruinarle el turno al de al lado. Con estética solemne, bajarle el 6 a un amigo se siente hostil; con estética cartoon, se lee como un chiste.</p></div></div>
       <div class="arg"><span class="n">2</span><div><h3>Legibilidad del mercado</h3><p>Hay 3 cartas boca arriba que todos leen desde su asiento. Contorno grueso, color plano y alto contraste se leen a 1 m; el tramado de grabado se empasta.</p></div></div>
-      <div class="arg"><span class="n">3</span><div><h3>Las instantáneas tienen que gritar</h3><p>Una carta que se dispara sola al aparecer necesita reventar visualmente. Un borde doble de neón sobre negro hace eso; un marco grabado, no.</p></div></div>
-      <div class="arg"><span class="n">4</span><div><h3>Los dados son la estrella</h3><p>Viven entre 3 y 6 y el número tiene que leerse siempre. La vía cartoon permite pips gigantes y codificación por color; el grabado empuja a dados bonitos e ilegibles.</p></div></div>
-      <div class="arg"><span class="n">5</span><div><h3>Posicionamiento</h3><p>Es un filler de 20 minutos. Negro y oro grabado promete un euro pesado de 50 € y genera la expectativa equivocada en góndola. El neón promete lo que el juego realmente es.</p></div></div>
+      <div class="arg"><span class="n">3</span><div><h3>Las instantáneas deben ser llamativas</h3><p>Una carta que se dispara sola al aparecer tiene que distinguirse de inmediato. Un borde doble de neón sobre negro se ve a la primera; un marco grabado, no.</p></div></div>
+      <div class="arg"><span class="n">4</span><div><h3>Los dados son la estrella</h3><p>Viven entre 3 y 6 y el número tiene que leerse siempre. La vía cartoon permite pips grandes y codificación por color; el grabado tiende a dados vistosos pero poco legibles.</p></div></div>
+      <div class="arg"><span class="n">5</span><div><h3>Posicionamiento</h3><p>Es un juego corto, de 20 minutos. El negro y oro grabado aparenta un euro de 50 € y genera la expectativa equivocada en la góndola. El neón anticipa lo que el juego realmente es.</p></div></div>
       <div class="arg"><span class="n">6</span><div><h3>Producción</h3><p>Colores planos: menos costo de prueba de color, mejor tolerancia a la variación de imprenta, y escala directo a merch y expansiones.</p></div></div>
     </div>
   </div>
@@ -766,7 +768,7 @@ document.getElementById('bars').innerHTML = DECK.map(d => {
     <div class="name">${d.name}</div>
     <div class="plot">
       <div class="bar ${d.hostile ? 'b' : 'a'}" style="width:${w}%"></div>
-      <div class="val" style="left:calc(${w}% + 7px)">${d.n}</div>
+      <div class="barlabel" style="left:calc(${w}% + 7px)">${d.n}</div>
     </div>
     <div></div>
   </div>`;

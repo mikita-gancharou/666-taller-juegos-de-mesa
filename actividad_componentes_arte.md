@@ -24,13 +24,12 @@ Configuración base asumida: **2–4 jugadores, 15–25 min**.
 | 6 | Fichas de escudo | **6** | Ficha Ø 22 mm, forma distinta (escudo) | Cartón 2 mm | SHIELD activo sobre un dado |
 | 7 | Tableros de jugador | **4** | 180 × 90 mm | Cartón 1,5 mm, **con hueco para los 3 dados** | Interfaz: dados + track de momentum |
 | 8 | Tapete del mercado | **1** | 300 × 120 mm | Cartón o tela | Mazo + 3 slots + descarte |
-| 9 | Marcador de primer jugador | **1** | Token Ø 35 mm | Cartón 2 mm | Orden de turno |
-| 10 | Reglamento | **1** | A5, 8 págs. | Papel 130 gsm | — |
-| 11 | Caja + inserto | **1** | 140 × 100 × 65 mm | Cartón rígido + inserto termoformado | — |
+| 9 | Reglamento | **1** | A5, 8 págs. | Papel 130 gsm | — |
+| 10 | Caja | **1** | 140 × 100 × 65 mm | Cartón rígido | — |
 
-**TOTAL DE PIEZAS: 104** (66 cartas + 13 dados + 18 fichas + 5 tableros/tapete + 1 marcador + reglamento).
+**TOTAL DE PIEZAS: 103** (66 cartas + 13 dados + 18 fichas + 4 tableros de jugador + tapete + reglamento), sin contar la caja.
 
-> **Guiño de diseño:** 13 dados en total y 66 cartas. Los números tienen que sostener el tema.
+> **Detalle temático:** 13 dados y 66 cartas.
 
 ### 1.3 Estructura del mazo (66 cartas)
 
@@ -51,7 +50,7 @@ Configuración base asumida: **2–4 jugadores, 15–25 min**.
 | **FLOOD** *(instant)* | 2 | Descartar el mercado, repartir 3 nuevas | Mercado |
 | **TOTAL** | **66** | | |
 
-**Ratio de agresión: 28 cartas de 66 — el 42 % puede dañar a un rival** (−2, Dual, SMASH, TRADE, REROLL, COLLAPSE). Cuatro de cada diez. No es un número accidental: es la identidad del juego, y es el dato que después justifica la elección estética.
+**Ratio de agresión: 28 cartas de 66 — el 42 % puede dañar a un rival** (−2, Dual, SMASH, TRADE, REROLL, COLLAPSE). Cuatro de cada diez. Es el dato que después justifica la elección estética.
 
 **Balance de progreso (chequeo rápido):** cada jugador necesita subir 9 pips (3-3-3 → 6-6-6). Las 24 cartas constructivas aportan 34 pips en total, más SURGE y GAMBLE. Con 4 jugadores hacen falta 36 pips y hay ~40 disponibles: el margen es mínimo, así que **el reglamento tiene que decir que se rebaraja el descarte** cuando el mazo se agota, o la partida se traba.
 
@@ -83,10 +82,10 @@ Configuración base asumida: **2–4 jugadores, 15–25 min**.
 | Azar (GAMBLE/REROLL) | Dado en movimiento | Magenta |
 | Instantánea | **Doble borde + rayo** | Rojo sobre negro |
 
-**Reglas de legibilidad (no negociables):**
+**Reglas de legibilidad:**
 - Icono legible a **1 metro** — es la distancia real de lectura del mercado.
 - **Codificación redundante**: color + forma de icono + posición. Nunca sólo color (≈8 % de los jugadores tiene daltonismo; un juego de rojo/verde infernal es la trampa clásica).
-- Las 3 cartas del mercado se ven boca arriba todo el tiempo → la silueta del icono manda sobre la ilustración.
+- Las 3 cartas del mercado están boca arriba todo el tiempo, así que el icono importa más que la ilustración.
 
 ### 1.5 Anatomía del tableros de jugador
 
@@ -147,7 +146,7 @@ memento mori woodcut         ·   cross hatching illustration
 ### MOODBOARD B — "NEÓN INFERNAL"
 *Cartoon pop, sticker de skate, 90s*
 
-**Concepto en una frase:** el infierno como fiesta de barrio, y vos le estás robando la silla a tu amigo.
+**Concepto en una frase:** el diablo dibujado, no el diablo temible.
 
 | | |
 |---|---|
@@ -185,8 +184,6 @@ Regla: **cada imagen tiene que justificar una decisión de producción concreta*
 
 ## 3. CINCO JUEGOS CON ESTÉTICA SIMILAR (BGG)
 
-> Buscar cada uno en boardgamegeek.com y capturar la galería de componentes para el moodboard.
-
 | # | Juego | Año | Por qué sirve como referencia |
 |---|---|---|---|
 | 1 | **The Binding of Isaac: Four Souls** | 2018 | El referente más directo: iconografía satánica + cartoon grotesco, juego de cartas con d6, *take-that* puro. Muestra que "666" puede ser gracioso y vendible. Ver cómo resuelven el borde y el dorso de carta. |
@@ -203,11 +200,11 @@ Regla: **cada imagen tiene que justificar una decisión de producción concreta*
 
 ### 4.1 Argumentación (esto es lo que se defiende en la presentación)
 
-1. **El arte tiene que desarmar la agresión.** El 42 % del mazo sirve para arruinarle el turno al de al lado. Con estética solemne, bajarle el 6 a un amigo se siente hostil; con estética cartoon, se siente un chiste. El arte es el que decide si la mesa se ríe o se pelea.
+1. **El arte suaviza la agresión.** El 42 % del mazo sirve para arruinarle el turno al de al lado. Con estética solemne, bajarle el 6 a un amigo se siente hostil; con estética cartoon, se lee como un chiste.
 2. **Legibilidad del mercado.** Hay 3 cartas boca arriba que todos leen desde su asiento. Contorno grueso + color plano + alto contraste se lee a 1 m; el tramado de grabado se empasta.
-3. **Las instantáneas tienen que gritar.** Una carta que se dispara sola en el momento en que aparece necesita reventar visualmente. Un borde doble de neón sobre negro hace eso; un marco grabado, no.
+3. **Las instantáneas deben ser llamativas.** Una carta que se dispara sola al aparecer tiene que distinguirse de inmediato. Un borde doble de neón sobre negro se ve a la primera; un marco grabado, no.
 4. **Los dados son la estrella y viven entre 3 y 6.** El número tiene que leerse siempre. La vía cartoon permite pips gigantes y codificación por color; la vía grabado empuja a dados "bonitos" e ilegibles.
-5. **Posicionamiento comercial.** Es un filler de 20 minutos. El grabado negro-y-oro promete un euro pesado de 50 € y genera expectativa equivocada en góndola. El neón promete lo que el juego realmente es.
+5. **Posicionamiento comercial.** Es un juego corto, de 20 minutos. El grabado negro y oro aparenta un euro de 50 € y genera la expectativa equivocada en la góndola. El neón anticipa lo que el juego realmente es.
 6. **Producción.** Colores planos = menos costo de prueba de color, mejor tolerancia a variación de imprenta, escalable a merch y a expansiones.
 
 ### 4.2 Qué nos llevamos del Moodboard A (injertos)
