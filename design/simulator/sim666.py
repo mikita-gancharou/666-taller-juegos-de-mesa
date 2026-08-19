@@ -45,6 +45,9 @@ DEFAULT_CFG = {
     "attack_rate_limit": 0,  # 1: each player absorbs max 1 SMASH/TRADE between own turns
     "win_delay": 0,          # 1: 3rd lock wins at START of your next turn (one last window)
     "shield_hidden": 0,      # 1: shields are face-down; attackers can't route around them
+    # shield_mode: "open" = v1 codified (placed on a die in advance)
+    #              "reaction" = played from HAND when attacked, cancels the hit
+    "shield_mode": "open",
 }
 
 LOCK_BONUS = 3.5
@@ -130,6 +133,8 @@ class Game:
         self.winner_lock_source = None      # 'play'|'SURGE'|'REROLL'|...
         self.pending_win = {}               # idx -> source (win_delay mode)
         self.win_denied = 0                 # pending wins broken by the table
+        self.shield_blocks = 0
+        self.gamble_plays = 0
         self.log = [] if log else None
         self.reshuffles = 0
         self._setup()
@@ -350,9 +355,10 @@ class Game:
                 for k in own[:3]:
                     out.append(("play", hi, c, (p.i, k), None))
         elif c == "SHIELD":
-            for k in range(3):
-                if p.locked[k] and not p.shield[k]:
-                    out.append(("play", hi, c, (p.i, k)))
+            if self.cfg["shield_mode"] == "open":
+                for k in range(3):
+                    if p.locked[k] and not p.shield[k]:
+                        out.append(("play", hi, c, (p.i, k)))
         elif c in ("SMASH", "TRADE"):
             pay = self._trade_pay_die(p) if c == "TRADE" else 0
             if c == "TRADE" and pay is None:
@@ -376,6 +382,11 @@ class Game:
                     if q.dice[k] >= 5:
                         out.append(("play", hi, c, (q.i, k)))
         return out
+
+    def _wants_block(self, q):
+        if q.bot == "random":
+            return self.rng.random() < 0.5
+        return True
 
     def _trade_pay_die(self, p):
         cands = [k for k in p.unlocked() if p.dice[k] > 1]
@@ -445,6 +456,8 @@ class Game:
             qi, k = a[3]
             q = self.players[qi]
             shielded = q.shield[k] and not self.cfg["shield_hidden"]
+            if self.cfg["shield_mode"] == "reaction":
+                shielded = False
             if shielded:
                 base = 0.8
             else:
@@ -454,6 +467,8 @@ class Game:
                 elif q.locks == 2:
                     base += 6
             v = base * OPP_W * (1.4 if qi == leader.i else 0.7)
+            if self.cfg["shield_mode"] == "reaction" and len(q.hand) > 0:
+                v *= 0.75
             if self.cfg["smash_bounty"]:
                 v += 1.2
             if c == "TRADE":
@@ -483,7 +498,9 @@ class Game:
         low = [k for k in p.unlocked() if p.dice[k] <= 4]
         v = {"P1": 1.0, "P2": 1.7 if low else 0.9, "M2": 0.8,
              "DUAL": 1.5, "GAMBLE": 0.9, "REROLL": 0.7,
-             "SHIELD": 0.35 + 0.8 * p.locks,
+             "SHIELD": (0.5 + 0.9 * p.locks
+                        if self.cfg["shield_mode"] == "reaction"
+                        else 0.35 + 0.8 * p.locks),
              "SMASH": 0.3 + 1.5 * leader.locks,
              "TRADE": 0.1 + 1.1 * leader.locks}.get(c, 0.5)
         if len(p.hand) >= self.cfg["hand_limit"]:
@@ -560,6 +577,17 @@ class Game:
             qi, k = a[3]
             q = self.players[qi]
             q.hits_window += 1
+            if (self.cfg["shield_mode"] == "reaction" and "SHIELD" in q.hand
+                    and self._wants_block(q)):
+                q.hand.remove("SHIELD")
+                self.discard.append("SHIELD")
+                self.shield_blocks += 1
+                self._log(f"    P{p.i} {c} on P{qi} die{k} — SHIELD from hand, BLOCKED!")
+                if c == "TRADE":
+                    pk = self._trade_pay_die(p)
+                    if pk is not None:
+                        self._set_die(p, pk, p.dice[pk] - 1, "trade-cost")
+                return
             if q.shield[k]:
                 q.shield[k] = False
                 self._log(f"    P{p.i} {c} on P{qi} die{k} — SHIELD absorbs")
@@ -579,6 +607,7 @@ class Game:
                     self._set_die(p, pk, p.dice[pk] - 1, "trade-cost")
                     self._log(f"      TRADE cost: own die{pk} -> {p.dice[pk]}")
         elif c == "GAMBLE":
+            self.gamble_plays += 1
             _, k = a[3]
             roll = self.rng.randint(1, 6)
             delta = 2 if roll >= 4 else -1
@@ -678,6 +707,9 @@ class Game:
             "noimp_rate": sum(p.noimp for p in self.players) /
                           max(1, sum(p.turns for p in self.players)),
             "reshuffles": self.reshuffles,
+            "shield_blocks": self.shield_blocks,
+            "gamble_plays": self.gamble_plays,
+            "win_denied": self.win_denied,
             "winner_bot": (self.players[self.winner].bot
                            if not stalled else None),
             "winner_first_lock": None,
@@ -737,6 +769,9 @@ def aggregate(ms, cfg, mix):
         "attacks_mean": round(statistics.mean(m["attacks"] for m in ms), 1),
         "noimp_pct": round(100 * statistics.mean(m["noimp_rate"] for m in ms), 1),
         "reshuffles_mean": round(statistics.mean(m["reshuffles"] for m in ms), 2),
+        "blocks_mean": round(statistics.mean(m["shield_blocks"] for m in ms), 2),
+        "gamble_mean": round(statistics.mean(m["gamble_plays"] for m in ms), 2),
+        "win_denied_mean": round(statistics.mean(m["win_denied"] for m in ms), 2),
         "seat_win_pct": [round(100 * w / tot, 1) for w in seatw],
     }
     if mix == "mixed":
@@ -769,7 +804,9 @@ def selftest():
     for im in modes:
         for lm in locks:
             cfg = make_cfg({"instants": im, "lock_mode": lm,
-                            "blind_draw": im == "personal"})
+                            "blind_draw": im == "personal",
+                            "shield_mode": "reaction" if lm == "action" else "open",
+                            "win_delay": 1 if im == "omen" else 0})
             for g in range(120):
                 game = Game(cfg, ["smart"] * 4, 999 + g)
                 game.run()

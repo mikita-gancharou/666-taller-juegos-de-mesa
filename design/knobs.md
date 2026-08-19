@@ -25,6 +25,7 @@ needs new simulator code — propose it as `wish` text, not config.
 | `attack_rate_limit` | 0/1 | each player absorbs at most 1 SMASH/TRADE between their own turns |
 | `win_delay` | 0/1 | "the ink dries": 3rd lock wins at the START of your next turn — the table gets one last window to break it |
 | `shield_hidden` | 0/1 | shields are placed face-down; attackers can't route around them (blocks actually happen) |
+| `shield_mode` | `"open"`/`"reaction"` | reaction = SHIELD stays in HAND and is played as an interrupt when your die is attacked, cancelling the hit — the table's real interpretation; sim: 3.7 blocks/game vs 0.0 open |
 
 Cards: P1(+1)/P2(+2)/M2(−2)/DUAL/SHIELD/SMASH/TRADE/GAMBLE/REROLL/SURGE/COLLAPSE/FLOOD.
 
