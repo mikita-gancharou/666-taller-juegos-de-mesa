@@ -20,6 +20,11 @@ needs new simulator code — propose it as `wish` text, not config.
 | `hand_limit` | int | v1 = 5 |
 | `deck_overrides` | {card: n} | change counts; keep total 66 (e.g. fewer SMASH, more SHIELD) |
 | `max_rounds` | int | stall cap (60) |
+| `smash_bounty` | 0/1 | successful SMASH/TRADE also gives the attacker +1 on their lowest unlocked die ("soul harvest" — attacks stop being pip-deletion) |
+| `smash_to` | 4/5 | value a smashed 6 drops to (5 = dented, one card to repair; 4 = v1 deleted) |
+| `attack_rate_limit` | 0/1 | each player absorbs at most 1 SMASH/TRADE between their own turns |
+| `win_delay` | 0/1 | "the ink dries": 3rd lock wins at the START of your next turn — the table gets one last window to break it |
+| `shield_hidden` | 0/1 | shields are placed face-down; attackers can't route around them (blocks actually happen) |
 
 Cards: P1(+1)/P2(+2)/M2(−2)/DUAL/SHIELD/SMASH/TRADE/GAMBLE/REROLL/SURGE/COLLAPSE/FLOOD.
 

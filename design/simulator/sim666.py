@@ -39,6 +39,12 @@ DEFAULT_CFG = {
     "deck_overrides": {},         # e.g. {"SMASH": 6}
     "instant_replacement": {"P1": 3, "M2": 3},   # used when instants == "none"
     "max_rounds": 60,
+    # --- iteration-2 knobs ---
+    "smash_bounty": 0,       # 1: successful SMASH/TRADE also +1 attacker's lowest unlocked die
+    "smash_to": 4,           # value a smashed 6 drops to (5 = softer treadmill)
+    "attack_rate_limit": 0,  # 1: each player absorbs max 1 SMASH/TRADE between own turns
+    "win_delay": 0,          # 1: 3rd lock wins at START of your next turn (one last window)
+    "shield_hidden": 0,      # 1: shields are face-down; attackers can't route around them
 }
 
 LOCK_BONUS = 3.5
@@ -74,7 +80,8 @@ def build_deck(cfg):
 
 class Player:
     __slots__ = ("i", "dice", "locked", "shield", "hand", "bot",
-                 "instant_pips", "attacks_taken", "noimp", "turns")
+                 "instant_pips", "attacks_taken", "noimp", "turns",
+                 "hits_window")
 
     def __init__(self, i, bot):
         self.i = i
@@ -87,6 +94,7 @@ class Player:
         self.attacks_taken = 0
         self.noimp = 0
         self.turns = 0
+        self.hits_window = 0
 
     @property
     def locks(self):
@@ -120,6 +128,8 @@ class Game:
         self.leader = None
         self.mid_ranks = None
         self.winner_lock_source = None      # 'play'|'SURGE'|'REROLL'|...
+        self.pending_win = {}               # idx -> source (win_delay mode)
+        self.win_denied = 0                 # pending wins broken by the table
         self.log = [] if log else None
         self.reshuffles = 0
         self._setup()
@@ -176,13 +186,25 @@ class Game:
             if v == 6 and not p.locked[k]:
                 p.locked[k] = True
                 self._log(f"    P{p.i} locks die{k} ({source})")
-                if p.locks == 3 and not self.over:
-                    self.over = True
-                    self.winner = p.i
-                    self.winner_lock_source = source
+                self._check_win(p, source)
         if v < 6 and p.locked[k]:
             p.locked[k] = False
             p.shield[k] = False
+            if p.i in self.pending_win:
+                del self.pending_win[p.i]
+                self.win_denied += 1
+                self._log(f"    P{p.i}'s pending win is BROKEN")
+
+    def _check_win(self, p, source):
+        if p.locks == 3 and not self.over:
+            if self.cfg["win_delay"]:
+                if p.i not in self.pending_win:
+                    self.pending_win[p.i] = source
+                    self._log(f"    P{p.i} SIGNS THE CONTRACT — wins at next turn start")
+            else:
+                self.over = True
+                self.winner = p.i
+                self.winner_lock_source = source
 
     def _move_die(self, p, k, delta, source):
         if p.locked[k]:
@@ -335,7 +357,10 @@ class Game:
             pay = self._trade_pay_die(p) if c == "TRADE" else 0
             if c == "TRADE" and pay is None:
                 return out
+            lim = self.cfg["attack_rate_limit"]
             for q in opps:
+                if lim and q.hits_window >= lim:
+                    continue
                 for k in range(3):
                     if q.locked[k]:
                         out.append(("play", hi, c, (q.i, k)))
@@ -419,15 +444,18 @@ class Game:
         if c in ("SMASH", "TRADE"):
             qi, k = a[3]
             q = self.players[qi]
-            if q.shield[k]:
+            shielded = q.shield[k] and not self.cfg["shield_hidden"]
+            if shielded:
                 base = 0.8
             else:
-                base = (2 + LOCK_BONUS)
-                if q.locks == 3:
-                    base += 50            # deny the win (shouldn't happen)
+                base = (6 - self.cfg["smash_to"]) + LOCK_BONUS
+                if q.i in self.pending_win or q.locks == 3:
+                    base += 50
                 elif q.locks == 2:
                     base += 6
             v = base * OPP_W * (1.4 if qi == leader.i else 0.7)
+            if self.cfg["smash_bounty"]:
+                v += 1.2
             if c == "TRADE":
                 pk = self._trade_pay_die(p)
                 v -= 1 + (LOCK_BONUS if p.locked[pk] else 0)
@@ -472,10 +500,7 @@ class Game:
             k = a[1]
             p.locked[k] = True
             self._log(f"    P{p.i} spends action to lock die{k}")
-            if p.locks == 3:
-                self.over = True
-                self.winner = p.i
-                self.winner_lock_source = "lock-action"
+            self._check_win(p, "lock-action")
             return
         if typ == "defuse":
             card, owner = self.omens.pop(0)
@@ -534,13 +559,20 @@ class Game:
         elif c in ("SMASH", "TRADE"):
             qi, k = a[3]
             q = self.players[qi]
+            q.hits_window += 1
             if q.shield[k]:
                 q.shield[k] = False
                 self._log(f"    P{p.i} {c} on P{qi} die{k} — SHIELD absorbs")
             else:
-                self._set_die(q, k, q.dice[k] - 2, "attack")
+                self._set_die(q, k, self.cfg["smash_to"], "attack")
                 q.attacks_taken += 1
                 self._log(f"    P{p.i} {c} P{qi} die{k} -> {q.dice[k]} (unlocked)")
+                if self.cfg["smash_bounty"]:
+                    low = [kk for kk in p.unlocked() if p.dice[kk] < 6]
+                    if low:
+                        kk = min(low, key=lambda x: p.dice[x])
+                        self._move_die(p, kk, 1, "bounty")
+                        self._log(f"      bounty: own die{kk} -> {p.dice[kk]}")
             if c == "TRADE":
                 pk = self._trade_pay_die(p)
                 if pk is not None:
@@ -566,6 +598,15 @@ class Game:
     def play_turn(self, p):
         p.turns += 1
         self.turn_count += 1
+        p.hits_window = 0
+        if self.cfg["win_delay"] and p.i in self.pending_win:
+            if p.locks == 3:
+                self.over = True
+                self.winner = p.i
+                self.winner_lock_source = self.pending_win[p.i]
+                self._log(f"  P{p.i} — the ink dries. WIN.")
+                return
+            del self.pending_win[p.i]
         self._fire_omens_for(p.i)
         if self.over:
             return
