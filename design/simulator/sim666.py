@@ -48,6 +48,29 @@ DEFAULT_CFG = {
     # shield_mode: "open" = v1 codified (placed on a die in advance)
     #              "reaction" = played from HAND when attacked, cancels the hit
     "shield_mode": "open",
+    # --- ruleset: "v1" (pptx codified) | "ivan" (666 - Rules.docx, 2026-08-26) ---
+    "ruleset": "v1",
+    "basic_split": [15, 14],      # ivan: counts of B1 (+/-1) and B2 (+/-2), total 29
+    "dual_spec": [1, 1],          # ivan: DUAL = +a own / -b opponent
+    "effects": {"SMASH": 3, "SHIELD": 3, "GAMBLE": 3, "REROLL": 3},  # ivan: the 12 effect cards
+    "lock_free_draw": 0,          # ivan: draw a free card when you lock a die
+    "draw_block_at_limit": 0,     # ivan: at 5 cards the draw action is illegal
+    "minus_limit": 0,             # >0: max subtract-plays (basic/dual) per turn
+    "basic_flexible": 1,          # ivan: 0 = basics are plus-only
+    "minus_floor": 1,             # basic/dual minus only on dice >= this value
+    "seat_comp": 0,               # 1: seats before the last start with +1 card (4P: seats 0-2)
+    "tempt": 0,                   # 1: TEMPT THE DEVIL action (demonic die with memory)
+    "dual_minus_floor": 2,        # DUAL's minus half may target dice >= this
+    "smash_is_minus": 0,          # 1: SMASH/TRADE counts toward the minus_limit
+}
+
+IVAN_DEFAULTS = {
+    "momentum": [2, 3, 3],        # +1 action while holding at least one 6
+    "lock_free_draw": 1,
+    "draw_block_at_limit": 1,
+    "instants": "none",
+    "shield_mode": "reaction",
+    "hand_limit": 5,
 }
 
 LOCK_BONUS = 3.5
@@ -59,11 +82,26 @@ OPP_W = 0.8
 
 def make_cfg(overrides):
     cfg = dict(DEFAULT_CFG)
-    cfg.update(overrides or {})
+    ov = dict(overrides or {})
+    if ov.get("ruleset") == "ivan":
+        base = dict(IVAN_DEFAULTS)
+        base.update(ov)
+        ov = base
+    cfg.update(ov)
     return cfg
 
 
 def build_deck(cfg):
+    if cfg["ruleset"] == "ivan":
+        d = {"B1": cfg["basic_split"][0], "B2": cfg["basic_split"][1],
+             "DUAL": 11}
+        for k, v in cfg["effects"].items():
+            d[k] = d.get(k, 0) + v
+        deck = []
+        for k, v in d.items():
+            deck.extend([k] * v)
+        assert len(deck) == 52, f"ivan deck must be 52, got {len(deck)}"
+        return deck
     d = dict(BASE_DECK)
     d.update(cfg["deck_overrides"])
     if cfg["instants"] == "none":
@@ -135,6 +173,11 @@ class Game:
         self.win_denied = 0                 # pending wins broken by the table
         self.shield_blocks = 0
         self.gamble_plays = 0
+        self.reroll_plays = 0
+        self.turn_minus_used = 0
+        self.demon_face = 3
+        self.turn_tempted = False
+        self.tempt_plays = 0
         self.log = [] if log else None
         self.reshuffles = 0
         self._setup()
@@ -158,6 +201,21 @@ class Game:
                 self.market.append(c)
         self.deck.extend(held)
         self.rng.shuffle(self.deck)
+        if self.cfg["seat_comp"]:
+            n = len(self.players)
+            if self.cfg["seat_comp"] == 2:
+                extra = [max(0, n - 2 - i) for i in range(n)]
+                extra[0] = min(extra[0], 2)
+            else:
+                extra = [1] * (n - 1) + [0]
+            for p, e in zip(self.players, extra):
+                for _ in range(e):
+                    c = self._draw_raw()
+                    if c is not None and c not in INSTANTS:
+                        p.hand.append(c)
+                    elif c is not None:
+                        self.deck.append(c)
+                        self.rng.shuffle(self.deck)
         self.leader = None
 
     def _draw_raw(self):
@@ -191,6 +249,12 @@ class Game:
             if v == 6 and not p.locked[k]:
                 p.locked[k] = True
                 self._log(f"    P{p.i} locks die{k} ({source})")
+                if (self.cfg["lock_free_draw"]
+                        and len(p.hand) < self.cfg["hand_limit"]):
+                    c = self._draw_raw()
+                    if c is not None:
+                        p.hand.append(c)
+                        self._log(f"      free draw for locking")
                 self._check_win(p, source)
         if v < 6 and p.locked[k]:
             p.locked[k] = False
@@ -318,14 +382,19 @@ class Game:
         acts = []
         for hi, c in enumerate(p.hand):
             acts.extend(self._card_actions(p, hi, c))
-        for mi, c in enumerate(self.market):
-            acts.append(("draw", mi))
+        if not (self.cfg["draw_block_at_limit"]
+                and len(p.hand) >= self.cfg["hand_limit"]):
+            for mi, c in enumerate(self.market):
+                acts.append(("draw", mi))
         if self.cfg["blind_draw"] and (self.deck or self.discard):
             acts.append(("blind",))
         if self.cfg["lock_mode"] == "action":
             for k in range(3):
                 if p.dice[k] == 6 and not p.locked[k]:
                     acts.append(("lock", k))
+        if (self.cfg["tempt"] and not self.turn_tempted
+                and p.unlocked()):
+            acts.append(("tempt",))
         if self.omens:
             acts.append(("defuse", 0))
         if not acts:
@@ -335,7 +404,21 @@ class Game:
     def _card_actions(self, p, hi, c):
         out = []
         opps = [q for q in self.players if q.i != p.i]
-        if c in ("P1", "P2"):
+        if c in ("B1", "B2"):
+            v = 1 if c == "B1" else 2
+            for k in p.unlocked():
+                if p.dice[k] < 6:
+                    out.append(("play", hi, c, ("plus", p.i, k)))
+            lim = self.cfg["minus_limit"]
+            minus_ok = (self.cfg["basic_flexible"]
+                        and (not lim or self.turn_minus_used < lim))
+            if minus_ok:
+                fl = max(2, self.cfg["minus_floor"])
+                for q in opps:
+                    for k in q.unlocked():
+                        if q.dice[k] >= fl:
+                            out.append(("play", hi, c, ("minus", q.i, k)))
+        elif c in ("P1", "P2"):
             for k in p.unlocked():
                 if p.dice[k] < 6:
                     out.append(("play", hi, c, (p.i, k)))
@@ -344,6 +427,20 @@ class Game:
                 for k in q.unlocked():
                     if q.dice[k] > 1:
                         out.append(("play", hi, c, (q.i, k)))
+        elif c == "DUAL" and self.cfg["ruleset"] == "ivan":
+            own = [k for k in p.unlocked() if p.dice[k] < 6]
+            lim = self.cfg["minus_limit"]
+            block_minus = lim and self.turn_minus_used >= lim
+            fl = max(2, self.cfg["dual_minus_floor"])
+            tg = ([] if block_minus else
+                  [(q.i, k) for q in opps for k in q.unlocked() if q.dice[k] >= fl])
+            if own and tg:
+                for k in own[:3]:
+                    for t in tg[:6]:
+                        out.append(("play", hi, c, (p.i, k), t))
+            elif own:
+                for k in own[:3]:
+                    out.append(("play", hi, c, (p.i, k), None))
         elif c == "DUAL":
             own = [k for k in p.unlocked() if p.dice[k] < 6]
             tg = [(q.i, k) for q in opps for k in q.unlocked() if q.dice[k] > 1]
@@ -364,6 +461,9 @@ class Game:
             if c == "TRADE" and pay is None:
                 return out
             lim = self.cfg["attack_rate_limit"]
+            if (self.cfg["smash_is_minus"] and self.cfg["minus_limit"]
+                    and self.turn_minus_used >= self.cfg["minus_limit"]):
+                return out
             for q in opps:
                 if lim and q.hits_window >= lim:
                     continue
@@ -373,13 +473,21 @@ class Game:
         elif c == "GAMBLE":
             for k in p.unlocked():
                 out.append(("play", hi, c, (p.i, k)))
+        elif c == "PACT":
+            if len(p.unlocked()) >= 2:
+                for k in p.unlocked():
+                    out.append(("play", hi, c, (p.i, k)))
+        elif c == "IDOL":
+            for k in p.unlocked():
+                if p.dice[k] != self.demon_face:
+                    out.append(("play", hi, c, (p.i, k)))
         elif c == "REROLL":
             for k in p.unlocked():
                 if p.dice[k] <= 3:
                     out.append(("play", hi, c, (p.i, k)))
             for q in opps:
                 for k in q.unlocked():
-                    if q.dice[k] >= 5:
+                    if q.dice[k] >= 4:
                         out.append(("play", hi, c, (q.i, k)))
         return out
 
@@ -423,6 +531,13 @@ class Game:
                 oth_gain = sum(1 for k in leader.unlocked() if leader.dice[k] == 5)
                 return oth_gain * 2.0 - 1.0 + n
             return 0.2 + n
+        if typ == "tempt":
+            f = self.demon_face
+            p_up = (6 - f) / 6.0
+            p_dn = (f - 1) / 6.0
+            best = max((p.dice[k] for k in p.unlocked()), default=1)
+            bonus = LOCK_BONUS * p_up if best == 5 else 0
+            return p_up * 1.0 - p_dn * 1.1 + bonus * 0.5 + n
         if typ == "blind":
             return 0.55 + n
         if typ == "draw":
@@ -430,6 +545,16 @@ class Game:
             return self._draw_value(p, c, leader) + n
         # play
         c = a[2]
+        if c in ("B1", "B2"):
+            v = 1 if c == "B1" else 2
+            mode, qi, k = a[3]
+            q = self.players[qi]
+            if mode == "plus":
+                delta = min(6, q.dice[k] + v) - q.dice[k]
+                return delta + self._gain_lock(q, q.dice[k] + delta, k) + n
+            delta = q.dice[k] - max(1, q.dice[k] - v)
+            w = OPP_W * (1.3 if qi == leader.i else 0.6)
+            return delta * w + n
         if c in ("P1", "P2"):
             _, k = a[3]
             delta = min(6, p.dice[k] + (1 if c == "P1" else 2)) - p.dice[k]
@@ -441,8 +566,9 @@ class Game:
             w = OPP_W * (1.3 if qi == leader.i else 0.6)
             return delta * w + n
         if c == "DUAL":
+            up = self.cfg["dual_spec"][0] if self.cfg["ruleset"] == "ivan" else 2
             _, k = a[3]
-            delta = min(6, p.dice[k] + 2) - p.dice[k]
+            delta = min(6, p.dice[k] + up) - p.dice[k]
             v = delta + self._gain_lock(p, p.dice[k] + delta, k)
             if a[4]:
                 qi, kk = a[4]
@@ -475,6 +601,16 @@ class Game:
                 pk = self._trade_pay_die(p)
                 v -= 1 + (LOCK_BONUS if p.locked[pk] else 0)
             return v + n
+        if c == "PACT":
+            _, k = a[3]
+            v0 = p.dice[k]
+            win_part = (6 - v0) + LOCK_BONUS + (WIN_SCORE if p.locks == 2 else 0)
+            lose_part = (1 - v0)
+            return 0.5 * win_part + 0.5 * lose_part + n
+        if c == "IDOL":
+            _, k = a[3]
+            delta = self.demon_face - p.dice[k]
+            return delta + self._gain_lock(p, self.demon_face, k) + n
         if c == "GAMBLE":
             _, k = a[3]
             v0 = p.dice[k]
@@ -497,6 +633,8 @@ class Game:
     def _draw_value(self, p, c, leader):
         low = [k for k in p.unlocked() if p.dice[k] <= 4]
         v = {"P1": 1.0, "P2": 1.7 if low else 0.9, "M2": 0.8,
+             "B1": 1.1, "B2": 1.8 if low else 1.0,
+             "PACT": 1.3, "IDOL": 0.9,
              "DUAL": 1.5, "GAMBLE": 0.9, "REROLL": 0.7,
              "SHIELD": (0.5 + 0.9 * p.locks
                         if self.cfg["shield_mode"] == "reaction"
@@ -524,6 +662,27 @@ class Game:
             self.discard.append(card)
             self._log(f"    P{p.i} defuses omen {card}")
             return
+        if typ == "tempt":
+            self.turn_tempted = True
+            self.tempt_plays += 1
+            roll = self.rng.randint(1, 6)
+            f = self.demon_face
+            self.demon_face = roll
+            if roll > f:
+                ks = [k for k in p.unlocked() if p.dice[k] < 6]
+                if ks:
+                    k = max(ks, key=lambda x: p.dice[x])
+                    self._move_die(p, k, 1, "TEMPT")
+                    self._log(f"    P{p.i} TEMPTS: {roll}>{f}, +1 die{k} -> {p.dice[k]}")
+            elif roll < f:
+                ks = [k for k in p.unlocked() if p.dice[k] > 1]
+                if ks:
+                    k = max(ks, key=lambda x: p.dice[x])
+                    self._move_die(p, k, -1, "TEMPT")
+                    self._log(f"    P{p.i} TEMPTS: {roll}<{f}, -1 die{k} -> {p.dice[k]}")
+            else:
+                self._log(f"    P{p.i} TEMPTS: {roll}=={f}, nothing")
+            return
         if typ == "draw":
             c = self.market.pop(a[1])
             p.hand.append(c)
@@ -548,7 +707,19 @@ class Game:
         hi, c = a[1], a[2]
         p.hand.pop(hi)
         self.discard.append(c)
-        if c in ("P1", "P2"):
+        if c in ("B1", "B2"):
+            v = 1 if c == "B1" else 2
+            mode, qi, k = a[3]
+            q = self.players[qi]
+            if mode == "plus":
+                self._move_die(q, k, v, "play")
+                self._log(f"    P{p.i} plays +{v} on own die{k} -> {q.dice[k]}")
+            else:
+                self._move_die(q, k, -v, "attack")
+                self.turn_minus_used += 1
+                q.attacks_taken += 1
+                self._log(f"    P{p.i} plays -{v} on P{qi} die{k} -> {q.dice[k]}")
+        elif c in ("P1", "P2"):
             _, k = a[3]
             self._move_die(p, k, 1 if c == "P1" else 2, "play")
             self._log(f"    P{p.i} plays {c} on own die{k} -> {p.dice[k]}")
@@ -558,6 +729,19 @@ class Game:
             self._move_die(q, k, -2, "attack")
             q.attacks_taken += 1
             self._log(f"    P{p.i} plays -2 on P{qi} die{k} -> {q.dice[k]}")
+        elif c == "DUAL" and self.cfg["ruleset"] == "ivan":
+            up, dn = self.cfg["dual_spec"]
+            _, k = a[3]
+            self._move_die(p, k, up, "play")
+            msg = f"    P{p.i} DUAL +{up} own die{k} -> {p.dice[k]}"
+            if a[4]:
+                qi, kk = a[4]
+                q = self.players[qi]
+                self._move_die(q, kk, -dn, "attack")
+                self.turn_minus_used += 1
+                q.attacks_taken += 1
+                msg += f", -{dn} P{qi} die{kk} -> {q.dice[kk]}"
+            self._log(msg)
         elif c == "DUAL":
             _, k = a[3]
             self._move_die(p, k, 2, "play")
@@ -577,6 +761,8 @@ class Game:
             qi, k = a[3]
             q = self.players[qi]
             q.hits_window += 1
+            if self.cfg["smash_is_minus"]:
+                self.turn_minus_used += 1
             if (self.cfg["shield_mode"] == "reaction" and "SHIELD" in q.hand
                     and self._wants_block(q)):
                 q.hand.remove("SHIELD")
@@ -606,14 +792,31 @@ class Game:
                 if pk is not None:
                     self._set_die(p, pk, p.dice[pk] - 1, "trade-cost")
                     self._log(f"      TRADE cost: own die{pk} -> {p.dice[pk]}")
+        elif c == "PACT":
+            self.gamble_plays += 1
+            _, k = a[3]
+            roll = self.rng.randint(1, 6)
+            self.demon_face = roll
+            if roll >= 4:
+                self._set_die(p, k, 6, "PACT")
+                self._log(f"    P{p.i} PACT die{k}: roll {roll} -> LOCKED 6")
+            else:
+                self._set_die(p, k, 1, "PACT")
+                self._log(f"    P{p.i} PACT die{k}: roll {roll} -> 1")
+        elif c == "IDOL":
+            _, k = a[3]
+            self._set_die(p, k, self.demon_face, "IDOL")
+            self._log(f"    P{p.i} FALSE IDOL: die{k} -> {self.demon_face}")
         elif c == "GAMBLE":
             self.gamble_plays += 1
             _, k = a[3]
             roll = self.rng.randint(1, 6)
+            self.demon_face = roll
             delta = 2 if roll >= 4 else -1
             self._move_die(p, k, delta, "GAMBLE")
             self._log(f"    P{p.i} GAMBLE die{k}: roll {roll} -> {p.dice[k]}")
         elif c == "REROLL":
+            self.reroll_plays += 1
             qi, k = a[3]
             q = self.players[qi]
             v = self.rng.randint(1, 6)
@@ -628,6 +831,8 @@ class Game:
         p.turns += 1
         self.turn_count += 1
         p.hits_window = 0
+        self.turn_minus_used = 0
+        self.turn_tempted = False
         if self.cfg["win_delay"] and p.i in self.pending_win:
             if p.locks == 3:
                 self.over = True
@@ -709,7 +914,10 @@ class Game:
             "reshuffles": self.reshuffles,
             "shield_blocks": self.shield_blocks,
             "gamble_plays": self.gamble_plays,
+            "tempt_plays": self.tempt_plays,
+            "reroll_plays": self.reroll_plays,
             "win_denied": self.win_denied,
+            "win_source": (None if stalled else self.winner_lock_source),
             "winner_bot": (self.players[self.winner].bot
                            if not stalled else None),
             "winner_first_lock": None,
@@ -771,7 +979,15 @@ def aggregate(ms, cfg, mix):
         "reshuffles_mean": round(statistics.mean(m["reshuffles"] for m in ms), 2),
         "blocks_mean": round(statistics.mean(m["shield_blocks"] for m in ms), 2),
         "gamble_mean": round(statistics.mean(m["gamble_plays"] for m in ms), 2),
+        "tempt_mean": round(statistics.mean(m["tempt_plays"] for m in ms), 2),
+        "reroll_mean": round(statistics.mean(m["reroll_plays"] for m in ms), 2),
+        "demonic_mean": round(statistics.mean(
+            m["gamble_plays"] + m["reroll_plays"] for m in ms), 2),
         "win_denied_mean": round(statistics.mean(m["win_denied"] for m in ms), 2),
+        "win_by_roll_pct": round(100 * sum(
+            1 for m in ms if m.get("win_source") in
+            ("PACT", "GAMBLE", "REROLL", "TEMPT")) / max(1, len(
+                [m for m in ms if not m["stalled"]])), 1),
         "seat_win_pct": [round(100 * w / tot, 1) for w in seatw],
     }
     if mix == "mixed":
@@ -798,6 +1014,16 @@ SUITES = {
 
 
 def selftest():
+    for g in range(300):
+        cfg = make_cfg({"ruleset": "ivan"})
+        game = Game(cfg, ["smart"] * 4, 5000 + g)
+        game.run()
+        cards = (len(game.deck) + len(game.discard) + len(game.market)
+                 + sum(len(p.hand) for p in game.players) + len(game.omens))
+        assert cards == 52, f"ivan card leak {cards}"
+        for p in game.players:
+            assert all(1 <= v <= 6 for v in p.dice)
+    print("ivan ruleset OK — 300 games, 52 cards conserved")
     modes = ["raw", "none", "choice", "omen", "catchup", "personal"]
     locks = ["auto", "action"]
     total = 0

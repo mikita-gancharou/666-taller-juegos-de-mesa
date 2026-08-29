@@ -1,0 +1,1098 @@
+{
+ "CTRL  (3/3/3/3)": {
+  "4p": {
+   "cfg": {
+    "players": 4,
+    "instants": "none",
+    "momentum": [
+     2,
+     3,
+     3
+    ],
+    "catchup_bonus": 0,
+    "lock_mode": "auto",
+    "market_slots": 3,
+    "blind_draw": false,
+    "hand_limit": 5,
+    "deck_overrides": {},
+    "max_rounds": 60,
+    "smash_bounty": 1,
+    "smash_to": 5,
+    "attack_rate_limit": 0,
+    "win_delay": 0,
+    "shield_hidden": 0,
+    "shield_mode": "reaction",
+    "ruleset": "ivan",
+    "basic_split": [
+     15,
+     14
+    ],
+    "dual_spec": [
+     1,
+     1
+    ],
+    "effects": {
+     "SMASH": 3,
+     "SHIELD": 3,
+     "GAMBLE": 3,
+     "REROLL": 3
+    },
+    "lock_free_draw": 1,
+    "draw_block_at_limit": 1,
+    "minus_limit": 1,
+    "basic_flexible": 1,
+    "minus_floor": 4,
+    "seat_comp": 0,
+    "tempt": 0
+   },
+   "mix": "smart",
+   "games": 3000,
+   "stall_pct": 0.0,
+   "rounds_med": 8.0,
+   "rounds_p90": 18,
+   "lead_changes": 4.05,
+   "comeback_pct": 68.0,
+   "photo_med": 3.0,
+   "photo_close_pct": 85.3,
+   "instant_decided_pct": 0.0,
+   "instant_pips_mean": 0,
+   "attacks_mean": 21.2,
+   "noimp_pct": 0.3,
+   "reshuffles_mean": 0.68,
+   "blocks_mean": 1.04,
+   "gamble_mean": 2.73,
+   "tempt_mean": 0,
+   "reroll_mean": 2.24,
+   "demonic_mean": 4.97,
+   "win_denied_mean": 0,
+   "seat_win_pct": [
+    23.5,
+    23.1,
+    26.0,
+    27.3
+   ]
+  },
+  "agency": {
+   "cfg": {
+    "players": 4,
+    "instants": "none",
+    "momentum": [
+     2,
+     3,
+     3
+    ],
+    "catchup_bonus": 0,
+    "lock_mode": "auto",
+    "market_slots": 3,
+    "blind_draw": false,
+    "hand_limit": 5,
+    "deck_overrides": {},
+    "max_rounds": 60,
+    "smash_bounty": 1,
+    "smash_to": 5,
+    "attack_rate_limit": 0,
+    "win_delay": 0,
+    "shield_hidden": 0,
+    "shield_mode": "reaction",
+    "ruleset": "ivan",
+    "basic_split": [
+     15,
+     14
+    ],
+    "dual_spec": [
+     1,
+     1
+    ],
+    "effects": {
+     "SMASH": 3,
+     "SHIELD": 3,
+     "GAMBLE": 3,
+     "REROLL": 3
+    },
+    "lock_free_draw": 1,
+    "draw_block_at_limit": 1,
+    "minus_limit": 1,
+    "basic_flexible": 1,
+    "minus_floor": 4,
+    "seat_comp": 0,
+    "tempt": 0
+   },
+   "mix": "mixed",
+   "games": 1500,
+   "stall_pct": 0.0,
+   "rounds_med": 9.0,
+   "rounds_p90": 17,
+   "lead_changes": 2.53,
+   "comeback_pct": 35.9,
+   "photo_med": 6.0,
+   "photo_close_pct": 22.9,
+   "instant_decided_pct": 0.0,
+   "instant_pips_mean": 0,
+   "attacks_mean": 22.5,
+   "noimp_pct": 6.5,
+   "reshuffles_mean": 0.64,
+   "blocks_mean": 0.65,
+   "gamble_mean": 2.8,
+   "tempt_mean": 0,
+   "reroll_mean": 2.77,
+   "demonic_mean": 5.57,
+   "win_denied_mean": 0,
+   "seat_win_pct": [
+    26.2,
+    24.8,
+    24.2,
+    24.8
+   ],
+   "smart_win_pct": 91.5
+  },
+  "3p": {
+   "cfg": {
+    "players": 3,
+    "instants": "none",
+    "momentum": [
+     2,
+     3,
+     3
+    ],
+    "catchup_bonus": 0,
+    "lock_mode": "auto",
+    "market_slots": 3,
+    "blind_draw": false,
+    "hand_limit": 5,
+    "deck_overrides": {},
+    "max_rounds": 60,
+    "smash_bounty": 1,
+    "smash_to": 5,
+    "attack_rate_limit": 0,
+    "win_delay": 0,
+    "shield_hidden": 0,
+    "shield_mode": "reaction",
+    "ruleset": "ivan",
+    "basic_split": [
+     15,
+     14
+    ],
+    "dual_spec": [
+     1,
+     1
+    ],
+    "effects": {
+     "SMASH": 3,
+     "SHIELD": 3,
+     "GAMBLE": 3,
+     "REROLL": 3
+    },
+    "lock_free_draw": 1,
+    "draw_block_at_limit": 1,
+    "minus_limit": 1,
+    "basic_flexible": 1,
+    "minus_floor": 4,
+    "seat_comp": 0,
+    "tempt": 0
+   },
+   "mix": "smart",
+   "games": 2000,
+   "stall_pct": 0.1,
+   "rounds_med": 9.0,
+   "rounds_p90": 18,
+   "lead_changes": 3.26,
+   "comeback_pct": 57.4,
+   "photo_med": 3.0,
+   "photo_close_pct": 77.5,
+   "instant_decided_pct": 0.0,
+   "instant_pips_mean": 0,
+   "attacks_mean": 16.2,
+   "noimp_pct": 0.3,
+   "reshuffles_mean": 0.42,
+   "blocks_mean": 0.96,
+   "gamble_mean": 2.22,
+   "tempt_mean": 0,
+   "reroll_mean": 1.7,
+   "demonic_mean": 3.92,
+   "win_denied_mean": 0,
+   "seat_win_pct": [
+    34.4,
+    28.5,
+    37.1
+   ]
+  }
+ },
+ "A PACT+wd": {
+  "4p": {
+   "cfg": {
+    "players": 4,
+    "instants": "none",
+    "momentum": [
+     2,
+     3,
+     3
+    ],
+    "catchup_bonus": 0,
+    "lock_mode": "auto",
+    "market_slots": 3,
+    "blind_draw": false,
+    "hand_limit": 5,
+    "deck_overrides": {},
+    "max_rounds": 60,
+    "smash_bounty": 1,
+    "smash_to": 5,
+    "attack_rate_limit": 0,
+    "win_delay": 1,
+    "shield_hidden": 0,
+    "shield_mode": "reaction",
+    "ruleset": "ivan",
+    "basic_split": [
+     17,
+     12
+    ],
+    "dual_spec": [
+     1,
+     1
+    ],
+    "effects": {
+     "SMASH": 3,
+     "SHIELD": 3,
+     "GAMBLE": 2,
+     "REROLL": 1,
+     "PACT": 3
+    },
+    "lock_free_draw": 1,
+    "draw_block_at_limit": 1,
+    "minus_limit": 1,
+    "basic_flexible": 1,
+    "minus_floor": 4,
+    "seat_comp": 0,
+    "tempt": 0
+   },
+   "mix": "smart",
+   "games": 3000,
+   "stall_pct": 0.0,
+   "rounds_med": 9.0,
+   "rounds_p90": 17,
+   "lead_changes": 3.97,
+   "comeback_pct": 57.4,
+   "photo_med": 1.0,
+   "photo_close_pct": 94.5,
+   "instant_decided_pct": 0.0,
+   "instant_pips_mean": 0,
+   "attacks_mean": 21.0,
+   "noimp_pct": 0.2,
+   "reshuffles_mean": 0.78,
+   "blocks_mean": 1.17,
+   "gamble_mean": 5.27,
+   "tempt_mean": 0,
+   "reroll_mean": 0.49,
+   "demonic_mean": 5.76,
+   "win_denied_mean": 0.21,
+   "seat_win_pct": [
+    21.9,
+    22.3,
+    27.1,
+    28.7
+   ]
+  },
+  "agency": {
+   "cfg": {
+    "players": 4,
+    "instants": "none",
+    "momentum": [
+     2,
+     3,
+     3
+    ],
+    "catchup_bonus": 0,
+    "lock_mode": "auto",
+    "market_slots": 3,
+    "blind_draw": false,
+    "hand_limit": 5,
+    "deck_overrides": {},
+    "max_rounds": 60,
+    "smash_bounty": 1,
+    "smash_to": 5,
+    "attack_rate_limit": 0,
+    "win_delay": 1,
+    "shield_hidden": 0,
+    "shield_mode": "reaction",
+    "ruleset": "ivan",
+    "basic_split": [
+     17,
+     12
+    ],
+    "dual_spec": [
+     1,
+     1
+    ],
+    "effects": {
+     "SMASH": 3,
+     "SHIELD": 3,
+     "GAMBLE": 2,
+     "REROLL": 1,
+     "PACT": 3
+    },
+    "lock_free_draw": 1,
+    "draw_block_at_limit": 1,
+    "minus_limit": 1,
+    "basic_flexible": 1,
+    "minus_floor": 4,
+    "seat_comp": 0,
+    "tempt": 0
+   },
+   "mix": "mixed",
+   "games": 1500,
+   "stall_pct": 0.0,
+   "rounds_med": 10.0,
+   "rounds_p90": 17,
+   "lead_changes": 2.56,
+   "comeback_pct": 35.6,
+   "photo_med": 4.0,
+   "photo_close_pct": 40.3,
+   "instant_decided_pct": 0.0,
+   "instant_pips_mean": 0,
+   "attacks_mean": 23.4,
+   "noimp_pct": 6.0,
+   "reshuffles_mean": 0.76,
+   "blocks_mean": 0.81,
+   "gamble_mean": 5.19,
+   "tempt_mean": 0,
+   "reroll_mean": 1.02,
+   "demonic_mean": 6.21,
+   "win_denied_mean": 0.18,
+   "seat_win_pct": [
+    26.9,
+    23.6,
+    24.6,
+    24.9
+   ],
+   "smart_win_pct": 84.5
+  },
+  "3p": {
+   "cfg": {
+    "players": 3,
+    "instants": "none",
+    "momentum": [
+     2,
+     3,
+     3
+    ],
+    "catchup_bonus": 0,
+    "lock_mode": "auto",
+    "market_slots": 3,
+    "blind_draw": false,
+    "hand_limit": 5,
+    "deck_overrides": {},
+    "max_rounds": 60,
+    "smash_bounty": 1,
+    "smash_to": 5,
+    "attack_rate_limit": 0,
+    "win_delay": 1,
+    "shield_hidden": 0,
+    "shield_mode": "reaction",
+    "ruleset": "ivan",
+    "basic_split": [
+     17,
+     12
+    ],
+    "dual_spec": [
+     1,
+     1
+    ],
+    "effects": {
+     "SMASH": 3,
+     "SHIELD": 3,
+     "GAMBLE": 2,
+     "REROLL": 1,
+     "PACT": 3
+    },
+    "lock_free_draw": 1,
+    "draw_block_at_limit": 1,
+    "minus_limit": 1,
+    "basic_flexible": 1,
+    "minus_floor": 4,
+    "seat_comp": 0,
+    "tempt": 0
+   },
+   "mix": "smart",
+   "games": 2000,
+   "stall_pct": 0.0,
+   "rounds_med": 10.0,
+   "rounds_p90": 19,
+   "lead_changes": 3.34,
+   "comeback_pct": 51.8,
+   "photo_med": 1.0,
+   "photo_close_pct": 86.7,
+   "instant_decided_pct": 0.0,
+   "instant_pips_mean": 0,
+   "attacks_mean": 16.4,
+   "noimp_pct": 0.2,
+   "reshuffles_mean": 0.5,
+   "blocks_mean": 1.05,
+   "gamble_mean": 4.25,
+   "tempt_mean": 0,
+   "reroll_mean": 0.36,
+   "demonic_mean": 4.61,
+   "win_denied_mean": 0.12,
+   "seat_win_pct": [
+    31.9,
+    32.2,
+    36.0
+   ]
+  }
+ },
+ "A PACT": {
+  "4p": {
+   "cfg": {
+    "players": 4,
+    "instants": "none",
+    "momentum": [
+     2,
+     3,
+     3
+    ],
+    "catchup_bonus": 0,
+    "lock_mode": "auto",
+    "market_slots": 3,
+    "blind_draw": false,
+    "hand_limit": 5,
+    "deck_overrides": {},
+    "max_rounds": 60,
+    "smash_bounty": 1,
+    "smash_to": 5,
+    "attack_rate_limit": 0,
+    "win_delay": 0,
+    "shield_hidden": 0,
+    "shield_mode": "reaction",
+    "ruleset": "ivan",
+    "basic_split": [
+     17,
+     12
+    ],
+    "dual_spec": [
+     1,
+     1
+    ],
+    "effects": {
+     "SMASH": 3,
+     "SHIELD": 3,
+     "GAMBLE": 2,
+     "REROLL": 1,
+     "PACT": 3
+    },
+    "lock_free_draw": 1,
+    "draw_block_at_limit": 1,
+    "minus_limit": 1,
+    "basic_flexible": 1,
+    "minus_floor": 4,
+    "seat_comp": 0,
+    "tempt": 0
+   },
+   "mix": "smart",
+   "games": 3000,
+   "stall_pct": 0.0,
+   "rounds_med": 8.0,
+   "rounds_p90": 15,
+   "lead_changes": 3.34,
+   "comeback_pct": 65.1,
+   "photo_med": 3.0,
+   "photo_close_pct": 79.0,
+   "instant_decided_pct": 0.0,
+   "instant_pips_mean": 0,
+   "attacks_mean": 19.1,
+   "noimp_pct": 0.2,
+   "reshuffles_mean": 0.59,
+   "blocks_mean": 1.02,
+   "gamble_mean": 4.62,
+   "tempt_mean": 0,
+   "reroll_mean": 0.46,
+   "demonic_mean": 5.08,
+   "win_denied_mean": 0,
+   "seat_win_pct": [
+    23.1,
+    22.2,
+    26.4,
+    28.3
+   ]
+  },
+  "agency": {
+   "cfg": {
+    "players": 4,
+    "instants": "none",
+    "momentum": [
+     2,
+     3,
+     3
+    ],
+    "catchup_bonus": 0,
+    "lock_mode": "auto",
+    "market_slots": 3,
+    "blind_draw": false,
+    "hand_limit": 5,
+    "deck_overrides": {},
+    "max_rounds": 60,
+    "smash_bounty": 1,
+    "smash_to": 5,
+    "attack_rate_limit": 0,
+    "win_delay": 0,
+    "shield_hidden": 0,
+    "shield_mode": "reaction",
+    "ruleset": "ivan",
+    "basic_split": [
+     17,
+     12
+    ],
+    "dual_spec": [
+     1,
+     1
+    ],
+    "effects": {
+     "SMASH": 3,
+     "SHIELD": 3,
+     "GAMBLE": 2,
+     "REROLL": 1,
+     "PACT": 3
+    },
+    "lock_free_draw": 1,
+    "draw_block_at_limit": 1,
+    "minus_limit": 1,
+    "basic_flexible": 1,
+    "minus_floor": 4,
+    "seat_comp": 0,
+    "tempt": 0
+   },
+   "mix": "mixed",
+   "games": 1500,
+   "stall_pct": 0.0,
+   "rounds_med": 9.0,
+   "rounds_p90": 16,
+   "lead_changes": 2.41,
+   "comeback_pct": 40.1,
+   "photo_med": 5.0,
+   "photo_close_pct": 27.1,
+   "instant_decided_pct": 0.0,
+   "instant_pips_mean": 0,
+   "attacks_mean": 21.2,
+   "noimp_pct": 6.0,
+   "reshuffles_mean": 0.6,
+   "blocks_mean": 0.68,
+   "gamble_mean": 4.67,
+   "tempt_mean": 0,
+   "reroll_mean": 0.92,
+   "demonic_mean": 5.59,
+   "win_denied_mean": 0,
+   "seat_win_pct": [
+    27.5,
+    23.5,
+    24.3,
+    24.8
+   ],
+   "smart_win_pct": 83.9
+  },
+  "3p": {
+   "cfg": {
+    "players": 3,
+    "instants": "none",
+    "momentum": [
+     2,
+     3,
+     3
+    ],
+    "catchup_bonus": 0,
+    "lock_mode": "auto",
+    "market_slots": 3,
+    "blind_draw": false,
+    "hand_limit": 5,
+    "deck_overrides": {},
+    "max_rounds": 60,
+    "smash_bounty": 1,
+    "smash_to": 5,
+    "attack_rate_limit": 0,
+    "win_delay": 0,
+    "shield_hidden": 0,
+    "shield_mode": "reaction",
+    "ruleset": "ivan",
+    "basic_split": [
+     17,
+     12
+    ],
+    "dual_spec": [
+     1,
+     1
+    ],
+    "effects": {
+     "SMASH": 3,
+     "SHIELD": 3,
+     "GAMBLE": 2,
+     "REROLL": 1,
+     "PACT": 3
+    },
+    "lock_free_draw": 1,
+    "draw_block_at_limit": 1,
+    "minus_limit": 1,
+    "basic_flexible": 1,
+    "minus_floor": 4,
+    "seat_comp": 0,
+    "tempt": 0
+   },
+   "mix": "smart",
+   "games": 2000,
+   "stall_pct": 0.0,
+   "rounds_med": 8.0,
+   "rounds_p90": 18,
+   "lead_changes": 2.9,
+   "comeback_pct": 57.2,
+   "photo_med": 3.0,
+   "photo_close_pct": 67.2,
+   "instant_decided_pct": 0.0,
+   "instant_pips_mean": 0,
+   "attacks_mean": 15.4,
+   "noimp_pct": 0.2,
+   "reshuffles_mean": 0.38,
+   "blocks_mean": 0.93,
+   "gamble_mean": 3.89,
+   "tempt_mean": 0,
+   "reroll_mean": 0.35,
+   "demonic_mean": 4.24,
+   "win_denied_mean": 0,
+   "seat_win_pct": [
+    32.4,
+    32.1,
+    35.5
+   ]
+  }
+ },
+ "B REROLL-heavy": {
+  "4p": {
+   "cfg": {
+    "players": 4,
+    "instants": "none",
+    "momentum": [
+     2,
+     3,
+     3
+    ],
+    "catchup_bonus": 0,
+    "lock_mode": "auto",
+    "market_slots": 3,
+    "blind_draw": false,
+    "hand_limit": 5,
+    "deck_overrides": {},
+    "max_rounds": 60,
+    "smash_bounty": 1,
+    "smash_to": 5,
+    "attack_rate_limit": 0,
+    "win_delay": 0,
+    "shield_hidden": 0,
+    "shield_mode": "reaction",
+    "ruleset": "ivan",
+    "basic_split": [
+     15,
+     14
+    ],
+    "dual_spec": [
+     1,
+     1
+    ],
+    "effects": {
+     "SMASH": 3,
+     "SHIELD": 4,
+     "REROLL": 5
+    },
+    "lock_free_draw": 1,
+    "draw_block_at_limit": 1,
+    "minus_limit": 1,
+    "basic_flexible": 1,
+    "minus_floor": 4,
+    "seat_comp": 0,
+    "tempt": 0
+   },
+   "mix": "smart",
+   "games": 3000,
+   "stall_pct": 0.0,
+   "rounds_med": 8.0,
+   "rounds_p90": 17,
+   "lead_changes": 3.93,
+   "comeback_pct": 68.9,
+   "photo_med": 3.0,
+   "photo_close_pct": 84.7,
+   "instant_decided_pct": 0.0,
+   "instant_pips_mean": 0,
+   "attacks_mean": 21.0,
+   "noimp_pct": 0.4,
+   "reshuffles_mean": 0.68,
+   "blocks_mean": 1.29,
+   "gamble_mean": 0,
+   "tempt_mean": 0,
+   "reroll_mean": 4.22,
+   "demonic_mean": 4.22,
+   "win_denied_mean": 0,
+   "seat_win_pct": [
+    22.3,
+    23.9,
+    25.7,
+    28.1
+   ]
+  },
+  "agency": {
+   "cfg": {
+    "players": 4,
+    "instants": "none",
+    "momentum": [
+     2,
+     3,
+     3
+    ],
+    "catchup_bonus": 0,
+    "lock_mode": "auto",
+    "market_slots": 3,
+    "blind_draw": false,
+    "hand_limit": 5,
+    "deck_overrides": {},
+    "max_rounds": 60,
+    "smash_bounty": 1,
+    "smash_to": 5,
+    "attack_rate_limit": 0,
+    "win_delay": 0,
+    "shield_hidden": 0,
+    "shield_mode": "reaction",
+    "ruleset": "ivan",
+    "basic_split": [
+     15,
+     14
+    ],
+    "dual_spec": [
+     1,
+     1
+    ],
+    "effects": {
+     "SMASH": 3,
+     "SHIELD": 4,
+     "REROLL": 5
+    },
+    "lock_free_draw": 1,
+    "draw_block_at_limit": 1,
+    "minus_limit": 1,
+    "basic_flexible": 1,
+    "minus_floor": 4,
+    "seat_comp": 0,
+    "tempt": 0
+   },
+   "mix": "mixed",
+   "games": 1500,
+   "stall_pct": 0.0,
+   "rounds_med": 10.0,
+   "rounds_p90": 17,
+   "lead_changes": 2.64,
+   "comeback_pct": 36.1,
+   "photo_med": 6.0,
+   "photo_close_pct": 19.6,
+   "instant_decided_pct": 0.0,
+   "instant_pips_mean": 0,
+   "attacks_mean": 23.6,
+   "noimp_pct": 6.9,
+   "reshuffles_mean": 0.68,
+   "blocks_mean": 0.82,
+   "gamble_mean": 0,
+   "tempt_mean": 0,
+   "reroll_mean": 4.84,
+   "demonic_mean": 4.84,
+   "win_denied_mean": 0,
+   "seat_win_pct": [
+    25.9,
+    24.3,
+    25.1,
+    24.7
+   ],
+   "smart_win_pct": 91.5
+  },
+  "3p": {
+   "cfg": {
+    "players": 3,
+    "instants": "none",
+    "momentum": [
+     2,
+     3,
+     3
+    ],
+    "catchup_bonus": 0,
+    "lock_mode": "auto",
+    "market_slots": 3,
+    "blind_draw": false,
+    "hand_limit": 5,
+    "deck_overrides": {},
+    "max_rounds": 60,
+    "smash_bounty": 1,
+    "smash_to": 5,
+    "attack_rate_limit": 0,
+    "win_delay": 0,
+    "shield_hidden": 0,
+    "shield_mode": "reaction",
+    "ruleset": "ivan",
+    "basic_split": [
+     15,
+     14
+    ],
+    "dual_spec": [
+     1,
+     1
+    ],
+    "effects": {
+     "SMASH": 3,
+     "SHIELD": 4,
+     "REROLL": 5
+    },
+    "lock_free_draw": 1,
+    "draw_block_at_limit": 1,
+    "minus_limit": 1,
+    "basic_flexible": 1,
+    "minus_floor": 4,
+    "seat_comp": 0,
+    "tempt": 0
+   },
+   "mix": "smart",
+   "games": 2000,
+   "stall_pct": 0.0,
+   "rounds_med": 9.0,
+   "rounds_p90": 18,
+   "lead_changes": 3.29,
+   "comeback_pct": 59.1,
+   "photo_med": 3.0,
+   "photo_close_pct": 76.8,
+   "instant_decided_pct": 0.0,
+   "instant_pips_mean": 0,
+   "attacks_mean": 16.3,
+   "noimp_pct": 0.4,
+   "reshuffles_mean": 0.42,
+   "blocks_mean": 1.19,
+   "gamble_mean": 0,
+   "tempt_mean": 0,
+   "reroll_mean": 3.29,
+   "demonic_mean": 3.29,
+   "win_denied_mean": 0,
+   "seat_win_pct": [
+    32.1,
+    30.9,
+    37.0
+   ]
+  }
+ },
+ "C TEMPT+IDOL": {
+  "4p": {
+   "cfg": {
+    "players": 4,
+    "instants": "none",
+    "momentum": [
+     2,
+     3,
+     3
+    ],
+    "catchup_bonus": 0,
+    "lock_mode": "auto",
+    "market_slots": 3,
+    "blind_draw": false,
+    "hand_limit": 5,
+    "deck_overrides": {},
+    "max_rounds": 60,
+    "smash_bounty": 1,
+    "smash_to": 5,
+    "attack_rate_limit": 0,
+    "win_delay": 0,
+    "shield_hidden": 0,
+    "shield_mode": "reaction",
+    "ruleset": "ivan",
+    "basic_split": [
+     15,
+     14
+    ],
+    "dual_spec": [
+     1,
+     1
+    ],
+    "effects": {
+     "SMASH": 4,
+     "SHIELD": 3,
+     "GAMBLE": 2,
+     "REROLL": 2,
+     "IDOL": 1
+    },
+    "lock_free_draw": 1,
+    "draw_block_at_limit": 1,
+    "minus_limit": 1,
+    "basic_flexible": 1,
+    "minus_floor": 4,
+    "seat_comp": 0,
+    "tempt": 1
+   },
+   "mix": "smart",
+   "games": 3000,
+   "stall_pct": 0.03333333333333333,
+   "rounds_med": 8,
+   "rounds_p90": 18,
+   "lead_changes": 4.19,
+   "comeback_pct": 68.0,
+   "photo_med": 3,
+   "photo_close_pct": 84.6,
+   "instant_decided_pct": 0.0,
+   "instant_pips_mean": 0,
+   "attacks_mean": 22.5,
+   "noimp_pct": 0.9,
+   "reshuffles_mean": 0.67,
+   "blocks_mean": 1.28,
+   "gamble_mean": 1.75,
+   "tempt_mean": 1.72,
+   "reroll_mean": 1.34,
+   "demonic_mean": 3.09,
+   "win_denied_mean": 0,
+   "seat_win_pct": [
+    22.2,
+    23.2,
+    25.5,
+    29.1
+   ]
+  },
+  "agency": {
+   "cfg": {
+    "players": 4,
+    "instants": "none",
+    "momentum": [
+     2,
+     3,
+     3
+    ],
+    "catchup_bonus": 0,
+    "lock_mode": "auto",
+    "market_slots": 3,
+    "blind_draw": false,
+    "hand_limit": 5,
+    "deck_overrides": {},
+    "max_rounds": 60,
+    "smash_bounty": 1,
+    "smash_to": 5,
+    "attack_rate_limit": 0,
+    "win_delay": 0,
+    "shield_hidden": 0,
+    "shield_mode": "reaction",
+    "ruleset": "ivan",
+    "basic_split": [
+     15,
+     14
+    ],
+    "dual_spec": [
+     1,
+     1
+    ],
+    "effects": {
+     "SMASH": 4,
+     "SHIELD": 3,
+     "GAMBLE": 2,
+     "REROLL": 2,
+     "IDOL": 1
+    },
+    "lock_free_draw": 1,
+    "draw_block_at_limit": 1,
+    "minus_limit": 1,
+    "basic_flexible": 1,
+    "minus_floor": 4,
+    "seat_comp": 0,
+    "tempt": 1
+   },
+   "mix": "mixed",
+   "games": 1500,
+   "stall_pct": 0.0,
+   "rounds_med": 9.0,
+   "rounds_p90": 16,
+   "lead_changes": 2.36,
+   "comeback_pct": 31.3,
+   "photo_med": 6.0,
+   "photo_close_pct": 14.8,
+   "instant_decided_pct": 0.0,
+   "instant_pips_mean": 0,
+   "attacks_mean": 20.0,
+   "noimp_pct": 12.6,
+   "reshuffles_mean": 0.47,
+   "blocks_mean": 0.7,
+   "gamble_mean": 1.63,
+   "tempt_mean": 8.07,
+   "reroll_mean": 1.62,
+   "demonic_mean": 3.26,
+   "win_denied_mean": 0,
+   "seat_win_pct": [
+    26.6,
+    24.9,
+    24.3,
+    24.1
+   ],
+   "smart_win_pct": 94.2
+  },
+  "3p": {
+   "cfg": {
+    "players": 3,
+    "instants": "none",
+    "momentum": [
+     2,
+     3,
+     3
+    ],
+    "catchup_bonus": 0,
+    "lock_mode": "auto",
+    "market_slots": 3,
+    "blind_draw": false,
+    "hand_limit": 5,
+    "deck_overrides": {},
+    "max_rounds": 60,
+    "smash_bounty": 1,
+    "smash_to": 5,
+    "attack_rate_limit": 0,
+    "win_delay": 0,
+    "shield_hidden": 0,
+    "shield_mode": "reaction",
+    "ruleset": "ivan",
+    "basic_split": [
+     15,
+     14
+    ],
+    "dual_spec": [
+     1,
+     1
+    ],
+    "effects": {
+     "SMASH": 4,
+     "SHIELD": 3,
+     "GAMBLE": 2,
+     "REROLL": 2,
+     "IDOL": 1
+    },
+    "lock_free_draw": 1,
+    "draw_block_at_limit": 1,
+    "minus_limit": 1,
+    "basic_flexible": 1,
+    "minus_floor": 4,
+    "seat_comp": 0,
+    "tempt": 1
+   },
+   "mix": "smart",
+   "games": 2000,
+   "stall_pct": 0.0,
+   "rounds_med": 9.0,
+   "rounds_p90": 19,
+   "lead_changes": 3.46,
+   "comeback_pct": 58.5,
+   "photo_med": 3.0,
+   "photo_close_pct": 78.5,
+   "instant_decided_pct": 0.0,
+   "instant_pips_mean": 0,
+   "attacks_mean": 17.2,
+   "noimp_pct": 1.0,
+   "reshuffles_mean": 0.4,
+   "blocks_mean": 1.13,
+   "gamble_mean": 1.37,
+   "tempt_mean": 1.56,
+   "reroll_mean": 1.04,
+   "demonic_mean": 2.42,
+   "win_denied_mean": 0,
+   "seat_win_pct": [
+    32.2,
+    30.0,
+    37.8
+   ]
+  }
+ }
+}
