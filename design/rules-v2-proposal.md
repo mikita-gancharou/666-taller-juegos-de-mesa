@@ -12,30 +12,16 @@ The bones are good: 52 cards, no market-fired instants (correctly cut — they
 decided 12% of v1 games), momentum softened to +1 action, free draw on lock,
 3–4 players. Two structural problems surfaced:
 
-1. **Flexible basics stall competitive play.** When any of 40 cards can be
-   played as a minus, the table can always police whoever approaches 6:
-   under optimal play **98% of games hit a 60-round cap**. Casual tables race
-   instead of policing, which is why real games ended — but any competitive
-   table will find the stall.
+1. **Flexible basics can stall a competitive table** (see Known issues —
+   team decision: ship as-is, document it).
 2. **The 12 effect cards and the demonic die were undefined** — and that's
    where both the fun and the breakage live.
-
-## The two rules that fix the stall (one sentence each)
-
-> **A minus play may only target a die showing 4 or 5.**
-> **You may make at most one minus play per turn** (basic or dual; SMASH also
-> counts as your minus play).
-
-Effect: median 8 rounds, p90 15, **0% stalls**, and building is safe early
-while fights concentrate where they're dramatic — near the goal.
-(Exception found by red-team: DUAL's minus half may target 2–5, otherwise
-"park at 3" becomes an untouchable dominant strategy — verified by sim.)
 
 ## The 12 effect cards
 
 | Card | Qty | Text |
 |---|---|---|
-| **SMASH** | 3 | Drop an opponent's locked 6 to **5** (it unlocks), then **+1 your lowest unlocked die**. Counts as your minus play. |
+| **SMASH** | 3 | Drop an opponent's locked 6 to **5** (it unlocks), then **+1 your lowest unlocked die**. |
 | **SHIELD** | 3 | Keep in hand. When an opponent's card hits your dice, reveal: **that entire card is cancelled** (all its effects, for everyone). Reveal after targets are declared, before any roll. |
 | **GAMBLE** | 2 | Roll the demonic die on one of your unlocked dice: 1–3 → −1, 4–6 → +2. |
 | **REROLL** | 1 | Set one of **your own** unlocked dice — or an opponent's die showing 4–5 — to a demonic-die roll. |
@@ -73,8 +59,7 @@ lock… he rolls… THREE").
 
 1. Count your actions **at the start of your turn** (locking mid-turn helps
    next turn).
-2. DUAL's minus half is **optional**, and fizzles if you already made your
-   minus play.
+2. DUAL's minus half is **optional** (you may skip it).
 3. **You may always discard a card as an action, and you may always pass**
    (prevents a 5-card hand of unplayable reaction cards from freezing a turn).
 4. When the deck runs out, **reshuffle the discard** (happens ~1×/game).
@@ -82,23 +67,29 @@ lock… he rolls… THREE").
    at 8 rounds after the luck cards speed it up).
 6. DUAL = +1/−1.
 
-## Numbers (4P, 3000–4000 games/config)
+## Numbers (4P, 2000–3000 games/config)
 
-| Metric | v1 (pptx) | Iván skeleton, optimal play | **v2 final** | target |
-|---|---|---|---|---|
-| Median rounds (p90) | 12 (18) | 42 (57) | **8 (15)** | 8–13 (≤18) |
-| Stalled games | 0% | **98%** | **0%** | <1% |
-| Runner-up ≤3 pips | 55% | 5% | **83%** | ≥60% |
-| Comeback (winner ≠ mid-game leader) | 59% | — | **71%** | ≥40% |
-| Wins decided by an uncontrollable event | 12% (random SURGE) | — | **16% (chosen PACT/GAMBLE)** | <20%, and *authored* |
-| Attack events | 23 | 178 | **21** | 12–22 |
-| Shield blocks ("BLOCKED!") | 0.0 | — | **1.1/game** | ≥1 |
-| Demonic-die rolls | — | — | **~4/game** (+REROLL) | ≥3 |
-| Optimal bot vs 3 random | 60% | 97% | **85%** | 55–85% |
-| 3P | — | — | 9 rounds, 75% photo | — |
+| Metric | v1 (pptx) | **v2 as shipped** (optimal bots) | v2, mixed table proxy |
+|---|---|---|---|
+| Median rounds (p90) | 12 (18) | 31 (51) | 19 (39) |
+| Stalled games (60-round cap) | 0% | 15% | 2.4% |
+| Runner-up ≤3 pips | 55% | 27% | — |
+| Wins decided by an uncontrollable event | 12% (random SURGE) | **15% (chosen PACT/GAMBLE)** | — |
+| Shield blocks ("BLOCKED!") | 0.0 | ~1/game | — |
+
+Optimal bots are the worst case — they exploit the beat-the-leader loop
+mercilessly. Real tables sit between the two columns; the team's live games
+ended in normal time.
 
 ## Known issues, stated honestly
 
+- **Competitive stall (team decision: accepted).** Because every basic card
+  can be played as a minus, a table that plays hard can knock back whoever
+  approaches the win indefinitely: with optimal bots 15% of games hit the
+  60-round cap and the median runs 31 rounds. Casual tables race instead of
+  policing and finish fine. If it ever shows up in live play, the tested
+  two-line fix is parked here: *minus plays only on dice showing 4–5, max
+  one minus play per turn* → median 8 rounds, 0% stalls, 83% photo finishes.
 - **Seat bias**: the last seat wins ~31% vs ~18% for the first (open-target
   race structure; every config shows it). Optional setup rule that trims it
   to ~8 pp and costs one round: *deal 2 extra starting cards to the first
@@ -120,8 +111,7 @@ lock… he rolls… THREE").
 ## Reproduce
 
 ```json
-{"ruleset":"ivan","smash_to":5,"smash_bounty":1,"minus_floor":4,
- "minus_limit":1,"smash_is_minus":1,"dual_minus_floor":2,
+{"ruleset":"ivan","smash_to":5,"smash_bounty":1,
  "effects":{"SMASH":3,"SHIELD":3,"GAMBLE":2,"REROLL":1,"PACT":3},
  "basic_split":[17,12]}
 ```
