@@ -45,7 +45,6 @@ body{margin:0;background:var(--plano);color:var(--ink);font-family:var(--sans)}
 .dfila.grande svg{width:8.6mm;height:8.6mm}
 .dfila b{font-size:.75em;font-weight:400}
 .dfila .op{font-size:.62em;color:#fff;opacity:.9}
-.objetivo:empty{display:none}
 .objetivo{
   font-size:2.5mm;letter-spacing:.14em;text-transform:uppercase;text-align:center;
   padding:1.5mm 1mm;color:#fff;font-weight:600;position:relative;z-index:2;
@@ -251,7 +250,6 @@ function die(n,color,inv){
   return `<svg viewBox="0 0 24 24">${rect}${pips}</svg>`;
 }
 const R=(a,b,color)=>{let o='';for(let i=a;i<=b;i++)o+=die(i,color);return o;}
-const dieQ=color=>`<svg viewBox="0 0 24 24"><rect x="1.5" y="1.5" width="21" height="21" rx="5" fill="none" stroke="${color}" stroke-width="2.6"/><text x="12" y="17" text-anchor="middle" font-family="Bungee,system-ui" font-size="12.5" fill="${color}">?</text></svg>`;
 
 /* ---------- definiciones de carta ---------- */
 const T = {
@@ -273,7 +271,7 @@ const T = {
   GAMBLE:{fam:'f-azar',banda:'GAMBLE',icono:IC.gamble,valor:`<span class="dfila">${R(1,3,'#FF2D2D')}<b>→ −1</b></span><span class="dfila">${R(4,6,'#FF2D2D')}<b>→ +2</b></span>`,
       obj:'ONE OF YOUR DICE',
       rec:'Roll the demonic die.'},
-  REROLL:{fam:'f-azar',banda:'REROLL',icono:IC.reroll,valor:`<span class="dfila grande">${dieQ('#FF2D2D')}</span>`,
+  REROLL:{fam:'f-azar',banda:'REROLL',icono:IC.reroll,valor:'⟳<br><br>',
       obj:'YOUR OR RIVAL',
       rec:'Set it to a demonic-die roll.'},
   PACT:{fam:'f-pact',banda:'PACT',icono:IC.pact,valor:`<span class="dfila">${R(4,6,'#FF2D2D')}<span class="op">→</span>${die(6,'#FF2D2D',1)}</span><span class="dfila">${R(1,3,'#FF2D2D')}<span class="op">→</span>${die(1,'#FF2D2D',1)}</span>`,
