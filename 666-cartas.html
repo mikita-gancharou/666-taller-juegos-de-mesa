@@ -141,6 +141,10 @@ h1{font-family:var(--disp);font-size:clamp(22px,4vw,40px);margin:0;color:var(--a
 .pliegos{display:none}
 @media print{
   @page{size:A4;margin:0}
+  body.a3 .hoja{
+    width:419mm;height:296mm;
+    grid-template-columns:repeat(6,63mm);
+  }
   body{background:#fff}
   .pantalla{display:none}
   .pliegos{display:block}
@@ -162,7 +166,10 @@ h1{font-family:var(--disp);font-size:clamp(22px,4vw,40px);margin:0;color:var(--a
   <p class="sub">Mazo de <b>52 cartas</b> según <code>design/rules-v2-proposal.md</code>, en la estética
   Neón Infernal y con la anatomía definida en la actividad de componentes: banda de familia,
   icono legible a 1 metro, banda de objetivo y recordatorio. <b>Ctrl+P → guardar como PDF</b>
-  para obtener los pliegos a tamaño real (63 × 88 mm, 3×3 por A4, dorsos incluidos).</p>
+  para obtener los pliegos a tamaño real (63 × 88 mm), con dorsos intercalados para doble faz.
+  Formato: <a href="#" id="fA4" style="color:var(--azufre)">A4 (6 hojas doble faz)</a> ·
+  <a href="#a3" id="fA3" style="color:var(--azufre)">A3 (3 hojas doble faz)</a> —
+  formato actual: <b id="fmt">A4</b>.</p>
   <div class="galeria" id="galeria"></div>
   <div class="aviso">
     <b>Para imprimir:</b> papel A4, escala 100 % (sin "ajustar a página"), color, fondos activados.
@@ -322,18 +329,31 @@ for(const [tipo,n] of MAZO.concat([['REF','ayuda ×2'],['DORSO','dorso']])){
 }
 
 /* ---------- pliegos de impresión ---------- */
+const A3=location.hash==='#a3';
+if(A3){
+  document.body.classList.add('a3');
+  const st=document.createElement('style');
+  st.textContent='@page{size:A3 landscape;margin:0}';
+  document.head.appendChild(st);
+  document.getElementById('fmt').textContent='A3';
+}
+document.getElementById('fA4').onclick=()=>{location.hash='';location.reload();};
+document.getElementById('fA3').onclick=()=>{location.hash='#a3';location.reload();};
+window.addEventListener('hashchange',()=>location.reload());
+
+const PORHOJA=A3?18:9;
 const lista=[];
 for(const [tipo,n] of MAZO) for(let i=0;i<n;i++) lista.push(tipo);
-lista.push('REF','REF');                      // 54 = 6 hojas exactas de 3×3
+lista.push('REF','REF');                      // 54 cartas exactas
 const pl=document.getElementById('pliegos');
-for(let i=0;i<lista.length;i+=9){
-  const hoja=document.createElement('div'); hoja.className='hoja';
-  lista.slice(i,i+9).forEach(t=>hoja.appendChild(carta(t)));
-  pl.appendChild(hoja);
+for(let i=0;i<lista.length;i+=PORHOJA){
+  const frente=document.createElement('div'); frente.className='hoja';
+  lista.slice(i,i+PORHOJA).forEach(t=>frente.appendChild(carta(t)));
+  pl.appendChild(frente);
+  const dorsos=document.createElement('div'); dorsos.className='hoja';
+  for(let k=0;k<PORHOJA;k++) dorsos.appendChild(carta('DORSO'));
+  pl.appendChild(dorsos);
 }
-const dorsos=document.createElement('div'); dorsos.className='hoja';
-for(let i=0;i<9;i++) dorsos.appendChild(carta('DORSO'));
-pl.appendChild(dorsos);
 </script>
 </body>
 </html>
