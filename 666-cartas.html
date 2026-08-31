@@ -40,6 +40,11 @@ body{margin:0;background:var(--plano);color:var(--ink);font-family:var(--sans)}
   font-family:var(--disp);text-align:center;color:#fff;line-height:1;
   font-size:7mm;padding:0 2mm 1.6mm;position:relative;z-index:2;
 }
+.dfila{display:flex;align-items:center;justify-content:center;gap:1mm;margin:.5mm 0}
+.dfila svg{width:6.2mm;height:6.2mm;flex:0 0 auto}
+.dfila.grande svg{width:8.6mm;height:8.6mm}
+.dfila b{font-size:.75em;font-weight:400}
+.dfila .op{font-size:.62em;color:#fff;opacity:.9}
 .objetivo{
   font-size:2.5mm;letter-spacing:.14em;text-transform:uppercase;text-align:center;
   padding:1.5mm 1mm;color:#fff;font-weight:600;position:relative;z-index:2;
@@ -111,6 +116,9 @@ h1{font-family:var(--disp);font-size:clamp(22px,4vw,40px);margin:0;color:var(--a
 .galeria .banda{font-size:14.5px;padding:6px 4px 5px}
 .galeria .icono svg{width:120px}
 .galeria .valor{font-size:25px;padding:0 7px 6px}
+.galeria .dfila{gap:3.5px;margin:2px 0}
+.galeria .dfila svg{width:22px;height:22px}
+.galeria .dfila.grande svg{width:30px;height:30px}
 .galeria .objetivo{font-size:9px;padding:5.5px 4px}
 .galeria .recordatorio{font-size:9.8px;padding:6px 11px 9px;min-height:32px}
 .galeria .pie{font-size:6.7px;bottom:4px}
@@ -179,10 +187,13 @@ const IC = {
     <path d="M34 90 16 68h11V56h14v12h11Z" fill="#6B2BD9"/>
     <path d="M64 80 48 62h9V52h14v10h9Z" fill="#6B2BD9" opacity=".82"/></svg>`,
   smash:`<svg viewBox="0 0 100 96" fill="none">
-    <rect x="16" y="18" width="60" height="60" rx="10" transform="rotate(-8 46 48)" stroke="#FF2D2D" stroke-width="6"/>
-    <circle cx="34" cy="36" r="5.5" fill="#FF2D2D"/><circle cx="58" cy="32" r="5.5" fill="#FF2D2D"/>
-    <circle cx="38" cy="60" r="5.5" fill="#FF2D2D"/><circle cx="62" cy="56" r="5.5" fill="#FF2D2D"/>
-    <path d="M84 8 62 42l14-4-20 34 4-22-13 5 12-31-9 3Z" fill="#fff" stroke="#101018" stroke-width="2.5" stroke-linejoin="round"/></svg>`,
+    <g transform="rotate(-8 46 48)">
+      <rect x="16" y="18" width="60" height="60" rx="10" stroke="#FF2D2D" stroke-width="6"/>
+      <circle cx="31" cy="32" r="5" fill="#FF2D2D"/><circle cx="61" cy="32" r="5" fill="#FF2D2D"/>
+      <circle cx="31" cy="48" r="5" fill="#FF2D2D"/><circle cx="61" cy="48" r="5" fill="#FF2D2D"/>
+      <circle cx="31" cy="64" r="5" fill="#FF2D2D"/><circle cx="61" cy="64" r="5" fill="#FF2D2D"/>
+    </g>
+    <g transform="translate(34 -4) scale(0.72)"><path d="M84 8 62 42l14-4-20 34 4-22-13 5 12-31-9 3Z" fill="#fff" stroke="#101018" stroke-width="3.5" stroke-linejoin="round"/></g></svg>`,
   shield:`<svg viewBox="0 0 90 100" fill="none">
     <path d="M45 4 82 18v34c0 22-16 36-37 44C24 88 8 74 8 52V18Z" stroke="#00E5C0" stroke-width="6" stroke-linejoin="round"/>
     <path d="M45 26l6.2 12.9L65 41l-10 9.9 2.4 14L45 58l-12.4 6.9 2.4-14-10-9.9 13.8-2.1Z" fill="#00E5C0"/></svg>`,
@@ -220,6 +231,19 @@ const IC = {
       <path d="M17 17l6 6M83 17l-6 6M17 83l6-6M83 83l-6-6"/></g></svg>`,
 };
 
+/* ---------- grano de dado con pips ---------- */
+const PIPS={1:[[12,12]],2:[[7.5,16.5],[16.5,7.5]],3:[[7,17],[12,12],[17,7]],
+  4:[[7.5,7.5],[16.5,7.5],[7.5,16.5],[16.5,16.5]],
+  5:[[7.5,7.5],[16.5,7.5],[12,12],[7.5,16.5],[16.5,16.5]],
+  6:[[7.5,6.5],[16.5,6.5],[7.5,12],[16.5,12],[7.5,17.5],[16.5,17.5]]};
+function die(n,color,inv){
+  const pips=PIPS[n].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="2.1" fill="${inv?'#101018':color}"/>`).join('');
+  const rect=inv?`<rect x="1.5" y="1.5" width="21" height="21" rx="5" fill="${color}"/>`
+               :`<rect x="1.5" y="1.5" width="21" height="21" rx="5" fill="none" stroke="${color}" stroke-width="2.6"/>`;
+  return `<svg viewBox="0 0 24 24">${rect}${pips}</svg>`;
+}
+const R=(a,b,color)=>{let o='';for(let i=a;i<=b;i++)o+=die(i,color);return o;}
+
 /* ---------- definiciones de carta ---------- */
 const T = {
   B1:{fam:'f-basic',banda:'BASIC',icono:IC.basic1,valor:'±1',
@@ -231,19 +255,19 @@ const T = {
   DUAL:{fam:'f-dual',banda:'DUAL',dual:true,
       obj:'BOTH AT ONCE',
       rec:'You may skip the minus half.'},
-  SMASH:{fam:'f-smash',banda:'SMASH',icono:IC.smash,valor:'6 → 5',
+  SMASH:{fam:'f-smash',banda:'SMASH',icono:IC.smash,valor:`<span class="dfila grande">${die(6,'#FF2D2D')}<span class="op">→</span>${die(5,'#FF2D2D',1)}</span>`,
       obj:"A RIVAL'S LOCKED 6",
       rec:'It unlocks. Then +1 your lowest unlocked die.'},
   SHIELD:{fam:'f-shield',banda:'SHIELD',icono:IC.shield,valor:'',cinta:'· REACTION ·',
       obj:'WHEN A CARD HITS YOUR DICE',
       rec:'Reveal from your hand: that card is fully cancelled. Before any roll.'},
-  GAMBLE:{fam:'f-azar',banda:'GAMBLE',icono:IC.gamble,valor:'1-3 −1 · 4-6 +2',
+  GAMBLE:{fam:'f-azar',banda:'GAMBLE',icono:IC.gamble,valor:`<span class="dfila">${R(1,3,'#FF2E88')}<b>−1</b></span><span class="dfila">${R(4,6,'#FF2E88')}<b>+2</b></span>`,
       obj:'ONE OF YOUR DICE',
       rec:'Roll the demonic die.'},
   REROLL:{fam:'f-azar',banda:'REROLL',icono:IC.reroll,valor:'⟳',
       obj:'YOUR DIE · OR A RIVAL DIE ON 4-5',
       rec:'Set it to a demonic-die roll.'},
-  PACT:{fam:'f-pact',banda:'PACT',icono:IC.pact,valor:'4-6 → 6 · 1-3 → 1',
+  PACT:{fam:'f-pact',banda:'PACT',icono:IC.pact,valor:`<span class="dfila">${R(4,6,'#FF2D2D')}<span class="op">→</span>${die(6,'#FF2D2D',1)}</span><span class="dfila">${R(1,3,'#FF2D2D')}<span class="op">→</span>${die(1,'#FF2D2D',1)}</span>`,
       obj:'YOUR DIE — NOT YOUR LAST',
       rec:'Roll the demonic die. A pact 6 locks. The pact is final.'},
   REF:{fam:'f-ref',banda:'666',ref:true,obj:'KEEP ON THE TABLE',rec:''},
