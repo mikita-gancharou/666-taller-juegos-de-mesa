@@ -299,7 +299,7 @@ const T = {
       obj:'YOUR OR RIVAL',
       rec:'Roll the demonic die.'},
   REROLL:{fam:'f-azar',banda:'REROLL',icono:IC.reroll,valor:'⟳<br><br>',
-      obj:'YOUR OR RIVAL',
+      obj:'ONE OF YOUR DICE',
       rec:' '},
   PACT:{fam:'f-pact',banda:'PACT',icono:IC.pact,valor:`<span class="dfila grande">${die(6,'var(--rojo)',1)}<span class="op">or</span>${die(1,'var(--rojo)',1)}</span>`,
       obj:'<br>',
@@ -329,6 +329,7 @@ function carta(tipo){
       <div class="l"><span>Lock a die</span><b>free card</b></div>
       <div class="l"><span>Hand limit</span><b>5</b></div>
       <div class="l"><span>Market refills</span><b>end of turn</b></div>
+      <div class="l"><span>Deck empty</span><b>reshuffle discard</b></div>
       <div style="margin-top:2.2mm"><b>SHIELD</b> can be played at any time and
       does not cost an action.</div>
     </div>`;
@@ -366,7 +367,7 @@ if(A3){
 const PORHOJA=A3?18:9;
 const lista=[];
 for(const [tipo,n] of MAZO) for(let i=0;i<n;i++) lista.push(tipo);
-lista.push('REF','REF');                      // 54 = 6 hojas exactas de 3×3
+lista.push('REF','REF','REF');                      // 54 = 6 hojas exactas de 3×3
 const pl=document.getElementById('pliegos');
 for(let i=0;i<lista.length;i+=PORHOJA){
   const frente=document.createElement('div'); frente.className='hoja';
