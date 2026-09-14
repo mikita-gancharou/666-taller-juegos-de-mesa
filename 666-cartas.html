@@ -367,7 +367,7 @@ if(A3){
 const PORHOJA=A3?18:9;
 const lista=[];
 for(const [tipo,n] of MAZO) for(let i=0;i<n;i++) lista.push(tipo);
-lista.push('REF','REF','REF');                      // 54 = 6 hojas exactas de 3×3
+lista.push('REF','REF');                      // 54 = 6 hojas exactas de 3×3
 const pl=document.getElementById('pliegos');
 for(let i=0;i<lista.length;i+=PORHOJA){
   const frente=document.createElement('div'); frente.className='hoja';
