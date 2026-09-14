@@ -232,7 +232,7 @@ const IC = {
     <path d="M45 4 82 18v34c0 22-16 36-37 44C24 88 8 74 8 52V18Z" stroke="var(--rojo)" stroke-width="6" stroke-linejoin="round"/>
     <path d="M45 26l6.2 12.9L65 41l-10 9.9 2.4 14L45 58l-12.4 6.9 2.4-14-10-9.9 13.8-2.1Z" fill="var(--rojo)"/></svg>`,
   gamble:`<svg viewBox="0 0 100 96" fill="none">
-    <path d="M22 22 10 6l16 7Z" fill="var(--rojo)"/><path d="M78 22 90 6 74 13Z" fill="var(--rojo)"/>
+    <path d="M30 21 25 3l16 17Z" fill="var(--rojo)"/><path d="M70 21 75 3 59 20Z" fill="var(--rojo)"/>
     <rect x="20" y="20" width="60" height="60" rx="11" stroke="var(--rojo)" stroke-width="6"/>
     <path d="M50 32l5.6 11.7 12.5 1.9-9 8.9 2.1 12.6L50 61.2l-11.2 5.9 2.1-12.6-9-8.9 12.5-1.9Z" fill="var(--rojo)"/></svg>`,
   reroll:`<svg viewBox="0 0 100 100" fill="none">
@@ -290,20 +290,20 @@ const T = {
       obj:'BOTH AT ONCE',
       rec:''},
   SMASH:{fam:'f-smash',banda:'SMASH',icono:IC.smash,valor:`<span class="dfila grande">${die(6,'var(--rojo)')}<span class="op">→</span>${die(5,'var(--rojo)',1)}</span>`,
-      obj:"<br>",
-      rec:''},
+      obj:"A RIVAL'S LOCKED 6",
+      rec:'It drops to 5 and unlocks.'},
   SHIELD:{fam:'f-shield',banda:'SHIELD',icono:IC.shield,valor:'',cinta:'· REACTION ·',
       obj:'<br>',
       rec:''},
   GAMBLE:{fam:'f-azar',banda:'GAMBLE',icono:IC.gamble,valor:`<span class="dfila grande"><b>−1</b><span class="op">or</span><b>+2</b></span>`,
       obj:'YOUR OR RIVAL',
       rec:'Roll the demonic die.'},
-  REROLL:{fam:'f-azar',banda:'REROLL',icono:IC.reroll,valor:'⟳<br><br>',
+  REROLL:{fam:'f-azar',banda:'REROLL',icono:IC.reroll,valor:'',
       obj:'ONE OF YOUR DICE',
       rec:' '},
-  PACT:{fam:'f-pact',banda:'PACT',icono:IC.pact,valor:`<span class="dfila grande">${die(6,'var(--rojo)',1)}<span class="op">or</span>${die(1,'var(--rojo)',1)}</span>`,
-      obj:'<br>',
-      rec:''},
+  PACT:{fam:'f-pact',banda:'PACT',icono:IC.pact,valor:`<span class="dfila"><b>+2</b><span class="op">→</span>${die(6,'var(--rojo)',1)}</span><span class="dfila"><b>−1</b><span class="op">→</span>${die(1,'var(--rojo)',1)}</span>`,
+      obj:'ONE OF YOUR DICE',
+      rec:'Roll the demonic die. Your die becomes 6 — or falls to 1.'},
   REF:{fam:'f-ref',banda:'666',ref:true,obj:'KEEP ON THE TABLE',rec:''},
   DORSO:{dorso:true},
 };
