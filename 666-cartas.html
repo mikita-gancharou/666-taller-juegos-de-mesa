@@ -63,18 +63,18 @@ body{margin:0;background:var(--plano);color:var(--ink);font-family:var(--sans)}
 }
 
 /* familias */
-.f-basic  .banda{background:var(--azufre)}
-.f-basic  .objetivo{background:#1c1c28}
-.f-dual   .banda{background:var(--violeta);color:#fff}
-.f-dual   .objetivo{background:#1d1030}
-.f-smash  .banda{background:var(--rojo);color:#fff}
-.f-smash  .objetivo{background:#3d1016}
-.f-shield .banda{background:var(--rojo);color:#fff}
-.f-shield .objetivo{background:#3d1016}
-.f-azar   .banda{background:var(--rojo);color:#fff}
-.f-azar   .objetivo{background:#3d1016}
-.f-pact   .banda{background:var(--rojo);color:#fff}
-.f-pact   .objetivo{background:#3d1016}
+.f-basic  .banda{background:var(--azufre);color:var(--azufre-ink,#101018)}
+.f-basic  .objetivo{background:color-mix(in srgb, var(--azufre) 14%, #101018)}
+.f-dual   .banda{background:var(--violeta);color:var(--violeta-ink,#fff)}
+.f-dual   .objetivo{background:color-mix(in srgb, var(--violeta) 22%, #101018)}
+.f-smash  .banda{background:var(--rojo);color:var(--rojo-ink,#fff)}
+.f-smash  .objetivo{background:color-mix(in srgb, var(--rojo) 22%, #101018)}
+.f-shield .banda{background:var(--rojo);color:var(--rojo-ink,#fff)}
+.f-shield .objetivo{background:color-mix(in srgb, var(--rojo) 22%, #101018)}
+.f-azar   .banda{background:var(--rojo);color:var(--rojo-ink,#fff)}
+.f-azar   .objetivo{background:color-mix(in srgb, var(--rojo) 22%, #101018)}
+.f-pact   .banda{background:var(--rojo);color:var(--rojo-ink,#fff)}
+.f-pact   .objetivo{background:color-mix(in srgb, var(--rojo) 22%, #101018)}
 .f-pact{background:radial-gradient(ellipse at 50% 42%,#1c0a10 0%,#0a0a0f 70%)}
 .f-ref   .banda{background:#3a3a4c;color:#fff}
 .f-ref   .objetivo{background:#1c1c28}
@@ -160,9 +160,35 @@ h1{font-family:var(--disp);font-size:clamp(22px,4vw,40px);margin:0;color:var(--a
   .hoja:last-child{page-break-after:auto}
   .carta{box-shadow:inset 0 0 0 .45mm #2a2a36;print-color-adjust:exact;-webkit-print-color-adjust:exact}
 }
+
+/* панель цветов — только экран */
+.paleta{position:fixed;top:14px;right:14px;z-index:50;background:#15151d;border:1px solid #2a2a36;
+  border-radius:10px;padding:12px 14px;font-size:12px;color:var(--muted);width:210px}
+.paleta h3{margin:0 0 8px;font-family:var(--disp);font-size:12px;color:var(--ink);letter-spacing:.06em}
+.paleta .fila{display:flex;align-items:center;justify-content:space-between;margin:6px 0;gap:6px}
+.paleta input[type=color]{width:44px;height:26px;border:none;background:none;padding:0;cursor:pointer}
+.paleta code{font-size:10px;color:var(--ink)}
+.paleta .presets{display:flex;gap:6px;margin-top:9px;flex-wrap:wrap}
+.paleta button{background:#22222c;border:1px solid #34343f;color:var(--ink);border-radius:6px;
+  padding:4px 8px;font-size:10.5px;cursor:pointer}
+.paleta button:hover{border-color:var(--azufre)}
+@media print{.paleta{display:none}}
 </style>
 </head>
 <body>
+<div class="paleta">
+  <h3>COLORES</h3>
+  <div class="fila"><span>BASIC</span><code id="hx-azufre"></code><input type="color" data-var="azufre"></div>
+  <div class="fila"><span>DUAL</span><code id="hx-violeta"></code><input type="color" data-var="violeta"></div>
+  <div class="fila"><span>EFECTO</span><code id="hx-rojo"></code><input type="color" data-var="rojo"></div>
+  <div class="presets">
+    <button data-p="FFD400,6B2BD9,FF2D2D">actual</button>
+    <button data-p="FFD400,E8DCC0,FF2D2D">hueso</button>
+    <button data-p="FFD400,00E5C0,FF2D2D">veneno</button>
+    <button data-p="FFD400,9B6BFF,FF2D2D">violeta claro</button>
+  </div>
+  <div style="margin-top:8px;font-size:10px">Se guarda solo. Mandame los tres códigos y regenero el PDF.</div>
+</div>
 
 <!-- ================= GALERÍA (pantalla) ================= -->
 <div class="pantalla">
@@ -187,54 +213,54 @@ h1{font-family:var(--disp);font-size:clamp(22px,4vw,40px);margin:0;color:var(--a
 /* ---------- iconos SVG (inline, monocromos por familia) ---------- */
 const IC = {
   basic1:`<svg viewBox="0 0 100 92" fill="none">
-    <path d="M50 4 74 32H58v22H42V32H26Z" fill="#FFD400"/>
-    <path d="M50 88 30 64h13V50h14v14h13Z" fill="#6B2BD9"/></svg>`,
+    <path d="M50 4 74 32H58v22H42V32H26Z" fill="var(--azufre)"/>
+    <path d="M50 88 30 64h13V50h14v14h13Z" fill="var(--violeta)"/></svg>`,
   basic2:`<svg viewBox="0 0 100 92" fill="none">
-    <path d="M38 2 58 26H45v14H31V26H18Z" fill="#FFD400"/>
-    <path d="M66 12 86 36H73v14H59V36H46Z" fill="#FFD400" opacity=".82"/>
-    <path d="M34 90 16 68h11V56h14v12h11Z" fill="#6B2BD9"/>
-    <path d="M64 80 48 62h9V52h14v10h9Z" fill="#6B2BD9" opacity=".82"/></svg>`,
+    <path d="M38 2 58 26H45v14H31V26H18Z" fill="var(--azufre)"/>
+    <path d="M66 12 86 36H73v14H59V36H46Z" fill="var(--azufre)" opacity=".82"/>
+    <path d="M34 90 16 68h11V56h14v12h11Z" fill="var(--violeta)"/>
+    <path d="M64 80 48 62h9V52h14v10h9Z" fill="var(--violeta)" opacity=".82"/></svg>`,
   smash:`<svg viewBox="0 0 100 96" fill="none">
     <g transform="rotate(-8 46 48)">
-      <rect x="16" y="18" width="60" height="60" rx="10" stroke="#FF2D2D" stroke-width="6"/>
-      <circle cx="31" cy="32" r="5" fill="#FF2D2D"/><circle cx="61" cy="32" r="5" fill="#FF2D2D"/>
-      <circle cx="31" cy="48" r="5" fill="#FF2D2D"/><circle cx="61" cy="48" r="5" fill="#FF2D2D"/>
-      <circle cx="31" cy="64" r="5" fill="#FF2D2D"/><circle cx="61" cy="64" r="5" fill="#FF2D2D"/>
+      <rect x="16" y="18" width="60" height="60" rx="10" stroke="var(--rojo)" stroke-width="6"/>
+      <circle cx="31" cy="32" r="5" fill="var(--rojo)"/><circle cx="61" cy="32" r="5" fill="var(--rojo)"/>
+      <circle cx="31" cy="48" r="5" fill="var(--rojo)"/><circle cx="61" cy="48" r="5" fill="var(--rojo)"/>
+      <circle cx="31" cy="64" r="5" fill="var(--rojo)"/><circle cx="61" cy="64" r="5" fill="var(--rojo)"/>
     </g>
     <g transform="translate(34 -4) scale(0.72)"><path d="M84 8 62 42l14-4-20 34 4-22-13 5 12-31-9 3Z" fill="#fff" stroke="#101018" stroke-width="3.5" stroke-linejoin="round"/></g></svg>`,
   shield:`<svg viewBox="0 0 90 100" fill="none">
-    <path d="M45 4 82 18v34c0 22-16 36-37 44C24 88 8 74 8 52V18Z" stroke="#FF2D2D" stroke-width="6" stroke-linejoin="round"/>
-    <path d="M45 26l6.2 12.9L65 41l-10 9.9 2.4 14L45 58l-12.4 6.9 2.4-14-10-9.9 13.8-2.1Z" fill="#FF2D2D"/></svg>`,
+    <path d="M45 4 82 18v34c0 22-16 36-37 44C24 88 8 74 8 52V18Z" stroke="var(--rojo)" stroke-width="6" stroke-linejoin="round"/>
+    <path d="M45 26l6.2 12.9L65 41l-10 9.9 2.4 14L45 58l-12.4 6.9 2.4-14-10-9.9 13.8-2.1Z" fill="var(--rojo)"/></svg>`,
   gamble:`<svg viewBox="0 0 100 96" fill="none">
-    <path d="M22 22 10 6l16 7Z" fill="#FF2D2D"/><path d="M78 22 90 6 74 13Z" fill="#FF2D2D"/>
-    <rect x="20" y="20" width="60" height="60" rx="11" stroke="#FF2D2D" stroke-width="6"/>
-    <path d="M50 32l5.6 11.7 12.5 1.9-9 8.9 2.1 12.6L50 61.2l-11.2 5.9 2.1-12.6-9-8.9 12.5-1.9Z" fill="#FF2D2D"/></svg>`,
+    <path d="M22 22 10 6l16 7Z" fill="var(--rojo)"/><path d="M78 22 90 6 74 13Z" fill="var(--rojo)"/>
+    <rect x="20" y="20" width="60" height="60" rx="11" stroke="var(--rojo)" stroke-width="6"/>
+    <path d="M50 32l5.6 11.7 12.5 1.9-9 8.9 2.1 12.6L50 61.2l-11.2 5.9 2.1-12.6-9-8.9 12.5-1.9Z" fill="var(--rojo)"/></svg>`,
   reroll:`<svg viewBox="0 0 100 100" fill="none">
-    <rect x="30" y="30" width="40" height="40" rx="8" stroke="#FF2D2D" stroke-width="5.5"/>
-    <circle cx="42" cy="42" r="3.6" fill="#FF2D2D"/><circle cx="58" cy="58" r="3.6" fill="#FF2D2D"/>
-    <path d="M50 8a42 42 0 0 1 38 24" stroke="#FF2D2D" stroke-width="6" stroke-linecap="round"/>
-    <path d="M92 18v18H74Z" fill="#FF2D2D"/>
-    <path d="M50 92A42 42 0 0 1 12 68" stroke="#FF2D2D" stroke-width="6" stroke-linecap="round"/>
-    <path d="M8 82V64h18Z" fill="#FF2D2D"/></svg>`,
+    <rect x="30" y="30" width="40" height="40" rx="8" stroke="var(--rojo)" stroke-width="5.5"/>
+    <circle cx="42" cy="42" r="3.6" fill="var(--rojo)"/><circle cx="58" cy="58" r="3.6" fill="var(--rojo)"/>
+    <path d="M50 8a42 42 0 0 1 38 24" stroke="var(--rojo)" stroke-width="6" stroke-linecap="round"/>
+    <path d="M92 18v18H74Z" fill="var(--rojo)"/>
+    <path d="M50 92A42 42 0 0 1 12 68" stroke="var(--rojo)" stroke-width="6" stroke-linecap="round"/>
+    <path d="M8 82V64h18Z" fill="var(--rojo)"/></svg>`,
   pact:`<svg viewBox="0 0 100 100" fill="none">
-    <circle cx="50" cy="50" r="45" stroke="#FF2D2D" stroke-width="3.4"/>
-    <circle cx="50" cy="50" r="36" stroke="#FF2D2D" stroke-width="1.4" opacity=".6"/>
-    <path d="M50 14 71.5 80 15 39h70L29 80Z" stroke="#FF2D2D" stroke-width="3.2" stroke-linejoin="round"/>
-    <circle cx="50" cy="50" r="7.5" fill="#0a0a0f" stroke="#FF2D2D" stroke-width="2"/></svg>`,
+    <circle cx="50" cy="50" r="45" stroke="var(--rojo)" stroke-width="3.4"/>
+    <circle cx="50" cy="50" r="36" stroke="var(--rojo)" stroke-width="1.4" opacity=".6"/>
+    <path d="M50 14 71.5 80 15 39h70L29 80Z" stroke="var(--rojo)" stroke-width="3.2" stroke-linejoin="round"/>
+    <circle cx="50" cy="50" r="7.5" fill="#0a0a0f" stroke="var(--rojo)" stroke-width="2"/></svg>`,
   ref:`<svg viewBox="0 0 100 90" fill="none">
     <rect x="24" y="18" width="52" height="52" rx="9" stroke="#c9c9d6" stroke-width="5"/>
     <circle cx="40" cy="34" r="4" fill="#c9c9d6"/><circle cx="60" cy="34" r="4" fill="#c9c9d6"/>
     <circle cx="40" cy="54" r="4" fill="#c9c9d6"/><circle cx="60" cy="54" r="4" fill="#c9c9d6"/>
     <path d="M30 76h40" stroke="#c9c9d6" stroke-width="5" stroke-linecap="round"/></svg>`,
-  up:`<svg viewBox="0 0 40 40"><path d="M20 4 36 22H26v14H14V22H4Z" fill="#6B2BD9"/></svg>`,
-  down:`<svg viewBox="0 0 40 40"><path d="M20 36 4 18h10V4h12v14h10Z" fill="#6B2BD9"/></svg>`,
+  up:`<svg viewBox="0 0 40 40"><path d="M20 4 36 22H26v14H14V22H4Z" fill="var(--violeta)"/></svg>`,
+  down:`<svg viewBox="0 0 40 40"><path d="M20 36 4 18h10V4h12v14h10Z" fill="var(--violeta)"/></svg>`,
   dorso:`<svg viewBox="0 0 100 100" fill="none">
-    <circle cx="50" cy="50" r="47" stroke="#FF2D2D" stroke-width="1.6"/>
-    <circle cx="50" cy="50" r="41" stroke="#FF2D2D" stroke-width=".8" opacity=".55"/>
-    <path d="M50 88 12 26h76Z" stroke="#FF2D2D" stroke-width="1.6"/>
-    <path d="M50 12 12 74h76Z" stroke="#FF2D2D" stroke-width=".8" opacity=".4"/>
-    <circle cx="50" cy="50" r="9" stroke="#FF2D2D" stroke-width="1.2"/>
-    <g stroke="#FF2D2D" stroke-width="1.1" opacity=".85">
+    <circle cx="50" cy="50" r="47" stroke="var(--rojo)" stroke-width="1.6"/>
+    <circle cx="50" cy="50" r="41" stroke="var(--rojo)" stroke-width=".8" opacity=".55"/>
+    <path d="M50 88 12 26h76Z" stroke="var(--rojo)" stroke-width="1.6"/>
+    <path d="M50 12 12 74h76Z" stroke="var(--rojo)" stroke-width=".8" opacity=".4"/>
+    <circle cx="50" cy="50" r="9" stroke="var(--rojo)" stroke-width="1.2"/>
+    <g stroke="var(--rojo)" stroke-width="1.1" opacity=".85">
       <path d="M50 3v8M50 89v8M3 50h8M89 50h8"/>
       <path d="M17 17l6 6M83 17l-6 6M17 83l6-6M83 83l-6-6"/></g></svg>`,
 };
@@ -263,19 +289,19 @@ const T = {
   DUAL:{fam:'f-dual',banda:'DUAL',dual:true,
       obj:'BOTH AT ONCE',
       rec:''},
-  SMASH:{fam:'f-smash',banda:'SMASH',icono:IC.smash,valor:`<span class="dfila grande">${die(6,'#FF2D2D')}<span class="op">→</span>${die(5,'#FF2D2D',1)}</span>`,
+  SMASH:{fam:'f-smash',banda:'SMASH',icono:IC.smash,valor:`<span class="dfila grande">${die(6,'var(--rojo)')}<span class="op">→</span>${die(5,'var(--rojo)',1)}</span>`,
       obj:"<br>",
       rec:''},
   SHIELD:{fam:'f-shield',banda:'SHIELD',icono:IC.shield,valor:'',cinta:'· REACTION ·',
       obj:'<br>',
       rec:''},
-  GAMBLE:{fam:'f-azar',banda:'GAMBLE',icono:IC.gamble,valor:`<span class="dfila">${R(1,3,'#FF2D2D')}<b>→ −1</b></span><span class="dfila">${R(4,6,'#FF2D2D')}<b>→ +2</b></span>`,
+  GAMBLE:{fam:'f-azar',banda:'GAMBLE',icono:IC.gamble,valor:`<span class="dfila">${R(1,3,'var(--rojo)')}<b>→ −1</b></span><span class="dfila">${R(4,6,'var(--rojo)')}<b>→ +2</b></span>`,
       obj:'YOUR OR RIVAL',
       rec:'Roll the demonic die.'},
   REROLL:{fam:'f-azar',banda:'REROLL',icono:IC.reroll,valor:'⟳<br><br>',
       obj:'YOUR OR RIVAL',
       rec:' '},
-  PACT:{fam:'f-pact',banda:'PACT',icono:IC.pact,valor:`<span class="dfila">${R(4,6,'#FF2D2D')}<span class="op">→</span>${die(6,'#FF2D2D',1)}</span><span class="dfila">${R(1,3,'#FF2D2D')}<span class="op">→</span>${die(1,'#FF2D2D',1)}</span>`,
+  PACT:{fam:'f-pact',banda:'PACT',icono:IC.pact,valor:`<span class="dfila">${R(4,6,'var(--rojo)')}<span class="op">→</span>${die(6,'var(--rojo)',1)}</span><span class="dfila">${R(1,3,'var(--rojo)')}<span class="op">→</span>${die(1,'var(--rojo)',1)}</span>`,
       obj:'<br>',
       rec:''},
   REF:{fam:'f-ref',banda:'666',ref:true,obj:'KEEP ON THE TABLE',rec:''},
@@ -350,6 +376,33 @@ for(let i=0;i<lista.length;i+=PORHOJA){
   for(let k=0;k<PORHOJA;k++) dorsos.appendChild(carta('DORSO'));
   pl.appendChild(dorsos);
 }
+
+/* ---------- juego de colores ---------- */
+const DEFAULTS={azufre:'#FFD400',violeta:'#6B2BD9',rojo:'#FF2D2D'};
+const lum=h=>{const v=parseInt(h.slice(1),16),f=c=>{c/=255;return c<=.03928?c/12.92:((c+.055)/1.055)**2.4};
+  return .2126*f(v>>16&255)+.7152*f(v>>8&255)+.0722*f(v&255)};
+function aplicar(name,hex){
+  document.documentElement.style.setProperty('--'+name,hex);
+  document.documentElement.style.setProperty('--'+name+'-ink', lum(hex)>0.45?'#101018':'#ffffff');
+  document.getElementById('hx-'+name).textContent=hex.toUpperCase();
+  const inp=document.querySelector(`input[data-var="${name}"]`); if(inp) inp.value=hex;
+}
+function guardar(){
+  const cur={};
+  for(const k in DEFAULTS) cur[k]=getComputedStyle(document.documentElement).getPropertyValue('--'+k).trim();
+  localStorage.setItem('666colores', JSON.stringify(cur));
+}
+const saved=JSON.parse(localStorage.getItem('666colores')||'{}');
+for(const k in DEFAULTS) aplicar(k, saved[k]||DEFAULTS[k]);
+document.querySelectorAll('.paleta input[type=color]').forEach(inp=>{
+  inp.addEventListener('input',()=>{ aplicar(inp.dataset.var, inp.value); guardar(); });
+});
+document.querySelectorAll('.paleta button').forEach(b=>{
+  b.addEventListener('click',()=>{
+    const [a,v,r]=b.dataset.p.split(',');
+    aplicar('azufre','#'+a); aplicar('violeta','#'+v); aplicar('rojo','#'+r); guardar();
+  });
+});
 </script>
 </body>
 </html>
