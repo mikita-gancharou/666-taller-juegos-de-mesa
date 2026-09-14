@@ -208,7 +208,7 @@ const IC = {
   gamble:`<svg viewBox="0 0 100 96" fill="none">
     <path d="M22 22 10 6l16 7Z" fill="#FF2E88"/><path d="M78 22 90 6 74 13Z" fill="#FF2E88"/>
     <rect x="20" y="20" width="60" height="60" rx="11" stroke="#FF2E88" stroke-width="6"/>
-    <text x="50" y="63" text-anchor="middle" font-family="Bungee,system-ui" font-size="34" fill="#FF2E88">?</text></svg>`,
+    <path d="M50 32l5.6 11.7 12.5 1.9-9 8.9 2.1 12.6L50 61.2l-11.2 5.9 2.1-12.6-9-8.9 12.5-1.9Z" fill="#FF2E88"/></svg>`,
   reroll:`<svg viewBox="0 0 100 100" fill="none">
     <rect x="30" y="30" width="40" height="40" rx="8" stroke="#FF2E88" stroke-width="5.5"/>
     <circle cx="42" cy="42" r="3.6" fill="#FF2E88"/><circle cx="58" cy="58" r="3.6" fill="#FF2E88"/>
@@ -270,8 +270,8 @@ const T = {
       obj:'<br>',
       rec:''},
   GAMBLE:{fam:'f-azar',banda:'GAMBLE',icono:IC.gamble,valor:`<span class="dfila">${R(1,3,'#FF2E88')}<b>→ −1</b></span><span class="dfila">${R(4,6,'#FF2E88')}<b>→ +2</b></span>`,
-      obj:'ONE OF YOUR DICE',
-      rec:' '},
+      obj:'YOUR OR RIVAL',
+      rec:'Roll the demonic die.'},
   REROLL:{fam:'f-azar',banda:'REROLL',icono:IC.reroll,valor:'⟳<br><br>',
       obj:'YOUR OR RIVAL',
       rec:' '},
