@@ -11,7 +11,7 @@
 :root{
   --fondo:#0c0c13; --panel:#14141d; --panel2:#191924;
   --rojo:#FF2D2D; --azufre:#FFD400; --violeta:#6B2BD9; --verde:#2ee08a;
-  --ink:#eeeef4; --sec:#b9b9c7; --muted:#8a8a99; --line:#26262f;
+  --ink:#f2f2f7; --sec:#d0d0dc; --muted:#8a8a99; --line:#26262f;
   --sans:system-ui,-apple-system,"Segoe UI",sans-serif;
 }
 *{box-sizing:border-box}
@@ -36,41 +36,41 @@ body{margin:0;background:#333;font-family:var(--sans);color:var(--ink)}
 .objetivo{border-left:1.2mm solid var(--rojo);border-radius:1.5mm;padding:3mm 5mm;
   background:linear-gradient(90deg,#2a0f1a 0%,#191024 100%)}
 .objetivo .k{color:var(--rojo);font-weight:800;font-size:3.4mm;letter-spacing:.06em;text-transform:uppercase}
-.objetivo p{margin:1mm 0 0;font-size:3.4mm}
+.objetivo p{margin:1mm 0 0;font-size:3.5mm}
 .panel{background:var(--panel);border-radius:3mm;padding:3.2mm 5.5mm 3.6mm}
 .panel h2{font-size:4mm;letter-spacing:.12em;margin:0 0 2mm;text-transform:uppercase;
   border-bottom:.3mm solid var(--line);padding-bottom:2mm}
-.panel p{font-size:3.15mm;line-height:1.45;color:var(--sec);margin:1.3mm 0}
+.panel p{font-size:3.35mm;line-height:1.5;color:var(--sec);margin:1.4mm 0}
 .panel b{color:var(--ink)}
 .contenido{display:grid;grid-template-columns:1fr 1fr;gap:1.2mm 8mm}
-.item{display:flex;align-items:center;gap:2.5mm;font-size:3.2mm;padding:.7mm 0}
+.item{display:flex;align-items:center;gap:2.5mm;font-size:3.4mm;padding:.8mm 0}
 .chip{background:#241f0c;border:.25mm solid #4a3f10;color:var(--azufre);font-weight:700;
   border-radius:1.5mm;min-width:8mm;text-align:center;padding:.6mm 1.5mm;font-size:3.1mm}
 .item small{color:var(--muted);font-size:2.8mm}
-ol.setup{margin:0;padding-left:6mm;font-size:3.15mm;line-height:1.42;color:var(--sec)}
-ol.setup li{padding-left:1mm;margin:.9mm 0}
+ol.setup{margin:0;padding-left:6mm;font-size:3.3mm;line-height:1.48;color:var(--sec)}
+ol.setup li{padding-left:1mm;margin:1mm 0}
 ol.setup li::marker{color:var(--rojo);font-weight:800}
 .accion{margin:2mm 0}
 .accion .k{color:var(--verde);font-weight:800;letter-spacing:.04em}
-.sublista{margin:1mm 0 0;padding-left:5mm;font-size:3.15mm;color:var(--sec);line-height:1.5}
-.nota{font-style:italic;color:var(--muted);font-size:3.05mm;margin-top:1.2mm}
+.sublista{margin:1mm 0 0;padding-left:5mm;font-size:3.3mm;color:var(--sec);line-height:1.5}
+.nota{font-style:italic;color:#a5a5b4;font-size:3.2mm;margin-top:1.2mm}
 .lockbox{border:.4mm dashed var(--azufre);border-radius:2.5mm;padding:2.4mm 4.5mm;margin-top:2.2mm;background:#1b190e}
 .lockbox .k{color:var(--azufre);font-weight:800;font-size:3.3mm;letter-spacing:.05em;text-transform:uppercase}
-.lockbox p{margin:1mm 0 0;font-size:3.1mm;line-height:1.42;color:var(--sec)}
+.lockbox p{margin:1mm 0 0;font-size:3.25mm;line-height:1.48;color:var(--sec)}
 
 /* ---------- página 2: tipos de carta ---------- */
-.tipos{display:grid;grid-template-columns:1fr 1fr;gap:4mm}
+.tipos{display:grid;grid-template-columns:1fr 1fr;gap:4.5mm}
 .tarjeta{background:var(--panel2);border-radius:2.5mm;overflow:hidden;border:.25mm solid var(--line)}
-.tarjeta .cab{font-family:'Bungee',var(--sans);font-size:3.6mm;padding:2.2mm 4mm;letter-spacing:.05em}
-.tarjeta .cuerpo{padding:2.5mm 4mm 3mm;font-size:3.15mm;line-height:1.5;color:var(--sec)}
+.tarjeta .cab{font-family:'Bungee',var(--sans);font-size:3.7mm;padding:2.4mm 4mm;letter-spacing:.05em}
+.tarjeta .cuerpo{padding:2.6mm 4mm 3.1mm;font-size:3.35mm;line-height:1.5;color:var(--sec)}
 .cab.c-basic{background:var(--azufre);color:#101018}
 .cab.c-dual{background:var(--violeta);color:#fff}
 .cab.c-efecto{background:var(--rojo);color:#fff}
-.aviso-efecto{border:.3mm solid var(--violeta);border-radius:2mm;padding:2.2mm 4mm;
-  text-align:center;font-size:3.2mm;font-weight:700;margin-bottom:4mm}
+.aviso-efecto{border:.3mm solid var(--violeta);border-radius:2mm;padding:2.5mm 4mm;
+  text-align:center;font-size:3.3mm;font-weight:700;margin-bottom:4.5mm}
 .ancha{grid-column:1 / -1}
 .reaction{color:var(--rojo);font-family:'Bungee',var(--sans);font-size:2.8mm;letter-spacing:.14em;margin-bottom:1mm}
-.fin{border:.7mm solid var(--rojo);border-radius:4mm;padding:4mm 8mm;text-align:center;
+.fin{border:.7mm solid var(--rojo);border-radius:4mm;padding:4.5mm 8mm;text-align:center;margin-top:auto;margin-bottom:8mm;
   background:linear-gradient(90deg,#20101c 0%,#160f1f 100%)}
 .fin .k{color:var(--rojo);font-family:'Bungee',var(--sans);font-size:4.4mm;letter-spacing:.1em}
 .fin p{margin:1.5mm 0 0;font-size:3.3mm;color:var(--ink);font-weight:600}
@@ -92,7 +92,7 @@ ol.setup li::marker{color:var(--rojo);font-weight:800}
     <h1>666</h1>
     <div class="sub">A satanic turn-based sabotage game with cards and dice</div>
     <div class="metas">
-      <div class="meta"><div class="k">Recommended age</div><div class="v">12+</div></div>
+      <div class="meta"><div class="k">Recommended age</div><div class="v">16+</div></div>
       <div class="meta"><div class="k">Duration</div><div class="v">30'</div></div>
       <div class="meta"><div class="k">Players</div><div class="v">3</div></div>
     </div>
@@ -108,7 +108,7 @@ ol.setup li::marker{color:var(--rojo);font-weight:800}
     <div class="contenido">
       <div class="item"><span class="chip">9</span>Standard d6 dice</div>
       <div class="item"><span class="chip">29</span>Basic cards</div>
-      <div class="item"><span class="chip">1</span><span style="white-space:nowrap">Demonic die <small>(−2 −1 −1 +2 +2 +3)</small></span></div>
+      <div class="item"><span class="chip">1</span>Demonic die</div>
       <div class="item"><span class="chip">11</span>Dual cards</div>
       <div class="item"><span class="chip">2</span>Rule cards</div>
       <div class="item"><span class="chip">12</span>Effect cards</div>
@@ -154,10 +154,10 @@ ol.setup li::marker{color:var(--rojo);font-weight:800}
     <p style="margin-top:2.2mm"><b>End of Turn and Market:</b> Players must perform all available actions to end
     their turn. The market is replenished from the draw deck <b>ONCE THE TURN IS ENDED</b> if any card was
     drawn, ensuring the next turn always starts with three cards in the market.
-    <b>If the draw deck runs out, shuffle the discard pile to form a new draw deck.</b></p>
+    If the draw deck runs out, shuffle the discard pile to form a new draw deck.</p>
   </div>
 
-  <div class="pie-doc">Nikita Hancharov · Iván Barbosa — Rules ENG v1.3</div>
+  <div class="pie-doc">Nikita Hancharov · Iván Barbosa</div>
 </div>
 
 <!-- ================= PÁGINA 2 ================= -->
@@ -214,7 +214,7 @@ ol.setup li::marker{color:var(--rojo);font-weight:800}
     remaining players suffer eternal punishment in hell.</p>
   </div>
 
-  <div class="pie-doc">Nikita Hancharov · Iván Barbosa — Rules ENG v1.3</div>
+  <div class="pie-doc">Nikita Hancharov · Iván Barbosa</div>
 </div>
 
 </body>
