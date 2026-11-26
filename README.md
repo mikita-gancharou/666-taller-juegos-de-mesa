@@ -1,37 +1,34 @@
-# 666 — Componentes, Interfaz y Arte
+# SeiSeiSeis!
 
-Actividad del **Taller de Juegos de Mesa** — Image Campus.
-Juego: *666, a strategy game of cards and dices*.
+Turn-based strategy game with cards and three dice. You play against two bots.
+Godot 4.7 prototype for Windows and Android.
 
-## Ver la presentación
+## Goal
 
-**→ https://mikita-gancharou.github.io/666-taller-juegos-de-mesa/**
+Be the first to have all three of your dice showing 6 at the same time.
 
-Navegación: `←` `→` (o barra espaciadora, `Home`, `End`), o los puntos de la derecha.
-`Ctrl+P` → "Guardar como PDF" para exportar.
+## How it plays
 
-Los dos moodboards ya están armados con material real (slides 8 y 10). Cada pieza
-se puede **reemplazar en vivo**: clic para elegir un archivo, o arrastrar la imagen
-directo sobre la pieza. La fila se re-justifica sola y ninguna imagen se deforma.
+- Everyone starts with three dice on 3 and three cards.
+- Each turn you have 2 actions (3 while you own a locked 6): draw a card from the market or play a card.
+- A die that reaches 6 is locked. Only effect cards can change it.
+- Cards raise your dice, lower a rival's dice, or roll the demonic die (-3 to +3).
 
-## Contenido
+Full rules: RULES button in the game.
 
-| Archivo | Qué es |
-|---|---|
-| `index.html` | La presentación completa, 14 slides |
-| `actividad_componentes_arte.md` | El documento de trabajo: tablas de componentes, especificaciones y argumentación |
-| `img/` | Las 16 piezas de los moodboards |
+## Android
 
-## Imágenes
+[builds/SeiSeiSeis.apk](builds/SeiSeiSeis.apk): arm64, Android 7.0 or newer, signed with a debug key. A tap works as a click.
 
-Todo el material visual es de **dominio público, CC0 o CC BY-SA** y viene de
-Wikimedia Commons. La atribución completa, con autor, licencia y enlace a cada
-ficha original, está en el último slide de la presentación.
+## Run from source
 
-## La actividad
+Open `666-godot/` in Godot 4.7.2 and press F5.
 
-1. Listado total de componentes — qué hay, cuántos, cómo son y qué estructura tienen
-2. Dos moodboards: **Grimorio** (grabado ocultista) y **Neón Infernal** (cartoon pop)
-3. Presentación
-4. Cinco juegos con estética similar en BoardGameGeek
-5. Moodboard elegido: **Neón Infernal**, con injertos del Grimorio
+- Export presets: `Windows Desktop` and `Android` (no Gradle, arm64-v8a).
+- Tests: `godot --headless --path 666-godot res://tests/run_tests.tscn`
+
+## Other files
+
+- `666-reglas.html`, `666-cartas.html`: rules and print-and-play cards of the tabletop version.
+- `design/`: rules drafts, analysis and a simulator.
+- `index.html`, `img/`, `actividad_componentes_arte.md`: earlier art and component work, in Spanish.
